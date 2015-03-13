@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd-MM-yyyy HH:mm:ss,SSS} [%.10t] %5p %.15X{ipAddress}-%.15X{user}  [%l] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="PS" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs\\evc.log" />
+		<param name="datePattern" value="'.'yyyy-MM-dd'.log'" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd-MM-yyyy HH:mm:ss,SSS} [%.10t] %5p %.15X{ipAddress} %.15X{user}  [%l] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!-- <category name="br.com.caelum.vraptor"> <priority value="INFO" /> <appender-ref 
+		ref="CONSOLE" /> </category> <category name="org.hibernate"> <priority value="INFO" 
+		/> <appender-ref ref="CONSOLE" /> </category> <category name="org.springframework"> 
+		<priority value="INFO" /> <appender-ref ref="CONSOLE" /> </category> <root> 
+		<priority value="INFO" /> <appender-ref ref="CONSOLE" /> <appender-ref ref="EVC" 
+		/> </root> -->
+	<category name="br.com.caelum.vraptor">
+		<priority value="INFO" />
+		<appender-ref ref="CONSOLE" />
+	</category>
+
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</log4j:configuration>

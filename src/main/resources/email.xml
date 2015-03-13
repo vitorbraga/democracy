@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<email>
+	<username>naoresponda@evoluservices.com</username>
+	<password>SauServ7787</password>
+	<serverName>192.168.0.255</serverName> COLOCAR ENDERECO OU ALIAS DO SV AQUI
+	<sleepTime>6000</sleepTime>
+
+	<host>
+		<name>smtpout.secureserver.net</name>
+        <port>465</port>
+        <ssl>true</ssl>
+        <tls>false</tls>
+	</host>
+</email>-->
+
+<email>
+	<username>testepag@saudeservice.com.br</username>
+	<password>Senha@123!</password>
+	<name>EvoluServices Conciliate</name>
+	<serverName>localhost:8090</serverName>
+	<sleepTime>6000</sleepTime>
+
+	<host>
+		<name>smtp.gmail.com</name>
+        <port>465</port>
+        <ssl>true</ssl>
+        <tls>false</tls>
+	</host>
+</email>

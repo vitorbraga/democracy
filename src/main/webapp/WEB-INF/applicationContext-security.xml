@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd ">
+
+	<!-- web authentication details -->
+	<authentication-manager erase-credentials="true"
+		alias="authenticationManager">
+	</authentication-manager>
+	
+	<beans:bean id="authenticationDetailsSource"
+		class="org.springframework.security.authentication.AuthenticationDetailsSourceImpl">
+		<beans:property name="clazz"
+			value="org.springframework.security.web.authentication.WebAuthenticationDetails" />
+	</beans:bean>
+
+	<beans:bean id="saltSource"
+		class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+		<beans:property name="userPropertyToUse" value="document" />
+	</beans:bean>
+
+	<beans:bean id="accessDeniedHandler"
+		class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+	</beans:bean>
+
+	<beans:bean id="entryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login" />
+	</beans:bean>
+
+	<http use-expressions="true" auto-config="true" entry-point-ref="entryPoint">
+
+		<intercept-url pattern="/Downloads/" filters="none" />
+		<intercept-url pattern="/Downloads/**" filters="none" />
+
+		<session-management session-fixation-protection="newSession" />
+
+		<anonymous enabled="true" granted-authority="ANONYMOUS" />
+	</http>
+
+	<beans:bean id="accessDecisionManager"
+		class="org.springframework.security.access.vote.AffirmativeBased">
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:ref bean="roleVoter" />
+				<beans:ref bean="authenticatedVoter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="roleVoter"
+		class="org.springframework.security.access.vote.RoleVoter">
+		<beans:property name="rolePrefix" value="" />
+	</beans:bean>
+
+	<beans:bean id="authenticatedVoter"
+		class="org.springframework.security.access.vote.AuthenticatedVoter">
+	</beans:bean>
+
+</beans:beans>
