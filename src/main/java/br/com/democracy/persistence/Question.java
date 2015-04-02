@@ -35,6 +35,22 @@ public class Question extends BaseEntity {
 		this.question = question;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
