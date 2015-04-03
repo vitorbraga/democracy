@@ -7,12 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import br.com.democracy.dao.HoliDaysDAO;
-import br.com.democracy.persistence.HoliDays;
-
 public class DateHelper {
-
-	private static HoliDaysDAO holiDayDao;
 
 	private static final BigDecimal MILLISECONDS_IN_ONE_DAY = new BigDecimal(
 			86400000L);
@@ -101,23 +96,6 @@ public class DateHelper {
 		return parser.format(date);
 	}
 
-	public static Date nextWorkDay(final Date date) {
-		
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		
-		HoliDays holiday = new HoliDays();
-
-		do {
-			c.add(Calendar.DATE, 1);
-			holiday = holiDayDao.getHolyday(c.getTime());
-		} while (holiday != null
-				|| c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-				|| c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
-		
-		return c.getTime();
-	}
-
 	public static Date addMonths(final Date date, Long monthNumber) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
@@ -141,11 +119,5 @@ public class DateHelper {
 		c.add(Calendar.MINUTE, minutes);
 		return c.getTime();
 	}
-	
-	public static void setHolidayDAO(HoliDaysDAO holiDaysDAO) {
-		DateHelper.holiDayDao = holiDaysDAO;
-	}
-
-	
 
 }

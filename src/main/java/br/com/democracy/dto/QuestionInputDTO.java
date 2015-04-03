@@ -57,6 +57,7 @@ public class QuestionInputDTO {
 				answer.setAnswer(ansDTO.getAnswer());
 				answer.setRegUser(regUser);
 				answer.setRegDate(now);
+				answer.setQuestion(question);
 				
 				question.getAnswers().add(answer);
 			}

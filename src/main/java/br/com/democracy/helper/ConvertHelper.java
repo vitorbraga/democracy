@@ -22,7 +22,6 @@ import br.com.democracy.exception.ServiceException;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.messages.MessagesLog;
-import br.com.democracy.persistence.enums.PaymentBrandEnum;
 
 public class ConvertHelper {
 
@@ -747,17 +746,6 @@ public class ConvertHelper {
 	public static void main(String[] args) throws ServiceException {
 		System.out.println(ConvertHelper.convertIdToView(0L));
 
-	}
-
-	public static String convertPaymentBrand(String paymentBrand) {
-
-		String bandeira = null;
-		if (paymentBrand.equals(PaymentBrandEnum.VISA.name()))
-			bandeira = "VISA";
-		else {
-			bandeira = paymentBrand;
-		}
-		return bandeira;
 	}
 
 	public static List<BigDecimal> roundBigDecimaListToView(

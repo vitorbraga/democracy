@@ -35,6 +35,7 @@ public class QuestionController {
 
 			questionService.newQuestion(question);
 			
+			result.redirectTo(AdminController.class).home();
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
