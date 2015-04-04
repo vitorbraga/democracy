@@ -11,7 +11,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 @Resource
-@Path("/home")
+@Path("/")
 public class HomeController {
 	
 	@Autowired
@@ -21,7 +21,7 @@ public class HomeController {
 	private HttpServletRequest request;
 	
 	@Get
-	@Path("/")
+	@Path("/home")
 	public void home() {
 		
 	}
@@ -33,7 +33,7 @@ public class HomeController {
 	}
 	
 	@Get
-	@Path("/welcome")
+	@Path("/")
 	public void welcome() {
 		
 	}
