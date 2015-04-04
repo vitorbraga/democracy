@@ -27,16 +27,17 @@ public class HomeController {
 	}
 	
 	@Get
-	@Path("")
-	public void home2() {
-		result.redirectTo(HomeController.class).home();
-	}
-	
-	@Get
 	@Path("/")
 	public void welcome() {
 		
 	}
+	
+	@Get
+	@Path("/home/")
+	public void home2() {
+		result.redirectTo(HomeController.class).home();
+	}
+	
 	
 	@Get
 	@Path("/searchQuestion")
@@ -47,6 +48,11 @@ public class HomeController {
 	@Get
 	@Path("/searchUser")
 	public void searchUser() {
+	}
+	
+	@Get
+	@Path("/register")
+	public void register() {
 	}
 	
 	

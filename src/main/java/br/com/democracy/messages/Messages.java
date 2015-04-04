@@ -19,6 +19,10 @@ public class Messages {
 	public static final String PASSWORD_INVALID = "Senha Inválida";
 
 	public static final String USERNAME_INVALID = "Usuário Inválido";
+	
+	public static final String NAME_INVALID = "Nome Inválido";
+	
+	public static final String EMAIL_INVALID = "Email Inválido";
 
 	public static final String INVALID_FILE_TYPE = "Tipo de Arquivo inválido";
 
