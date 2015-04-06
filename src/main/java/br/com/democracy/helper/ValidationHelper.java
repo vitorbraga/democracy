@@ -24,7 +24,7 @@ public class ValidationHelper {
 	/** The Constant NAME_COMPANY. */
 	private static final String NAME_COMPANY = "([0-9A-Za-záéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕçÇäëïöüÄËÏÖÜ&!()%@$+'.]+ ?)+";
 
-	private static final String QUESTION_OR_ANSWER = "[0-9A-Za-záéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕçÇäëïöüÄËÏÖÜ&!() #%@$+',-.?]+";
+	private static final String QUESTION_OR_ANSWER = "([0-9A-Za-zàáéíóúÁÉÍÓÚâêîôûÀÂÊÎÔÛãõÃÕçÇäëïöüÄËÏÖÜ\\_\\!\\\\\\;\\'\\?\\.\\-\\n,@#%$\\*\\+=\\(\\)\\[\\]\\{\\}\\/]+ *)+";
 	
 	/** The Constant DATE. */
 	private static final String DATE = "(([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/\\d{4}) \\d{2}:\\d{2}:\\d{2}";

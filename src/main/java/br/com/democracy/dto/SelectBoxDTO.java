@@ -1,5 +1,11 @@
 package br.com.democracy.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.democracy.helper.Mappers;
+import br.com.democracy.persistence.enums.QuestionStatusEnum;
+
 public class SelectBoxDTO {
 	
 	private String id;
@@ -40,6 +46,20 @@ public class SelectBoxDTO {
 						+ object[4].toString() + ")");
 		
 		return selectBoxDTO;
+	}
+	
+	public static List<SelectBoxDTO> copyQuestionStatus() {
+		
+		List<SelectBoxDTO> allStatus = new ArrayList<SelectBoxDTO>();
+		for(QuestionStatusEnum status : QuestionStatusEnum.values()) {
+			SelectBoxDTO selectBoxDTO = new SelectBoxDTO();
+			selectBoxDTO.setId(status.id().toString());
+			selectBoxDTO.setDesc(Mappers.questionStatus(status.id()));
+			
+			allStatus.add(selectBoxDTO);
+		}
+		
+		return allStatus;
 	}
 
 }

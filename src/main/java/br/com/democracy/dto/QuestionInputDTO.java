@@ -47,6 +47,7 @@ public class QuestionInputDTO {
 			question.setQuestion(questionDTO.getQuestion());
 			question.setStatus(QuestionStatusEnum.INACTIVE.id());
 			question.setRegDate(now);
+			question.setUpdated(now);
 			question.setRegUser(regUser);
 			
 			question.setAnswers(new ArrayList<Answer>());
@@ -57,6 +58,7 @@ public class QuestionInputDTO {
 				answer.setAnswer(ansDTO.getAnswer());
 				answer.setRegUser(regUser);
 				answer.setRegDate(now);
+				answer.setUpdated(now);
 				answer.setQuestion(question);
 				
 				question.getAnswers().add(answer);

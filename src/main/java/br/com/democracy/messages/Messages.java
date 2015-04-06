@@ -31,4 +31,10 @@ public class Messages {
 	public static final String QUESTION_FIELD_INVALID = "Campo pergunta inválido.";
 	
 	public static final String ANSWER_FIELD_INVALID = "Campo resposta inválido.";
+	
+	public static final String STATUS_FIELD_INVALID = "Campo status inválido.";
+	
+	public static final String PERIOD_FIELD_INVALID = "Campo período inválido.";
+	
+	public static final String QUESTION_NOT_FOUND = "Pergunta não encontrada";
 }

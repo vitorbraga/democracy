@@ -34,6 +34,11 @@ public abstract class BaseEntity implements Serializable,
 	@Column(name = "REGDATE")
 	private Date regDate;
 
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATED")
+	private Date updated;
+	
 	/** The registration date. */
 	@NotNull
 	@Column(name = "REGUSR")
@@ -83,6 +88,14 @@ public abstract class BaseEntity implements Serializable,
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 	/**

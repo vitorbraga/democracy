@@ -89,6 +89,16 @@ function getUrlInfo() {
 	return urlInfo;
 }
 
+function getSearchFilters() {
+
+	var search = {};
+	$.each($('.search-field'), function(i) {
+		search[$(this).attr('name')] = $(this).val();
+	});
+
+	return search;
+}
+
 function newQuestion() {
 	
 	$('#add-answer').on('click', function() {
@@ -101,5 +111,19 @@ function newQuestion() {
 		$(newAnswer).insertBefore('#question-submit-but');
 	});	
 	
+}
+
+function searchQuestion() {
 	
+	$('#question-search-but').on('click', function() {
+		// chama busca ajax
+		var search = getSearchFilters();
+		$.ajax({
+			url : basePath + 'question/search',
+			type : 'get',
+			data : search
+		}).done(function(data) {
+			$('#questions-result').hide().html(data).fadeIn(150);
+		});
+	});
 }

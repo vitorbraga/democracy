@@ -83,7 +83,7 @@
                                 <a href="#newQuestion" class="routeLink" callback="newQuestion">Nova Pergunta</a>
                             </li>
                             <li>
-                                <a href="#searchQuestion" class="routeLink">Buscar</a>
+                                <a href="#searchQuestion" class="routeLink" callback="searchQuestion">Buscar</a>
                             </li>
                         </ul>
                     </li>
