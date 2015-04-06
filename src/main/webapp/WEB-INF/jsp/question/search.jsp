@@ -9,6 +9,7 @@
 
 	#tourney-result-table th {
 		background-color: #096FAF;
+		color: white;
 	}
 
 	#tourney-result-table tr td {
@@ -37,14 +38,16 @@
 				<tr><th>Pergunta</th><th>Status</th><th>Data</th><th>Ação</th></tr>
 				<c:forEach var="question" items="${questions}">
 					<tr questionId="${question.id}">
-						<td>${question.question}</td><td>${question.status}</td><td>${question.date}</td>
+						<td>${question.question}</td>
+						<td>${question.status}</td>
+						<td>${question.date}</td>
 						<td>
 							<c:choose>
 							    <c:when test="${question.status == \"Ativo\"}">
-							        <a href="#">Desativar</a>
+							        <a href="javascript:void(0)" class="deactivate-link" questionId="${question.id}">Desativar</a>
 							    </c:when>
 							    <c:otherwise>
-							    	<a href="#">Ativar</a>	
+							    	<a href="javascript:void(0)" class="activate-link" questionId="${question.id}">Ativar</a>	
 							    </c:otherwise>
 							</c:choose>
 						</td>
@@ -59,9 +62,42 @@
 
 
 <script>
-	$('tr').on('click', function() {
-		
+
+	$('.activate-link').on('click', function() {
+		$('#loader-wrapper').fadeIn(150);
 		var questionId = $(this).attr('questionId');
+		$.ajax({
+			type : 'GET',
+			url : basePath + 'question/activateQuestion',
+			data : {
+				questionId : questionId
+			},
+			success : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				alert('Pergunta ativada com sucesso.');
+			}
+		});
+	});
+	
+	$('.deactivate-link').on('click', function() {
+		$('#loader-wrapper').fadeIn(150);
+		var questionId = $(this).attr('questionId');
+		$.ajax({
+			type : 'GET',
+			url : basePath + 'question/deactivateQuestion',
+			data : {
+				questionId : questionId
+			},
+			success : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				alert('Pergunta desativada com sucesso.');
+			}
+		});
+	});
+
+	$('table td:not(:last)').on('click', function() {
+		$('#loader-wrapper').fadeIn(150);
+		var questionId = $(this).parent().attr('questionId');
 		$.ajax({
 			type : 'GET',
 			url : basePath + 'question/questionDetails',
@@ -69,6 +105,7 @@
 				questionId : questionId
 			},
 			success : function(data) {
+				$('#loader-wrapper').fadeOut(150);
 				var $modal = $(data);
 			    $('body').append($modal);
 			    $modal.filter('.modal').modal();
@@ -79,15 +116,19 @@
 
 	function bindEditButton() {
 		$('#edit-question-button').on('click', function() {
+			$('#loader-wrapper').fadeIn(200);
 			var edit = getSearchFilters();
 			$.ajax({
 				type : 'post',
 				url : basePath + 'question/edit',
 				data : edit,
 				success : function(data) {
+					$('#loader-wrapper').fadeOut(150);
 					alert('Editado com sucesso.');
 				}
 			});
 		});
 	}
+	
+	
 </script>

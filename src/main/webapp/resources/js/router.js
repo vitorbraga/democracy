@@ -40,13 +40,14 @@ var AppRouter = Backbone.Router.extend({
 
 	redirect : function() {
 		
+		$('#loader-wrapper').fadeIn(150);
 		var urlInfo = getUrlInfo();
 
 		$.ajax({
 			url : basePath + urlInfo.ajaxUrl,
 			type : 'get'
 		}).done(function(data) {
-
+			$('#loader-wrapper').fadeOut(150);
 			$('.container-fluid').html(data);
 			if (callback != undefined && callback != '') {
 				callback = window[callback](param);
@@ -117,12 +118,14 @@ function searchQuestion() {
 	
 	$('#question-search-but').on('click', function() {
 		// chama busca ajax
+		$('#loader-wrapper').fadeIn(150);
 		var search = getSearchFilters();
 		$.ajax({
 			url : basePath + 'question/search',
 			type : 'get',
 			data : search
 		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
 			$('#questions-result').hide().html(data).fadeIn(150);
 		});
 	});

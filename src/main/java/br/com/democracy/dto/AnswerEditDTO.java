@@ -11,6 +11,14 @@ public class AnswerEditDTO {
 	@Validate(message=Messages.ANSWER_FIELD_INVALID, validation="isQuestionOrAnswer")
 	private String answer;
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getAnswer() {
 		return answer;
 	}

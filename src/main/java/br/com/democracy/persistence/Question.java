@@ -1,5 +1,6 @@
 package br.com.democracy.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "QUESTION")
@@ -22,6 +25,10 @@ public class Question extends BaseEntity {
 	@Column(name = "STATUS", nullable = false)
 	private Integer status;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_ACTIVATED", nullable = true)
+	private Date dateActivated;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
 	private List<Answer> answers;
 
@@ -42,6 +49,14 @@ public class Question extends BaseEntity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Date getDateActivated() {
+		return dateActivated;
+	}
+
+	public void setDateActivated(Date dateActivated) {
+		this.dateActivated = dateActivated;
 	}
 
 	public List<Comment> getComments() {

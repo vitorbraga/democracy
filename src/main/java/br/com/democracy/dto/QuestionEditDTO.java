@@ -18,7 +18,7 @@ public class QuestionEditDTO {
 	private String status;
 	
 	@ValidateCollection(recursive = true, nullable = false)
-	private List<AnswerInputDTO> answers;
+	private List<AnswerEditDTO> answers;
 
 	public String getId() {
 		return id;
@@ -44,11 +44,11 @@ public class QuestionEditDTO {
 		this.status = status;
 	}
 
-	public List<AnswerInputDTO> getAnswers() {
+	public List<AnswerEditDTO> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<AnswerInputDTO> answers) {
+	public void setAnswers(List<AnswerEditDTO> answers) {
 		this.answers = answers;
 	}
 	

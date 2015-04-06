@@ -18,7 +18,6 @@
 	background-clip: padding-box;
 }
 
-
 .info-header {
 	font-size: 20pt;
 	display: block;
@@ -97,7 +96,8 @@
 						<tr>
 							<td colspan=2>
 								<span class="info-label">Resposta ${myIndex.index+1}</span> 
-								<input type="text" name="edit.answers[myIndex].answer" class="form-control search-field" value="${answer.answer}" />
+								<input type="text" name="edit.answers[${myIndex.index}].answer" class="form-control search-field" value="${answer.answer}" />
+								<input type="hidden" name="edit.answers[${myIndex.index}].id" class="search-field" value="${answer.id}" />
 							</td>
 						</tr>
 					</c:forEach>
@@ -118,6 +118,7 @@
 
 		</div>
 		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 			<button type="button" class="btn btn-default" id="edit-question-button" data-dismiss="modal">Salvar</button>
 		</div>
 	</div>

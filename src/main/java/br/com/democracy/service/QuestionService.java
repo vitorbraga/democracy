@@ -23,4 +23,6 @@ public interface QuestionService {
 
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
 
+	void deactivateQuestion(Long questionId);
+
 }

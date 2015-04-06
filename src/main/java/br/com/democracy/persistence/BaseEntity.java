@@ -34,7 +34,6 @@ public abstract class BaseEntity implements Serializable,
 	@Column(name = "REGDATE")
 	private Date regDate;
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATED")
 	private Date updated;

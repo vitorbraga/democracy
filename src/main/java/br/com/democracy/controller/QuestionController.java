@@ -76,11 +76,32 @@ public class QuestionController {
 			questionService.activateQuestion(ConvertHelper
 					.convertIdFromView(questionId));
 
+			ResultControllerHelper.returnResultSuccess(result);
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
+	@Get
+	@Path("/deactivateQuestion")
+	public void deactivateQuestion(String questionId) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			questionService.deactivateQuestion(ConvertHelper
+					.convertIdFromView(questionId));
+
+			ResultControllerHelper.returnResultSuccess(result);
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
 
+	
 	@Get
 	@Path("/search")
 	public void search(QuestionSearchDTO search) {
