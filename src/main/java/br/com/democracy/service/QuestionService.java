@@ -13,7 +13,9 @@ public interface QuestionService {
 
 	void newQuestion(QuestionInputDTO question);
 
-	void activateQuestion(Long questionId);
+	void activateQuestion(Long questionId) throws ServiceException;
+
+	void deactivateQuestion(Long questionId) throws ServiceException;
 
 	List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search)
 			throws ServiceException;
@@ -22,7 +24,5 @@ public interface QuestionService {
 			throws ServiceException;
 
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
-
-	void deactivateQuestion(Long questionId);
 
 }

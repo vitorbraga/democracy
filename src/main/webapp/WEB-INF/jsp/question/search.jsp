@@ -71,10 +71,13 @@
 			url : basePath + 'question/activateQuestion',
 			data : {
 				questionId : questionId
-			},
-			success : function(data) {
-				$('#loader-wrapper').fadeOut(150);
+			}
+		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			if(data.success == 'true') {
 				alert('Pergunta ativada com sucesso.');
+			} else {
+				alert(data.message);
 			}
 		});
 	});
@@ -87,10 +90,13 @@
 			url : basePath + 'question/deactivateQuestion',
 			data : {
 				questionId : questionId
-			},
-			success : function(data) {
-				$('#loader-wrapper').fadeOut(150);
+			}
+		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			if(data.success == 'true') {
 				alert('Pergunta desativada com sucesso.');
+			} else {
+				alert(data.message);
 			}
 		});
 	});

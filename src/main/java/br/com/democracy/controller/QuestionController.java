@@ -79,6 +79,8 @@ public class QuestionController {
 			ResultControllerHelper.returnResultSuccess(result);
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
 	
@@ -97,6 +99,8 @@ public class QuestionController {
 
 			ResultControllerHelper.returnResultSuccess(result);
 		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}

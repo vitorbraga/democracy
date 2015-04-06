@@ -125,8 +125,12 @@ function searchQuestion() {
 			type : 'get',
 			data : search
 		}).done(function(data) {
-			$('#loader-wrapper').fadeOut(150);
-			$('#questions-result').hide().html(data).fadeIn(150);
+			if(data.success == 'false') {
+				alert(data.message);
+			} else {
+				$('#loader-wrapper').fadeOut(150);
+				$('#questions-result').hide().html(data).fadeIn(150);
+			}
 		});
 	});
 }

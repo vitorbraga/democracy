@@ -73,7 +73,7 @@ public class QuestionServiceImpl implements QuestionService {
 					.convertIdFromView(answerEdit.getId()));
 			answer.setAnswer(answerEdit.getAnswer());
 			answer.setUpdated(now);
-			
+
 			answerDAO.saveOrUpdate(answer);
 		}
 
@@ -83,30 +83,51 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void activateQuestion(Long questionId) {
+	public void activateQuestion(Long questionId) throws ServiceException {
 
-		Date now = DateHelper.now();
 		Question question = questionDAO.getById(questionId);
 
-		question.setStatus(QuestionStatusEnum.ACTIVE.id());
-		question.setDateActivated(now);
-		question.setUpdated(now);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		} else {
 
-		questionDAO.saveOrUpdate(question);
+			if (question.getStatus().equals(QuestionStatusEnum.ACTIVE.id())) {
+				throw new ServiceException(Messages.QUESTION_ALREADY_ACTIVATED);
+			}
+
+			Date now = DateHelper.now();
+
+			question.setStatus(QuestionStatusEnum.ACTIVE.id());
+			question.setDateActivated(now);
+			question.setUpdated(now);
+
+			questionDAO.saveOrUpdate(question);
+		}
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
-	public void deactivateQuestion(Long questionId) {
+	public void deactivateQuestion(Long questionId) throws ServiceException {
 
-		Date now = DateHelper.now();
 		Question question = questionDAO.getById(questionId);
 
-		question.setStatus(QuestionStatusEnum.INACTIVE.id());
-		question.setDateActivated(null);
-		question.setUpdated(now);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		} else {
 
-		questionDAO.saveOrUpdate(question);
+			if (question.getStatus().equals(QuestionStatusEnum.INACTIVE.id())) {
+				throw new ServiceException(
+						Messages.QUESTION_ALREADY_DEACTIVATED);
+			}
+
+			Date now = DateHelper.now();
+
+			question.setStatus(QuestionStatusEnum.INACTIVE.id());
+			question.setDateActivated(null);
+			question.setUpdated(now);
+
+			questionDAO.saveOrUpdate(question);
+		}
 	}
 
 	@Override
