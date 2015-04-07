@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.messages.Messages;
+import br.com.democracy.persistence.enums.GenderTypeEnum;
 
 /**
  * The Class ValidationHelper.
@@ -2509,6 +2510,29 @@ public class ValidationHelper {
 	
 	public static boolean isEmptyOrVoidArray(Object  array[]) {
 		return (array.length==0);
+	}
+	
+	public static boolean isGender(final String string) {
+
+		if (isEmptyOrVoid(string)) {
+			return false;
+		} else if (isNumber(string)
+				&& GenderTypeEnum.get(Integer.parseInt(string)) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isGenderOrEmpty(final String string) {
+
+		if (isEmptyOrVoid(string)
+				|| ((isNumber(string) && GenderTypeEnum.get(Integer
+						.parseInt(string)) != null))) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

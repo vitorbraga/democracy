@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.net.URLEncoder"%>
 <%@ include file="../include.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,40 +37,52 @@
 
 	  <div class="container">
 	    <div class="row">
-	        <form role="form">
+	        <form action="${pageContext.request.contextPath}/user/registerUser" method="post" role="form">
 	            <div class="col-lg-6">
 	                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
 	                <div class="form-group">
-	                    <label for="InputName">Nome</label>
+	                    <label for="name-field">Nome</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter Name" required>
+	                        <input type="text" class="form-control" name="user.name" id="name-field" placeholder="Enter Name" required>
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label for="InputEmail">Email</label>
+	                    <label for="email-field">Email</label>
 	                    <div class="input-group">
-	                        <input type="email" class="form-control" id="InputEmailFirst" name="InputEmail" placeholder="Enter Email" required>
+	                        <input type="email" class="form-control" id="email-field" name="user.email" placeholder="email" required>
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
-	                    <label for="InputEmail">Confirme o Email</label>
+	                    <label for="email-conf-field">Confirme o Email</label>
 	                    <div class="input-group">
-	                        <input type="email" class="form-control" id="InputEmailSecond" name="InputEmail" placeholder="Confirm Email" required>
+	                        <input type="email" class="form-control" id="email-conf-field" name="user.emailConf" placeholder="confirme o email" required>
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                    </div>
 	                </div>	
 	                <div class="form-group">
-	                	<label for="UserSex">Sexo:</label>
-		                <form role="form">
-			                <div class="radio">
-							  <label><input type="radio" name="optMasc">Masculino</label>
-							</div>
-							<div class="radio">
-							  <label><input type="radio" name="optFem">Feminino</label>
-							</div>             
-		                </form>
+	                    <label for="pass-field">Senha</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" id="pass-field" name="user.password" placeholder="senha" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="pass-conf-field">Confirme a senha</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" id="pass-conf-field" name="user.passwordConf" placeholder="confirme a senha" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>	
+	                <div class="form-group">
+	                	<label for="gender-field">Sexo:</label>
+		                <div class="radio">
+						  <label><input type="radio" value="1" name="user.gender">Masculino</label>
+						</div>
+						<div class="radio">
+						  <label><input type="radio" value="2" name="user.gender">Feminino</label>
+						</div>             
 	                
 	                </div>
 	                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">

@@ -8,7 +8,9 @@ public enum UserStatusEnum {
 
 	ACTIVE(1),
 	
-	INACTIVE(2);
+	INACTIVE(2),
+	
+	AWAITING_APPROVAL(3);
 
 	private Integer id;
 

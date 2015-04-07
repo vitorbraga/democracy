@@ -16,7 +16,6 @@ import org.apache.cxf.common.util.Base64Exception;
 import org.apache.cxf.common.util.Base64Utility;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
 
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.exception.ValidationException;
@@ -522,43 +521,6 @@ public class ConvertHelper {
 		}
 	}
 
-	/**
-	 * Receives a Cell and returns the string it contains
-	 * 
-	 * @param cell
-	 * @return
-	 */
-	public static String convertCellToString(Cell cell) {
-		String s = "";
-		if (null != cell) {
-			switch (cell.getCellType()) {
-			case Cell.CELL_TYPE_STRING:
-				s = cell.getStringCellValue();
-				break;
-			case Cell.CELL_TYPE_NUMERIC:
-				double d = cell.getNumericCellValue();
-				if (d - (int) d > 0) { // if has decimal value
-					s = new BigDecimal(String.valueOf(cell
-							.getNumericCellValue())).toString();
-				} else { // if integer
-					s = new BigDecimal(cell.getNumericCellValue()).toString();
-				}
-				break;
-			case Cell.CELL_TYPE_FORMULA:
-				s = cell.getCellFormula();
-				break;
-			case Cell.CELL_TYPE_BOOLEAN:
-				s = Boolean.toString(cell.getBooleanCellValue());
-				break;
-			case Cell.CELL_TYPE_ERROR:
-				s = String.valueOf(cell.getErrorCellValue());
-				break;
-			default:
-				break;
-			}
-		}
-		return s;
-	}
 
 	/**
 	 * Convert Date to view.

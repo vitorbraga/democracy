@@ -10,8 +10,10 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.democracy.dto.UserInputDTO;
+import br.com.democracy.exception.ServiceException;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.helper.ResultControllerHelper;
+import br.com.democracy.messages.Messages;
 import br.com.democracy.service.UserService;
 import br.com.democracy.validation.Validator;
 
@@ -36,15 +38,28 @@ public class UserController {
 	 */
 	@Post
 	@Path("/registerUser")
-	public void registerUser(UserInputDTO userInput) {
+	public void registerUser(UserInputDTO user) {
 		
 		try {
-			Validator.validate(userInput);
+			Validator.validate(user);
 
-			userService.registerUser(userInput);
+			if (!user.getEmail().equals(user.getEmailConf())) {
+				throw new ValidationException(
+						Messages.EMAIL_CONFIRMATION_INCORRECT);
+			}
+
+			if (!user.getPassword().equals(user.getPasswordConf())) {
+				throw new ValidationException(
+						Messages.PASSWORD_CONFIRMATION_INCORRECT);
+			}
+
+			userService.registerUser(user);
 			
 			result.redirectTo(HomeController.class).welcome();
+		
 		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}

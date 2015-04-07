@@ -17,8 +17,11 @@ public class User extends BaseEntity {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 	
-	@Column(name = "ACADEMIC_REGISTER", nullable = false, unique = true)
+	@Column(name = "ACADEMIC_REGISTER", nullable = true)
 	private String academicRegister;
+	
+	@Column(name = "EMAIL", nullable = false, unique = true)
+	private String email;
 	
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
@@ -28,10 +31,22 @@ public class User extends BaseEntity {
 	
 	@Column(name = "STATUS", nullable = false)
 	private Integer status;
+	
+	/** Ver UserTypeEnum */
+	@Column(nullable = false)
+	private Integer type;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Comment> comments;
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -62,6 +77,22 @@ public class User extends BaseEntity {
 
 	public void setAcademicRegister(String academicRegister) {
 		this.academicRegister = academicRegister;
+	}
+
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public List<Comment> getComments() {

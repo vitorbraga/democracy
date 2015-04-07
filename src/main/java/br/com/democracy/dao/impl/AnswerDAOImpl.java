@@ -7,8 +7,7 @@ import br.com.democracy.dao.AnswerDAO;
 import br.com.democracy.persistence.Answer;
 
 @Repository
-public class AnswerDAOImpl extends GenericDAOImpl<Answer> implements
-AnswerDAO {
+public class AnswerDAOImpl extends GenericDAOImpl<Answer> implements AnswerDAO {
 
 	@Override
 	protected Class<Answer> getClazz() {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="../include.jsp" %>
+<%@page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +50,7 @@
 	  <button type="submit" class="btn btn-default">Submit</button>
 	  
 	   <li>
-           <a href="#register" class="routeLink">Cadastre-se</a>
+           <a href="${pageContext.request.contextPath}/register" class="routeLink">Cadastre-se</a>
        </li>
 	</form>
 	
