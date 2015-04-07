@@ -50,7 +50,7 @@
 	                <div class="form-group">
 	                    <label for="name-field">Nome</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" name="user.name" id="name-field" placeholder="Enter Name" required>
+	                        <input type="text" class="form-control" name="user.name" id="name-field" placeholder="nome" required>
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                    </div>
 	                </div>

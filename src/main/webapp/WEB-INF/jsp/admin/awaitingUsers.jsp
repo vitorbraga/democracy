@@ -19,6 +19,7 @@
 	#tourney-result-table td {
 		background-color: white;
 		color: #555;
+		vertical-align: middle;
 	}
 	
 	.table-hover>tbody>tr:hover>td {
