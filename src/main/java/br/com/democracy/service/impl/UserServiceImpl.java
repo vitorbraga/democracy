@@ -1,12 +1,16 @@
 package br.com.democracy.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dto.UserInputDTO;
+import br.com.democracy.dto.UserOutputDTO;
 import br.com.democracy.exception.ServiceException;
+import br.com.democracy.helper.DateHelper;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.enums.UserStatusEnum;
@@ -32,7 +36,6 @@ public class UserServiceImpl implements UserService {
 			user.setType(UserTypeEnum.NORMAL.id());
 
 			userDAO.saveOrUpdate(user);
-
 		} else {
 			throw new ServiceException(Messages.EMAIL_ALREADY_REGISTERED);
 		}
@@ -48,4 +51,30 @@ public class UserServiceImpl implements UserService {
 		return userDAO.findUniqueByExample(user);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserOutputDTO> getAwaitingUsers() throws ServiceException {
+
+		List<User> users = userDAO.getAwaitingNormalUsers();
+
+		return UserOutputDTO.copy(users);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void activateUser(Long userId) throws ServiceException {
+
+		User user = userDAO.getById(userId);
+
+		if (user != null) {
+
+			user.setStatus(UserStatusEnum.ACTIVE.id());
+			user.setUpdated(DateHelper.now());
+			
+			userDAO.saveOrUpdate(user);
+			
+		} else {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+	}
 }

@@ -56,4 +56,6 @@ public class Messages {
 	
 	public static final String PASSWORD_CONFIRMATION_INCORRECT = "Confirmação de senha incorreta";
 	
+	public static final String USER_NOT_FOUND = "Usuário não encontrado";
+	
 }
