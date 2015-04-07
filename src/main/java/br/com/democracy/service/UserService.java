@@ -17,4 +17,8 @@ public interface UserService {
 
 	void activateUser(Long userId) throws ServiceException;
 
+	void deactivateUser(Long userId) throws ServiceException;
+
+	void registerAdmin(UserInputDTO userInput) throws ServiceException;
+
 }

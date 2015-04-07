@@ -134,3 +134,11 @@ function searchQuestion() {
 		});
 	});
 }
+
+function registerAdmin() {
+	
+}
+
+function awaitingUsers() {
+	
+}

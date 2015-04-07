@@ -108,7 +108,10 @@
                                 <a href="#searchUser" class="routeLink">Buscar</a>
                             </li>
                             <li>
-                                <a href="#newAdmin" class="routeLink">Cadastrar Admin</a>
+                                <a href="#awaitingUsers" class="routeLink" callback="awaitingUsers">Usuários pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#registerAdmin" class="routeLink" callback="registerAdmin">Cadastrar Admin</a>
                             </li>
                         </ul>
                     </li>

@@ -68,6 +68,34 @@ public class UserController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
+	
+	@Post
+	@Path("/registerAdmin")
+	public void registerAdmin(UserInputDTO user) {
+
+		try {
+			Validator.validate(user);
+
+			if (!user.getEmail().equals(user.getEmailConf())) {
+				throw new ValidationException(
+						Messages.EMAIL_CONFIRMATION_INCORRECT);
+			}
+
+			if (!user.getPassword().equals(user.getPasswordConf())) {
+				throw new ValidationException(
+						Messages.PASSWORD_CONFIRMATION_INCORRECT);
+			}
+
+			userService.registerAdmin(user);
+
+			result.redirectTo(AdminController.class).home();
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
 
 	/**
 	 * Método que adiciona ou edita um novo usuário
@@ -104,6 +132,26 @@ public class UserController {
 			}
 
 			userService.activateUser(ConvertHelper.convertIdFromView(userId));
+		
+			ResultControllerHelper.returnResultSuccess(result);
+			
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
+	@Post
+	@Path("/deactivateUser")
+	public void deactivateUser(String userId) {
+
+		try {
+			if (!ValidationHelper.isIdFromView(userId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			userService.deactivateUser(ConvertHelper.convertIdFromView(userId));
 		
 			ResultControllerHelper.returnResultSuccess(result);
 			

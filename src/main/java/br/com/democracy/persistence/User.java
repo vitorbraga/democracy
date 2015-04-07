@@ -1,5 +1,6 @@
 package br.com.democracy.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USER")
@@ -31,6 +34,10 @@ public class User extends BaseEntity {
 	
 	@Column(name = "STATUS", nullable = false)
 	private Integer status;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_ACTIVE")
+	private Date dateActive;
 	
 	/** Ver UserTypeEnum */
 	@Column(nullable = false)
@@ -93,6 +100,14 @@ public class User extends BaseEntity {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Date getDateActive() {
+		return dateActive;
+	}
+
+	public void setDateActive(Date dateActive) {
+		this.dateActive = dateActive;
 	}
 
 	public List<Comment> getComments() {

@@ -32,8 +32,26 @@ public class UserServiceImpl implements UserService {
 		if (emailUser == null) {
 			User user = UserInputDTO.createUser(userInput);
 			// FIXME inicialmente sera AWAITING_APPROVAL
-			user.setStatus(UserStatusEnum.ACTIVE.id());
+			user.setStatus(UserStatusEnum.AWAITING_APPROVAL.id());
 			user.setType(UserTypeEnum.NORMAL.id());
+
+			userDAO.saveOrUpdate(user);
+		} else {
+			throw new ServiceException(Messages.EMAIL_ALREADY_REGISTERED);
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public void registerAdmin(UserInputDTO userInput) throws ServiceException {
+
+		User emailUser = userDAO.getUserByEmail(userInput.getEmail());
+
+		if (emailUser == null) {
+			User user = UserInputDTO.createUser(userInput);
+			
+			user.setStatus(UserStatusEnum.ACTIVE.id());
+			user.setType(UserTypeEnum.ADMIN.id());
 
 			userDAO.saveOrUpdate(user);
 		} else {
@@ -70,6 +88,26 @@ public class UserServiceImpl implements UserService {
 
 			user.setStatus(UserStatusEnum.ACTIVE.id());
 			user.setUpdated(DateHelper.now());
+			user.setDateActive(DateHelper.now());
+			
+			userDAO.saveOrUpdate(user);
+			
+		} else {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public void deactivateUser(Long userId) throws ServiceException {
+
+		User user = userDAO.getById(userId);
+
+		if (user != null) {
+
+			user.setStatus(UserStatusEnum.INACTIVE.id());
+			user.setUpdated(DateHelper.now());
+			user.setDateActive(null);
 			
 			userDAO.saveOrUpdate(user);
 			
