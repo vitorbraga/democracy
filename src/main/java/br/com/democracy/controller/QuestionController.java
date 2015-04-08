@@ -46,7 +46,7 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-	
+
 	@Post
 	@Path("/edit")
 	public void editQuestion(QuestionEditDTO edit) {
@@ -56,7 +56,7 @@ public class QuestionController {
 
 			questionService.editQuestion(edit);
 
-			//result.redirectTo(AdminController.class).home();
+			// result.redirectTo(AdminController.class).home();
 			ResultControllerHelper.returnResultSuccess(result);
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
@@ -83,7 +83,7 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-	
+
 	@Get
 	@Path("/deactivateQuestion")
 	public void deactivateQuestion(String questionId) {
@@ -105,7 +105,6 @@ public class QuestionController {
 		}
 	}
 
-	
 	@Get
 	@Path("/search")
 	public void search(QuestionSearchDTO search) {
@@ -139,6 +138,32 @@ public class QuestionController {
 					.getQuestionDetails(ConvertHelper
 							.convertIdFromView(questionId));
 			result.include("question", question);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+	@Post
+	@Path("/makeComment")
+	public void makeComment(String questionId, String comment) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			if (!ValidationHelper.isComment(comment)) {
+				throw new ValidationException(Messages.COMMENT_INVALID);
+			}
+
+			questionService.makeComment(
+					ConvertHelper.convertIdFromView(questionId), comment);
+
+			ResultControllerHelper.returnResultSuccess(result);
 			
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());

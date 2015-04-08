@@ -173,4 +173,5 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
 	}
+	
 }

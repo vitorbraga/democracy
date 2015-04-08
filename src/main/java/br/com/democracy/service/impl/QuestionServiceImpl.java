@@ -1,14 +1,18 @@
 package br.com.democracy.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.democracy.dao.AnswerDAO;
+import br.com.democracy.dao.CommentDAO;
 import br.com.democracy.dao.QuestionDAO;
+import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dto.AnswerEditDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -20,8 +24,11 @@ import br.com.democracy.helper.ConvertHelper;
 import br.com.democracy.helper.DateHelper;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.Answer;
+import br.com.democracy.persistence.Comment;
 import br.com.democracy.persistence.Question;
+import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.enums.QuestionStatusEnum;
+import br.com.democracy.security.CustomUserDetails;
 import br.com.democracy.service.QuestionService;
 
 @Service
@@ -33,6 +40,12 @@ public class QuestionServiceImpl implements QuestionService {
 	@Autowired
 	private AnswerDAO answerDAO;
 
+	@Autowired
+	private UserDAO userDAO;
+	
+	@Autowired
+	private CommentDAO commentDAO;
+	
 	@Override
 	@Transactional(readOnly = false)
 	public void newQuestion(QuestionInputDTO questionDTO) {
@@ -154,4 +167,44 @@ public class QuestionServiceImpl implements QuestionService {
 		return QuestionOutputDTO.copy(question);
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void makeComment(Long questionId, String comment) throws ServiceException {
+		
+		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		
+		User user = userDAO.getById(userSession.getId());
+		if(user == null) {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+		
+		Question question = questionDAO.getById(questionId);
+		if(question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+		
+		Comment newComment = new Comment();
+		newComment.setComment(comment);
+		
+		newComment.setQuestion(question);
+		newComment.setUser(user); 
+		newComment.setRegDate(DateHelper.now());
+		newComment.setUpdated(DateHelper.now());
+		newComment.setRegUser("admin@email.com");
+
+		newComment = commentDAO.saveOrUpdate(newComment);
+		
+		if(user.getComments() == null) {
+			user.setComments(new ArrayList<Comment>());
+		}
+		user.getComments().add(newComment);
+
+		if(question.getComments() == null) {
+			question.setComments(new ArrayList<Comment>());
+		}
+		question.getComments().add(newComment);
+		
+		questionDAO.saveOrUpdate(question);
+	}
 }

@@ -25,4 +25,6 @@ public interface QuestionService {
 
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
 
+	void makeComment(Long questionId, String comment) throws ServiceException;
+
 }

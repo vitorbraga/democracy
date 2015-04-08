@@ -58,4 +58,6 @@ public class Messages {
 	
 	public static final String USER_NOT_FOUND = "Usuário não encontrado";
 	
+	public static final String COMMENT_INVALID = "Comentário inválido";
+	
 }
