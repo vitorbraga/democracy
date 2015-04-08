@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
 import br.com.democracy.dto.QuestionOutputDTO;
@@ -146,6 +147,48 @@ public class QuestionController {
 		}
 	}
 
+	@Get
+	@Path("/getAvailableQuestions")
+	public void getAvailableQuestions() {
+
+		try {
+
+			List<QuestionAvailableOutputDTO> questions = questionService
+					.getAvailableQuestions();
+
+			result.include("questions", questions);
+
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+	@Post
+	@Path("/answerQuestion")
+	public void answerQuestion(String questionId, String answerId) {
+
+		try {
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			if (!ValidationHelper.isIdFromView(answerId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			questionService.answerQuestion(
+					ConvertHelper.convertIdFromView(questionId),
+					ConvertHelper.convertIdFromView(answerId));
+
+			ResultControllerHelper.returnResultSuccess(result);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
 	@Post
 	@Path("/makeComment")
 	public void makeComment(String questionId, String comment) {
@@ -164,7 +207,7 @@ public class QuestionController {
 					ConvertHelper.convertIdFromView(questionId), comment);
 
 			ResultControllerHelper.returnResultSuccess(result);
-			
+
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		} catch (ServiceException e) {

@@ -1,7 +1,9 @@
 package br.com.democracy.persistence;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,8 +34,11 @@ public class Question extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
 	private List<Answer> answers;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
 	private List<Comment> comments;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.question", cascade=CascadeType.ALL)
+	private Set<UserQuestion> userQuestions = new HashSet<UserQuestion>(0);
 
 	public String getQuestion() {
 		return question;
@@ -73,6 +78,14 @@ public class Question extends BaseEntity {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public Set<UserQuestion> getUserQuestions() {
+		return userQuestions;
+	}
+
+	public void setUserQuestions(Set<UserQuestion> userQuestions) {
+		this.userQuestions = userQuestions;
 	}
 
 }

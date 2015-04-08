@@ -1,19 +1,26 @@
 package br.com.democracy.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.democracy.exception.ServiceException;
+import br.com.democracy.helper.ConvertHelper;
+import br.com.democracy.persistence.Comment;
+
 public class CommentOutputDTO {
 
-	private String commentId;
-	
+	private String id;
+
 	private String comment;
-	
+
 	private String userName;
 
-	public String getCommentId() {
-		return commentId;
+	public String getId() {
+		return id;
 	}
 
-	public void setCommentId(String commentId) {
-		this.commentId = commentId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getComment() {
@@ -31,5 +38,26 @@ public class CommentOutputDTO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
+	public static List<CommentOutputDTO> copyAll(List<Comment> comments)
+			throws ServiceException {
+
+		if (comments != null) {
+
+			List<CommentOutputDTO> dtos = new ArrayList<CommentOutputDTO>();
+
+			for (Comment comment : comments) {
+				CommentOutputDTO dto = new CommentOutputDTO();
+				dto.setId(ConvertHelper.convertIdToView(comment.getId()));
+				dto.setComment(comment.getComment());
+				dto.setUserName(comment.getUser().getName());
+
+				dtos.add(dto);
+			}
+
+			return dtos;
+		}
+
+		return null;
+	}
 }

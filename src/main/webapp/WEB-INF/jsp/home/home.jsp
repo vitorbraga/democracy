@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="../include.jsp" %>
-<%@page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -214,6 +213,13 @@
 			$('.routeLink').click(function () {
 				callback = $(this).attr('callback');
 				param = $(this).attr('callback');
+			});
+			
+			$.ajax({
+				url : basePath + 'question/getAvailableQuestions',
+				type : 'get'
+			}).done(function(data) {
+				$('.container-fluid').html(data);
 			});
 		});
 		

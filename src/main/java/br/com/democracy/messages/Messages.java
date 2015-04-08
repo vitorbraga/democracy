@@ -44,6 +44,8 @@ public class Messages {
 	
 	public static final String QUESTION_NOT_FOUND = "Pergunta não encontrada";
 	
+	public static final String ANSWER_NOT_FOUND = "Resposta não encontrada";
+	
 	public static final String QUESTION_ALREADY_ACTIVATED = "Pergunta já estava ativa";
 	
 	public static final String QUESTION_ALREADY_DEACTIVATED = "Pergunta já estava inativa";

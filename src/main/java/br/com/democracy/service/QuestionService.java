@@ -2,6 +2,7 @@ package br.com.democracy.service;
 
 import java.util.List;
 
+import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
 import br.com.democracy.dto.QuestionOutputDTO;
@@ -26,5 +27,9 @@ public interface QuestionService {
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
 
 	void makeComment(Long questionId, String comment) throws ServiceException;
+
+	List<QuestionAvailableOutputDTO> getAvailableQuestions() throws ServiceException;
+
+	void answerQuestion(Long questionId, Long answerId) throws ServiceException;
 
 }

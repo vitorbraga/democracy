@@ -14,6 +14,7 @@ import br.com.democracy.dao.CommentDAO;
 import br.com.democracy.dao.QuestionDAO;
 import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dto.AnswerEditDTO;
+import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
 import br.com.democracy.dto.QuestionOutputDTO;
@@ -42,10 +43,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired
 	private CommentDAO commentDAO;
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public void newQuestion(QuestionInputDTO questionDTO) {
@@ -168,43 +169,90 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<QuestionAvailableOutputDTO> getAvailableQuestions()
+			throws ServiceException {
+
+		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		User user = userDAO.getById(userSession.getId());
+
+		if (user == null) {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+
+		List<Question> questions = questionDAO.getAvailableQuestions();
+
+		return QuestionAvailableOutputDTO.copyAll(questions, user);
+	}
+
+	@Override
 	@Transactional(readOnly = false)
-	public void makeComment(Long questionId, String comment) throws ServiceException {
-		
+	public void answerQuestion(Long questionId, Long answerId)
+			throws ServiceException {
+
 		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		
 		User user = userDAO.getById(userSession.getId());
-		if(user == null) {
+		if (user == null) {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
 		
 		Question question = questionDAO.getById(questionId);
-		if(question == null) {
+		if (question == null) {
 			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
 		}
 		
+		Answer answer = answerDAO.getById(answerId);
+		if (answer == null) {
+			throw new ServiceException(Messages.ANSWER_NOT_FOUND);
+		}
+		
+		
+		// TODO fazer responder
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void makeComment(Long questionId, String comment)
+			throws ServiceException {
+
+		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		User user = userDAO.getById(userSession.getId());
+		if (user == null) {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+
+		Question question = questionDAO.getById(questionId);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+
 		Comment newComment = new Comment();
 		newComment.setComment(comment);
-		
+
 		newComment.setQuestion(question);
-		newComment.setUser(user); 
+		newComment.setUser(user);
 		newComment.setRegDate(DateHelper.now());
 		newComment.setUpdated(DateHelper.now());
 		newComment.setRegUser("admin@email.com");
 
 		newComment = commentDAO.saveOrUpdate(newComment);
-		
-		if(user.getComments() == null) {
+
+		if (user.getComments() == null) {
 			user.setComments(new ArrayList<Comment>());
 		}
 		user.getComments().add(newComment);
 
-		if(question.getComments() == null) {
+		if (question.getComments() == null) {
 			question.setComments(new ArrayList<Comment>());
 		}
 		question.getComments().add(newComment);
-		
+
 		questionDAO.saveOrUpdate(question);
 	}
 }
