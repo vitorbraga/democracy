@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.democracy.dao.AnswerDAO;
 import br.com.democracy.dao.CommentDAO;
 import br.com.democracy.dao.QuestionDAO;
+import br.com.democracy.dao.UserAnswerDAO;
 import br.com.democracy.dao.UserDAO;
+import br.com.democracy.dao.UserQuestionDAO;
 import br.com.democracy.dto.AnswerEditDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
@@ -28,6 +30,8 @@ import br.com.democracy.persistence.Answer;
 import br.com.democracy.persistence.Comment;
 import br.com.democracy.persistence.Question;
 import br.com.democracy.persistence.User;
+import br.com.democracy.persistence.UserAnswer;
+import br.com.democracy.persistence.UserQuestion;
 import br.com.democracy.persistence.enums.QuestionStatusEnum;
 import br.com.democracy.security.CustomUserDetails;
 import br.com.democracy.service.QuestionService;
@@ -46,6 +50,12 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private CommentDAO commentDAO;
+	
+	@Autowired
+	private UserAnswerDAO userAnswerDAO;
+	
+	@Autowired
+	private UserQuestionDAO userQuestionDAO;
 
 	@Override
 	@Transactional(readOnly = false)
@@ -210,8 +220,23 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new ServiceException(Messages.ANSWER_NOT_FOUND);
 		}
 		
+		Date now = DateHelper.now();
 		
-		// TODO fazer responder
+		UserAnswer userAnswer = new UserAnswer();
+		userAnswer.setUser(user);
+		userAnswer.setAnswer(answer);
+		userAnswer.setCreated(now);
+		userAnswer.setUpdated(now);
+		
+		userAnswerDAO.saveOrUpdate(userAnswer);
+		
+		UserQuestion userQuestion = new UserQuestion();
+		userQuestion.setUser(user);
+		userQuestion.setQuestion(question);
+		userQuestion.setCreated(now);
+		userQuestion.setUpdated(now);
+		
+		userQuestionDAO.saveOrUpdate(userQuestion);
 	}
 
 	@Override
