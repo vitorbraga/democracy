@@ -43,7 +43,7 @@ public class User extends BaseEntity {
 	private Date dateActive;
 	
 	/** Ver UserTypeEnum */
-	@Column(nullable = false)
+	@Column(name = "TYPE", nullable = false)
 	private Integer type;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

@@ -48,4 +48,16 @@ public class UserQuestionDAOImpl extends GenericDAOImpl<UserQuestion> implements
 		return (List<UserQuestion>) criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserQuestion> getByUser(Long userId) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		Criteria criteria = session.createCriteria(UserQuestion.class);
+		criteria.add(Restrictions.eq("pk.user.id", userId));
+		
+		return (List<UserQuestion>) criteria.list();
+	}
+	
 }

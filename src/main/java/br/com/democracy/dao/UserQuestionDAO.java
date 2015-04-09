@@ -10,4 +10,6 @@ public interface UserQuestionDAO extends GenericDAO<UserQuestion> {
 
 	List<UserQuestion> getByQuestion(Long questionId);
 
+	List<UserQuestion> getByUser(Long userId);
+
 }

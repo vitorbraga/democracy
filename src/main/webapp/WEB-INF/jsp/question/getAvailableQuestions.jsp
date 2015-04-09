@@ -30,7 +30,9 @@
 					<c:forEach var="answer" items="${question.answers}">
 						<div class="form-group">
 							<div class="radio">
-							  	<label><input name="question-${question.id}" type="radio" value="${answer.id}">${answer.answer}</label>
+							  	<label><input name="question-${question.id}" ${question.userAnswer == answer.id ? 'checked' : ''} type="radio" value="${answer.id}">
+							  		${answer.answer}
+							  	</label>
 							</div>
 						</div>
 					</c:forEach>
@@ -50,9 +52,9 @@
 		
 		var questionId = $(box).attr('questionId');
 		
-		var answerId = $('input[name="question-"'+ questionId +'"]:checked').val();
+		var answerId = $('input[name="question-'+ questionId +'"]:checked').val();
 		$.ajax({
-			type : 'GET',
+			type : 'POST',
 			url : basePath + 'question/answerQuestion',
 			data : {
 				questionId : questionId,

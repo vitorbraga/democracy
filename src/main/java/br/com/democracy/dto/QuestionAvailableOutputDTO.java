@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.helper.ConvertHelper;
 import br.com.democracy.persistence.Question;
-import br.com.democracy.persistence.User;
+import br.com.democracy.persistence.UserQuestion;
 
 public class QuestionAvailableOutputDTO {
 
@@ -61,29 +61,45 @@ public class QuestionAvailableOutputDTO {
 	}
 
 	public static List<QuestionAvailableOutputDTO> copyAll(
-			List<Question> questions, User user) throws ServiceException {
+			List<Question> questions, List<UserQuestion> userQuestions)
+			throws ServiceException {
 
 		if (questions != null) {
 
 			List<QuestionAvailableOutputDTO> dtos = new ArrayList<QuestionAvailableOutputDTO>();
 
-			for(Question question : questions) {
-				
+			for (Question question : questions) {
+
 				QuestionAvailableOutputDTO dto = new QuestionAvailableOutputDTO();
 				dto.setId(ConvertHelper.convertIdToView(question.getId()));
 				dto.setQuestion(question.getQuestion());
 				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
 				dto.setComments(CommentOutputDTO.copyAll(question.getComments()));
-				
-				dto.setUserAnswer(""); // TODO verificar se ja respondeu id da answer
-				
+
+				dto.setUserAnswer(checkAnswer(
+						question, userQuestions));
+
 				dtos.add(dto);
 			}
-			
+
 			return dtos;
 		}
 
 		return null;
 	}
 
+	public static String checkAnswer(Question question,
+			List<UserQuestion> userQuestions) throws ServiceException {
+
+		if (userQuestions != null) {
+			for (UserQuestion userQuestion : userQuestions) {
+				if (userQuestion.getQuestion().getId().equals(question.getId())) {
+					// respondeu essa pergunta
+					return ConvertHelper.convertIdToView(userQuestion.getAnswerId());
+				}
+			}
+		}
+
+		return null;
+	}
 }

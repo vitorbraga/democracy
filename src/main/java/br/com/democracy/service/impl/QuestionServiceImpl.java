@@ -194,7 +194,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 		List<Question> questions = questionDAO.getAvailableQuestions();
 
-		return QuestionAvailableOutputDTO.copyAll(questions, user);
+		List<UserQuestion> userQuestions = userQuestionDAO.getByUser(user.getId());
+		
+		return QuestionAvailableOutputDTO.copyAll(questions, userQuestions);
 	}
 
 	@Override
@@ -235,6 +237,7 @@ public class QuestionServiceImpl implements QuestionService {
 		userQuestion.setQuestion(question);
 		userQuestion.setCreated(now);
 		userQuestion.setUpdated(now);
+		userQuestion.setAnswerId(answerId);
 		
 		userQuestionDAO.saveOrUpdate(userQuestion);
 	}

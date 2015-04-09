@@ -17,22 +17,25 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "USER_QUESTION")
 @AssociationOverrides({
-	@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "userId")),
-	@AssociationOverride(name = "pk.question", joinColumns = @JoinColumn(name = "answerId")) })
-public class UserQuestion implements Serializable{
+		@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "userId")),
+		@AssociationOverride(name = "pk.question", joinColumns = @JoinColumn(name = "questionId")) })
+public class UserQuestion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private UserQuestionId pk = new UserQuestionId();
 
-	@Column(name="CREATED", nullable = true, columnDefinition = "TIMESTAMP")
+	@Column(name = "CREATED", nullable = true, columnDefinition = "TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
-	
-	@Column(name="UPDATED", nullable = true, columnDefinition = "TIMESTAMP")
+
+	@Column(name = "UPDATED", nullable = true, columnDefinition = "TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
+
+	@Column(name = "ANSWER_ID", nullable = false)
+	private Long answerId;
 
 	public UserQuestionId getPk() {
 		return pk;
@@ -93,6 +96,14 @@ public class UserQuestion implements Serializable{
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public Long getAnswerId() {
+		return answerId;
+	}
+
+	public void setAnswerId(Long answerId) {
+		this.answerId = answerId;
 	}
 
 }
