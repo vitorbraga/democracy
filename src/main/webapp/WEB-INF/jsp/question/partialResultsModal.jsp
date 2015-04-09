@@ -80,41 +80,9 @@
 	<div class="modal-content">
 		<div class="modal-body">
 			<span class="info-header"> 
-				Detalhes da pergunta
+				Resultados parciais
 			</span>
 
-			<div class="white-back">
-				<table class="info-table">
-					<tr>
-						<td colspan=2>
-							<span class="info-label">Pergunta</span>
-							<input type="text" name="edit.question" class="form-control search-field" value="${question.question}" /> 
-							<input type="hidden" name="edit.id" class="search-field" value="${question.id}" />
-						</td>
-					</tr>
-					<c:forEach var="answer" items="${question.answers}" varStatus="myIndex">
-						<tr>
-							<td colspan=2>
-								<span class="info-label">Resposta ${myIndex.index+1}</span> 
-								<input type="text" name="edit.answers[${myIndex.index}].answer" class="form-control search-field" value="${answer.answer}" />
-								<input type="hidden" name="edit.answers[${myIndex.index}].id" class="search-field" value="${answer.id}" />
-							</td>
-						</tr>
-					</c:forEach>
-					<tr>
-						<td><span class="info-label">Data criação</span> <span
-							class="info-data">${question.date}</span></td>
-						<td><span class="info-label">Status</span> 
-							<select class="form-control search-field" name="edit.status">
-								<c:forEach items="${question.allStatus}" var="sta">
-									<option value="${sta.id}"
-										${sta.desc == question.status ? 'selected' : ''}>${sta.desc}</option>
-								</c:forEach>
-							</select> 
-							
-					</tr>
-				</table>
-			</div>
 
 		</div>
 		<div class="modal-footer">

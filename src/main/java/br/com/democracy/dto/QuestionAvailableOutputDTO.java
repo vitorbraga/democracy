@@ -20,7 +20,7 @@ public class QuestionAvailableOutputDTO {
 
 	private String userAnswer;
 
-	private List<CommentOutputDTO> comments;
+	private Integer numComments;
 
 	public String getId() {
 		return id;
@@ -62,12 +62,12 @@ public class QuestionAvailableOutputDTO {
 		this.userAnswer = userAnswer;
 	}
 
-	public List<CommentOutputDTO> getComments() {
-		return comments;
+	public Integer getNumComments() {
+		return numComments;
 	}
 
-	public void setComments(List<CommentOutputDTO> comments) {
-		this.comments = comments;
+	public void setNumComments(Integer numComments) {
+		this.numComments = numComments;
 	}
 
 	public static List<QuestionAvailableOutputDTO> copyAll(
@@ -85,7 +85,12 @@ public class QuestionAvailableOutputDTO {
 				dto.setQuestion(question.getQuestion());
 				dto.setDateActivated(ConvertHelper.dateToViewSlash(question.getDateActivated()));
 				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
-				dto.setComments(CommentOutputDTO.copyAll(question.getComments()));
+				
+				if(question.getComments() != null) {
+					dto.setNumComments(question.getComments().size());
+				} else {
+					dto.setNumComments(0);
+				}
 
 				dto.setUserAnswer(checkAnswer(
 						question, userQuestions));

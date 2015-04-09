@@ -1,6 +1,5 @@
 package br.com.democracy.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -273,7 +272,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 		newComment = commentDAO.saveOrUpdate(newComment);
 
-		if (user.getComments() == null) {
+		/*if (user.getComments() == null) {
 			user.setComments(new ArrayList<Comment>());
 		}
 		user.getComments().add(newComment);
@@ -283,7 +282,7 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		question.getComments().add(newComment);
 
-		questionDAO.saveOrUpdate(question);
+		questionDAO.saveOrUpdate(question);*/
 	}
 
 	@Override

@@ -23,6 +23,11 @@
 		font-size: 12pt;
 		color: #B9B8BA;
 	}
+	
+	.question-comments {
+		margin-top: 10px;
+		padding: 10px;
+	}
 </style>
 
 <div>
@@ -47,8 +52,11 @@
 						</div>
 					</c:forEach>
 					<button type="button" class="btn btn-default answer-question">Responder</button>
-					<button type="button" class="btn btn-default comment-question">Comentários</button>
+					<button type="button" class="btn btn-default comment-question">Comentários (${question.numComments})</button>
 					<button type="button" class="btn btn-default partial-result">Resultado parcial</button>
+					<div class="question-comments">
+						
+					</div>
 				</div>
 			</c:forEach>
 	    </c:otherwise>
@@ -86,20 +94,18 @@
 		
 		var box = $(this).parent('.question-box');
 		
+		var commentsDiv = $(this).siblings('.question-comments');
+		
 		var questionId = $(box).attr('questionId');
 		
 		$.ajax({
 			type : 'GET',
-			url : basePath + 'question/commentModal',
+			url : basePath + 'question/commentBox',
 			data : {
 				questionId : questionId
 			},
 			success : function(data) {
-				//$('#loader-wrapper').fadeOut(150);
-				var $modal = $(data);
-			    $('body').append($modal);
-			    $modal.filter('.modal').modal();
-			    //bindEditButton();
+				$(commentsDiv).html(data);
 			}
 		});
 		
@@ -111,7 +117,18 @@
 		
 		var questionId = $(box).attr('questionId');
 		
-		
+		$.ajax({
+			type : 'GET',
+			url : basePath + 'question/partialResultsModal',
+			data : {
+				questionId : questionId
+			},
+			success : function(data) {
+				var $modal = $(data);
+			    $('body').append($modal);
+			    $modal.filter('.modal').modal();
+			}
+		});
 		
 	});
 

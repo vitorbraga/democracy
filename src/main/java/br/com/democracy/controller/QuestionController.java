@@ -217,8 +217,8 @@ public class QuestionController {
 	}
 
 	@Get
-	@Path("/commentModal")
-	public void commentModal(String questionId) {
+	@Path("/commentBox")
+	public void commentBox(String questionId) {
 
 		try {
 
@@ -229,6 +229,7 @@ public class QuestionController {
 			List<CommentOutputDTO> comments = questionService
 					.getComments(ConvertHelper.convertIdFromView(questionId));
 
+			result.include("questionId", questionId);
 			result.include("comments", comments);
 
 		} catch (ValidationException e) {
