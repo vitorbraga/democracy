@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.democracy.dto.CommentOutputDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -213,5 +214,44 @@ public class QuestionController {
 		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
+	}
+
+	@Get
+	@Path("/commentModal")
+	public void commentModal(String questionId) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			List<CommentOutputDTO> comments = questionService
+					.getComments(ConvertHelper.convertIdFromView(questionId));
+
+			result.include("comments", comments);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
+	@Get
+	@Path("/partialResultsModal")
+	public void partialResultsModal(String questionId) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			// TODO partial results
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} 
 	}
 }

@@ -16,6 +16,7 @@ import br.com.democracy.dao.UserAnswerDAO;
 import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dao.UserQuestionDAO;
 import br.com.democracy.dto.AnswerEditDTO;
+import br.com.democracy.dto.CommentOutputDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -50,10 +51,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private CommentDAO commentDAO;
-	
+
 	@Autowired
 	private UserAnswerDAO userAnswerDAO;
-	
+
 	@Autowired
 	private UserQuestionDAO userQuestionDAO;
 
@@ -194,8 +195,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 		List<Question> questions = questionDAO.getAvailableQuestions();
 
-		List<UserQuestion> userQuestions = userQuestionDAO.getByUser(user.getId());
-		
+		List<UserQuestion> userQuestions = userQuestionDAO.getByUser(user
+				.getId());
+
 		return QuestionAvailableOutputDTO.copyAll(questions, userQuestions);
 	}
 
@@ -206,39 +208,39 @@ public class QuestionServiceImpl implements QuestionService {
 
 		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
-		
+
 		User user = userDAO.getById(userSession.getId());
 		if (user == null) {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
-		
+
 		Question question = questionDAO.getById(questionId);
 		if (question == null) {
 			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
 		}
-		
+
 		Answer answer = answerDAO.getById(answerId);
 		if (answer == null) {
 			throw new ServiceException(Messages.ANSWER_NOT_FOUND);
 		}
-		
+
 		Date now = DateHelper.now();
-		
+
 		UserAnswer userAnswer = new UserAnswer();
 		userAnswer.setUser(user);
 		userAnswer.setAnswer(answer);
 		userAnswer.setCreated(now);
 		userAnswer.setUpdated(now);
-		
+
 		userAnswerDAO.saveOrUpdate(userAnswer);
-		
+
 		UserQuestion userQuestion = new UserQuestion();
 		userQuestion.setUser(user);
 		userQuestion.setQuestion(question);
 		userQuestion.setCreated(now);
 		userQuestion.setUpdated(now);
 		userQuestion.setAnswerId(answerId);
-		
+
 		userQuestionDAO.saveOrUpdate(userQuestion);
 	}
 
@@ -282,5 +284,21 @@ public class QuestionServiceImpl implements QuestionService {
 		question.getComments().add(newComment);
 
 		questionDAO.saveOrUpdate(question);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<CommentOutputDTO> getComments(Long questionId)
+			throws ServiceException {
+
+		Question question = questionDAO.getById(questionId);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+
+		List<CommentOutputDTO> comments = CommentOutputDTO.copyAll(question
+				.getComments());
+
+		return comments;
 	}
 }

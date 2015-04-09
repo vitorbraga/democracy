@@ -10,10 +10,19 @@
 		height: auto;
 		margin-top: 10px;
 		overflow: hidden;
-		border: 1px dotted;
+		border: 1px solid;
+		border-radius: 5px;
 		padding: 10px;
 	}
 
+	.question-question {
+		font-size: 14pt;
+	}
+	
+	.question-date {
+		font-size: 12pt;
+		color: #B9B8BA;
+	}
 </style>
 
 <div>
@@ -26,7 +35,8 @@
 	    <c:otherwise>
 			<c:forEach var="question" items="${questions}">
 				<div class="question-box" questionId="${question.id}">
-					<p>${question.question}</p>
+					<span class="question-question">${question.question}</span>
+					<span class="question-date">(${question.dateActivated})</span>
 					<c:forEach var="answer" items="${question.answers}">
 						<div class="form-group">
 							<div class="radio">
@@ -37,6 +47,8 @@
 						</div>
 					</c:forEach>
 					<button type="button" class="btn btn-default answer-question">Responder</button>
+					<button type="button" class="btn btn-default comment-question">Comentários</button>
+					<button type="button" class="btn btn-default partial-result">Resultado parcial</button>
 				</div>
 			</c:forEach>
 	    </c:otherwise>
@@ -67,6 +79,39 @@
 				alert(data.message);
 			}
 		});
+		
+	});
+	
+	$('.comment-question').on('click', function() {
+		
+		var box = $(this).parent('.question-box');
+		
+		var questionId = $(box).attr('questionId');
+		
+		$.ajax({
+			type : 'GET',
+			url : basePath + 'question/commentModal',
+			data : {
+				questionId : questionId
+			},
+			success : function(data) {
+				//$('#loader-wrapper').fadeOut(150);
+				var $modal = $(data);
+			    $('body').append($modal);
+			    $modal.filter('.modal').modal();
+			    //bindEditButton();
+			}
+		});
+		
+	});
+	
+	$('.partial-result').on('click', function() {
+		
+		var box = $(this).parent('.question-box');
+		
+		var questionId = $(box).attr('questionId');
+		
+		
 		
 	});
 

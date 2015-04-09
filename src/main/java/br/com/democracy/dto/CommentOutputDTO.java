@@ -14,6 +14,8 @@ public class CommentOutputDTO {
 	private String comment;
 
 	private String userName;
+	
+	private String date;
 
 	public String getId() {
 		return id;
@@ -38,6 +40,14 @@ public class CommentOutputDTO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public static List<CommentOutputDTO> copyAll(List<Comment> comments)
 			throws ServiceException {
@@ -51,7 +61,8 @@ public class CommentOutputDTO {
 				dto.setId(ConvertHelper.convertIdToView(comment.getId()));
 				dto.setComment(comment.getComment());
 				dto.setUserName(comment.getUser().getName());
-
+				dto.setDate(ConvertHelper.dateToViewSlash(comment.getRegDate()));
+				
 				dtos.add(dto);
 			}
 

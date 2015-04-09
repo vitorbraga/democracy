@@ -13,6 +13,8 @@ public class QuestionAvailableOutputDTO {
 	private String id;
 
 	private String question;
+	
+	private String dateActivated;
 
 	private List<AnswerOutputDTO> answers;
 
@@ -34,6 +36,14 @@ public class QuestionAvailableOutputDTO {
 
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+
+	public String getDateActivated() {
+		return dateActivated;
+	}
+
+	public void setDateActivated(String dateActivated) {
+		this.dateActivated = dateActivated;
 	}
 
 	public List<AnswerOutputDTO> getAnswers() {
@@ -73,6 +83,7 @@ public class QuestionAvailableOutputDTO {
 				QuestionAvailableOutputDTO dto = new QuestionAvailableOutputDTO();
 				dto.setId(ConvertHelper.convertIdToView(question.getId()));
 				dto.setQuestion(question.getQuestion());
+				dto.setDateActivated(ConvertHelper.dateToViewSlash(question.getDateActivated()));
 				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
 				dto.setComments(CommentOutputDTO.copyAll(question.getComments()));
 

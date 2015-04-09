@@ -540,6 +540,17 @@ public class ConvertHelper {
 		return null;
 	}
 
+	public static String dateToViewSlash(final Date date) {
+
+		if (!ValidationHelper.isEmptyOrVoid(date)) {
+			final SimpleDateFormat mySdf = new SimpleDateFormat(
+					DATE_FORMAT_FROM_VIEW);
+			return mySdf.format(date);
+		}
+
+		return null;
+	}
+	
 	public static String dateToViewShort(final Date date) {
 
 		if (!ValidationHelper.isEmptyOrVoid(date)) {
