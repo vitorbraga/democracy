@@ -75,7 +75,7 @@
 }
 </style>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog"
+<div class="modal fade custom-modal" id="basicModal" tabindex="-1" role="dialog"
 	aria-labelledby="basicModal" aria-hidden="true">
 	<div class="modal-content">
 		<div class="modal-body">

@@ -21,6 +21,8 @@
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
 
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sweet-alert.css">
+
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -146,6 +148,7 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
+	<script src="${pageContext.request.contextPath}/resources/js/sweet-alert.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/router.js"></script>
 	
 	<script type="text/javascript">

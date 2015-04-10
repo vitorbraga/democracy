@@ -63,6 +63,8 @@
 
 <script>
 
+	var lastSearch = {};
+
 	$('.activate-link').on('click', function() {
 		$('#loader-wrapper').fadeIn(150);
 		var questionId = $(this).attr('questionId');
@@ -71,37 +73,43 @@
 			url : basePath + 'question/activateQuestion',
 			data : {
 				questionId : questionId
+			}, 
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
 			}
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
-			if(data.success == 'true') {
-				alert('Pergunta ativada com sucesso.');
-			} else {
-				alert(data.message);
-			}
+			swal("Sucesso!", 'Pergunta ativada com sucesso.', "success");
+			$('#question-search-but').click();
 		});
 	});
 	
 	$('.deactivate-link').on('click', function() {
 		$('#loader-wrapper').fadeIn(150);
+		var link = $(this);
+		
 		var questionId = $(this).attr('questionId');
 		$.ajax({
 			type : 'GET',
 			url : basePath + 'question/deactivateQuestion',
 			data : {
 				questionId : questionId
-			}
+			},
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
+			},
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
-			if(data.success == 'true') {
-				alert('Pergunta desativada com sucesso.');
-			} else {
-				alert(data.message);
-			}
+			swal("Sucesso!", 'Pergunta desativada com sucesso.', "success");
+			$('#question-search-but').click();
 		});
 	});
 
-	$('table td:not(:last)').on('click', function() {
+	$('table tr td:not(:last-child)').on('click', function() {
 		$('#loader-wrapper').fadeIn(150);
 		var questionId = $(this).parent().attr('questionId');
 		$.ajax({
@@ -111,10 +119,17 @@
 				questionId : questionId
 			},
 			success : function(data) {
+				
 				$('#loader-wrapper').fadeOut(150);
+				
 				var $modal = $(data);
 			    $('body').append($modal);
 			    $modal.filter('.modal').modal();
+				
+			    $('.modal').on('hidden.bs.modal', function (e) {
+			        $(this).remove();
+			    });
+
 			    bindEditButton();
 			}
 		});

@@ -117,21 +117,26 @@ function newQuestion() {
 function searchQuestion() {
 	
 	$('#question-search-but').on('click', function() {
-		// chama busca ajax
 		$('#loader-wrapper').fadeIn(150);
-		var search = getSearchFilters();
-		$.ajax({
-			url : basePath + 'question/search',
-			type : 'get',
-			data : search
-		}).done(function(data) {
-			if(data.success == 'false') {
-				alert(data.message);
-			} else {
-				$('#loader-wrapper').fadeOut(150);
-				$('#questions-result').hide().html(data).fadeIn(150);
-			}
-		});
+		doSearchQuestion();
+	});
+}
+
+function doSearchQuestion() {
+	
+	var search = getSearchFilters();
+	
+	$.ajax({
+		url : basePath + 'question/search',
+		type : 'get',
+		data : search
+	}).done(function(data) {
+		if(data.success == 'false') {
+			alert(data.message);
+		} else {
+			$('#loader-wrapper').fadeOut(150);
+			$('#questions-result').hide().html(data).fadeIn(150);
+		}
 	});
 }
 
