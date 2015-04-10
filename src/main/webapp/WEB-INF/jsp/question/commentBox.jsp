@@ -119,11 +119,7 @@
 				comment : comment,
 			}
 		}).done(function(data) {
-			if(data.success == 'true') {
-				alert('Comentario feito com sucesso');
-			} else {
-				alert(data.message);
-			}
+			$('.question-comments[questionId="'+ questionId +'"]').html(data);
 		});
 	});
 	

@@ -20,6 +20,7 @@
 		<form-login login-page="/login"
 			authentication-failure-url="/loginError" default-target-url="/home"
 			username-parameter="email" password-parameter="password"
+			authentication-success-handler-ref="authSuccessHandler"
 			login-processing-url="/authenticate" />
 
 		<access-denied-handler error-page="/accessError" />
@@ -28,6 +29,8 @@
 			logout-url="/doLogout" />
 	</http>
 
+	<beans:bean id="authSuccessHandler" class="br.com.democracy.security.AuthenticationSuccessHandler"/>
+	
 	<authentication-manager erase-credentials="true">
 		<authentication-provider user-service-ref="userDetailsService">
 			<password-encoder ref="passwordEncoder" />

@@ -27,6 +27,9 @@
 	.question-comments {
 		margin-top: 10px;
 		padding: 10px;
+		width: 95%;
+		padding: 5px;
+		display: none;
 	}
 </style>
 
@@ -54,8 +57,8 @@
 					<button type="button" class="btn btn-default answer-question">Responder</button>
 					<button type="button" class="btn btn-default comment-question">Comentários (${question.numComments})</button>
 					<button type="button" class="btn btn-default partial-result">Resultado parcial</button>
-					<div class="question-comments">
-						
+					<div class="question-comments" questionId="${question.id}">
+						<img src="${pageContext.request.contextPath}/resources/images/loading-small.gif" />
 					</div>
 				</div>
 			</c:forEach>
@@ -96,6 +99,7 @@
 		
 		var commentsDiv = $(this).siblings('.question-comments');
 		
+		$(commentsDiv).fadeIn(150); 
 		var questionId = $(box).attr('questionId');
 		
 		$.ajax({

@@ -23,6 +23,8 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -176,7 +178,9 @@
         </nav>
 
         <div id="page-wrapper">
-
+			<div style="display:none;" id="loader-wrapper">
+	    		<div id="loader"></div>
+			</div>
             <div class="container-fluid">
 
 				<h2>Dashboard</h2>
@@ -215,10 +219,12 @@
 				param = $(this).attr('callback');
 			});
 			
+			$('#loader-wrapper').fadeIn(150);
 			$.ajax({
 				url : basePath + 'question/getAvailableQuestions',
 				type : 'get'
 			}).done(function(data) {
+				$('#loader-wrapper').fadeOut(150);
 				$('.container-fluid').html(data);
 			});
 		});

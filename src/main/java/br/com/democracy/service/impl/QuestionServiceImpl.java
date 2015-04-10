@@ -272,17 +272,6 @@ public class QuestionServiceImpl implements QuestionService {
 
 		newComment = commentDAO.saveOrUpdate(newComment);
 
-		/*if (user.getComments() == null) {
-			user.setComments(new ArrayList<Comment>());
-		}
-		user.getComments().add(newComment);
-
-		if (question.getComments() == null) {
-			question.setComments(new ArrayList<Comment>());
-		}
-		question.getComments().add(newComment);
-
-		questionDAO.saveOrUpdate(question);*/
 	}
 
 	@Override

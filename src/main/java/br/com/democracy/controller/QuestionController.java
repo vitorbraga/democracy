@@ -207,7 +207,7 @@ public class QuestionController {
 			questionService.makeComment(
 					ConvertHelper.convertIdFromView(questionId), comment);
 
-			ResultControllerHelper.returnResultSuccess(result);
+			result.redirectTo(QuestionController.class).commentBox(questionId);
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());

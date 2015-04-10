@@ -13,6 +13,8 @@ public class AnswerOutputDTO {
 
 	private String answer;
 
+	private Integer chosenTimes;
+	
 	public String getId() {
 		return id;
 	}
@@ -27,6 +29,14 @@ public class AnswerOutputDTO {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public Integer getChosenTimes() {
+		return chosenTimes;
+	}
+
+	public void setChosenTimes(Integer chosenTimes) {
+		this.chosenTimes = chosenTimes;
 	}
 
 	public static List<AnswerOutputDTO> copyAll(List<Answer> answers)
