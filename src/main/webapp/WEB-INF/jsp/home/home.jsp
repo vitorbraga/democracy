@@ -23,6 +23,8 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sweet-alert.css">
+
 	<link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -102,13 +104,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin - Home</a>
+                <a class="navbar-brand" href="index.html">Democracy</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
             
 	           <form class="navbar-form navbar-left" role="search">
-		        <div class="form-group">
+		        	<div class="form-group">
 		          <input type="text" class="form-control" placeholder="Search">
 		        </div>
 		        <button type="submit" class="btn btn-default">Submit</button>
@@ -128,7 +130,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="<c:url value="/doLogout"/>"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -203,6 +205,7 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
+	<script src="${pageContext.request.contextPath}/resources/js/sweet-alert.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/router.js"></script>
 	
 	<script type="text/javascript">

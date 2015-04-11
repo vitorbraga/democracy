@@ -1,5 +1,6 @@
 package br.com.democracy.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import br.com.democracy.dao.UserAnswerDAO;
 import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dao.UserQuestionDAO;
 import br.com.democracy.dto.AnswerEditDTO;
+import br.com.democracy.dto.AnswerOutputDTO;
 import br.com.democracy.dto.CommentOutputDTO;
+import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -288,5 +291,65 @@ public class QuestionServiceImpl implements QuestionService {
 				.getComments());
 
 		return comments;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public PartialResultsDTO getPartialResults(Long questionId)
+			throws ServiceException {
+
+		Question question = questionDAO.getById(questionId);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+
+		List<UserQuestion> userQuestions = userQuestionDAO.getByQuestion(questionId);
+		
+		PartialResultsDTO dto = generateResults(userQuestions);
+		
+		return dto;
+	}
+	
+	private PartialResultsDTO generateResults(List<UserQuestion> userQuestions)
+			throws ServiceException {
+		
+		int aux;
+		
+		PartialResultsDTO dto = new PartialResultsDTO();
+		dto.setTotal(userQuestions.size());
+		dto.setAnswers(new ArrayList<AnswerOutputDTO>());
+		
+		for(UserQuestion uq : userQuestions) {
+			aux = containsAnswer(dto.getAnswers(),
+					ConvertHelper.convertIdToView(uq.getAnswerId()));
+			if (aux == -1) {
+
+				Answer answer = answerDAO.getById(uq.getAnswerId());
+				AnswerOutputDTO answerDTO = AnswerOutputDTO.copy(answer);
+				answerDTO.setChosenTimes(1);
+
+				dto.getAnswers().add(answerDTO);
+			} else {
+				dto.getAnswers()
+						.get(aux)
+						.setChosenTimes(
+								dto.getAnswers().get(aux).getChosenTimes() + 1);
+			}
+		}
+		
+		return dto;
+	}
+	
+	private int containsAnswer(List<AnswerOutputDTO> answers, String answerId) {
+		
+		int i = 0;
+		for(AnswerOutputDTO dto : answers) {
+			if(dto.getId().equals(answerId)) {
+				return i;
+			}
+			i++;
+		}
+		
+		return -1;
 	}
 }

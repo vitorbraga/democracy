@@ -21,7 +21,7 @@
    		<button type="submit" id="question-submit-but" class="btn btn-default">Enviar</button>
 	</form>
 
-	<br/><a href="javascript:void(0)" id="add-answer">+ Resposta</a>
+	<br/><a href="javascript:void(0)" id="add-answer">+ Resposta</a>&nbsp;&nbsp;<a href="javascript:void(0)" id="remove-answer">- Resposta</a>
 </div>
 
 

@@ -67,14 +67,16 @@
 			url : basePath + 'user/activateUser',
 			data : {
 				userId : userId
+			},
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
 			}
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
-			if(data.success == 'true') {
-				alert('Usuário ativado com sucesso.');
-			} else {
-				alert(data.message);
-			}
+			swal("Sucesso!", 'Usuário ativado com sucesso.', "success");
+			doSearchAwaitingUsers();
 		});
 	});
 	
@@ -86,14 +88,16 @@
 			url : basePath + 'user/deactivateUser',
 			data : {
 				userId : userId
+			},
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
 			}
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
-			if(data.success == 'true') {
-				alert('Usuário desativado com sucesso.');
-			} else {
-				alert(data.message);
-			}
+			swal("Sucesso!", 'Usuário desativado com sucesso.', "success");
+			doSearchAwaitingUsers();
 		});
 	});
 

@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.democracy.dto.CommentOutputDTO;
+import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -249,9 +250,15 @@ public class QuestionController {
 				throw new ValidationException(Messages.ID_INVALID);
 			}
 
-			// TODO partial results
+			PartialResultsDTO partialResults = questionService
+					.getPartialResults(ConvertHelper
+							.convertIdFromView(questionId));
 
+			result.include("partialResults", partialResults);
+			
 		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		} 
 	}

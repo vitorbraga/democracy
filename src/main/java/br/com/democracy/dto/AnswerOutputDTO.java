@@ -14,7 +14,7 @@ public class AnswerOutputDTO {
 	private String answer;
 
 	private Integer chosenTimes;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -54,6 +54,20 @@ public class AnswerOutputDTO {
 			}
 
 			return dtos;
+		}
+
+		return null;
+	}
+
+	public static AnswerOutputDTO copy(Answer answer) throws ServiceException {
+
+		if (answer != null) {
+
+			AnswerOutputDTO dto = new AnswerOutputDTO();
+			dto.setId(ConvertHelper.convertIdToView(answer.getId()));
+			dto.setAnswer(answer.getAnswer());
+
+			return dto;
 		}
 
 		return null;

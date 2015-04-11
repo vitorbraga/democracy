@@ -3,6 +3,7 @@ package br.com.democracy.service;
 import java.util.List;
 
 import br.com.democracy.dto.CommentOutputDTO;
+import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
 import br.com.democracy.dto.QuestionInputDTO;
@@ -34,5 +35,8 @@ public interface QuestionService {
 	void answerQuestion(Long questionId, Long answerId) throws ServiceException;
 
 	List<CommentOutputDTO> getComments(Long questionId) throws ServiceException;
+
+	PartialResultsDTO getPartialResults(Long questionId)
+			throws ServiceException;
 
 }

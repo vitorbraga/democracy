@@ -82,13 +82,15 @@
 			data : {
 				questionId : questionId,
 				answerId : answerId,
+			}, 
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
 			}
 		}).done(function(data) {
-			if(data.success == 'true') {
-				alert('Pergunta ativada com sucesso.');
-			} else {
-				alert(data.message);
-			}
+			$('#loader-wrapper').fadeOut(150);
+			swal("Sucesso!", 'Sua resposta foi salva!', "success");
 		});
 		
 	});

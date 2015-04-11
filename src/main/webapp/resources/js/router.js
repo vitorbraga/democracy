@@ -53,7 +53,6 @@ var AppRouter = Backbone.Router.extend({
 				callback = window[callback](param);
 				callback ? callback(param) : null;
 			}
-			
 		});
 	},
 
@@ -110,7 +109,15 @@ function newQuestion() {
 			'<input type="text" num="'+ num +'" name="question.answers['+(num-1)+'].answer" class="input_answer  form-control" '+
 			'placeholder="Resposta '+num+'"/></div>';
 		$(newAnswer).insertBefore('#question-submit-but');
-	});	
+	});
+	
+	$('#remove-answer').on('click', function() {
+		var answers = $('.answer-box');
+		var length = answers.length;
+		if(length > 2) {
+			$(answers[length-1]).remove();
+		}
+	});
 	
 }
 
@@ -138,6 +145,18 @@ function doSearchQuestion() {
 			$('#questions-result').hide().html(data).fadeIn(150);
 		}
 	});
+}
+
+function doSearchAwaitingUsers() {
+	
+	$.ajax({
+		url : basePath + 'admin/awaitingUsers',
+		type : 'get'
+	}).done(function(data) {
+		$('#loader-wrapper').fadeOut(150);
+		$('.container-fluid').html(data);
+	});
+	
 }
 
 function registerAdmin() {

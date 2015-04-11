@@ -82,13 +82,12 @@
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
 			swal("Sucesso!", 'Pergunta ativada com sucesso.', "success");
-			$('#question-search-but').click();
+			doSearchQuestion();
 		});
 	});
 	
 	$('.deactivate-link').on('click', function() {
 		$('#loader-wrapper').fadeIn(150);
-		var link = $(this);
 		
 		var questionId = $(this).attr('questionId');
 		$.ajax({
@@ -105,7 +104,7 @@
 		}).done(function(data) {
 			$('#loader-wrapper').fadeOut(150);
 			swal("Sucesso!", 'Pergunta desativada com sucesso.', "success");
-			$('#question-search-but').click();
+			doSearchQuestion();
 		});
 	});
 

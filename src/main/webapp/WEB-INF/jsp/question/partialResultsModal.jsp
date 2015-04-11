@@ -83,11 +83,29 @@
 				Resultados parciais
 			</span>
 
-
+			<c:choose>
+			    <c:when test="${empty partialResults}">
+			        <span class="empty-result-msg">Sem resultados parciais.</span>
+			    </c:when>
+			    <c:otherwise>
+			    	<span>Total de respostas: ${partialResults.total}</span>
+					<table id="tourney-result-table" class="table table-condensed table-hover">
+					
+						<tr><th>Resposta</th><th>Votos</th><th>Porcentagem</th></tr>
+						<c:forEach var="answer" items="${partialResults.answers}">
+							<tr>
+								<td>${answer.answer}</td>
+								<td>${answer.chosenTimes}</td>
+								<td><fmt:formatNumber var="percentage" value="${(answer.chosenTimes / partialResults.total) *100}"  maxFractionDigits="1" />${percentage}%</td>
+							</tr>
+						</c:forEach>
+						
+					</table>
+			    </c:otherwise>
+			</c:choose>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-			<button type="button" class="btn btn-default" id="edit-question-button" data-dismiss="modal">Salvar</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
 		</div>
 	</div>
 </div>
