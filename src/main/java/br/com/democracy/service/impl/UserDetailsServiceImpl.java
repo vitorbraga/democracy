@@ -44,7 +44,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		if (userType.equals(UserTypeEnum.ADMIN.id())) {
 			roles.add("ROLE_ADMIN");
-			roles.add("ROLE_USER");
 		} else if (userType.equals(UserTypeEnum.NORMAL.id())) {
 			roles.add("ROLE_USER");
 		}

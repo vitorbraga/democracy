@@ -84,7 +84,7 @@
 			</span>
 
 			<c:choose>
-			    <c:when test="${empty partialResults}">
+			    <c:when test="${partialResults.total == 0}">
 			        <span class="empty-result-msg">Sem resultados parciais.</span>
 			    </c:when>
 			    <c:otherwise>
