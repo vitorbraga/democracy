@@ -35,6 +35,17 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO {
 
 		return (User) criteria.uniqueResult();
 	}
+	
+	@Override
+	public User getUserToken(String token) {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("token", token));
+
+		return (User) criteria.uniqueResult();
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

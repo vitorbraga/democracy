@@ -45,6 +45,9 @@ public class User extends BaseEntity {
 	/** Ver UserTypeEnum */
 	@Column(name = "TYPE", nullable = false)
 	private Integer type;
+	
+	@Column(name = "MOBILE_TOKEN", nullable = true)
+	private String token;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Comment> comments;
@@ -141,6 +144,14 @@ public class User extends BaseEntity {
 
 	public void setUserAnswers(Set<UserAnswer> userAnswers) {
 		this.userAnswers = userAnswers;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
