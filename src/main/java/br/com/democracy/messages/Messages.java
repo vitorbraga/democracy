@@ -62,4 +62,8 @@ public class Messages {
 	
 	public static final String COMMENT_INVALID = "Comentário inválido";
 	
+	public static final String USER_AUTHENTICATION_INVALID = "Autenticação do usuário inválida.";
+	
+	public static final String TOKEN_INVALID = "Token de autenticação inválido.";
+	
 }
