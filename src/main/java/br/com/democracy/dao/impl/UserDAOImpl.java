@@ -37,7 +37,7 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO {
 	}
 	
 	@Override
-	public User getUserToken(String token) {
+	public User getUserByToken(String token) {
 		
 		Session session = sessionFactory.getCurrentSession();
 

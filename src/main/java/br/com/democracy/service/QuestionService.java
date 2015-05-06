@@ -28,15 +28,18 @@ public interface QuestionService {
 
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
 
-	void makeComment(Long questionId, String comment) throws ServiceException;
-
-	List<QuestionAvailableOutputDTO> getAvailableQuestions() throws ServiceException;
-
-	void answerQuestion(Long questionId, Long answerId) throws ServiceException;
-
 	List<CommentOutputDTO> getComments(Long questionId) throws ServiceException;
 
 	PartialResultsDTO getPartialResults(Long questionId)
 			throws ServiceException;
+
+	void answerQuestion(Long questionId, Long answerId, boolean isMobile,
+			String token) throws ServiceException;
+
+	List<QuestionAvailableOutputDTO> getAvailableQuestions(boolean isMobile,
+			String token) throws ServiceException;
+
+	void makeComment(Long questionId, String comment, boolean isMobile,
+			String token) throws ServiceException;
 
 }

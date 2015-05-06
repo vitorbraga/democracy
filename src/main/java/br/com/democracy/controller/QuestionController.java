@@ -156,7 +156,7 @@ public class QuestionController {
 		try {
 
 			List<QuestionAvailableOutputDTO> questions = questionService
-					.getAvailableQuestions();
+					.getAvailableQuestions(false, null);
 
 			result.include("questions", questions);
 
@@ -180,7 +180,7 @@ public class QuestionController {
 
 			questionService.answerQuestion(
 					ConvertHelper.convertIdFromView(questionId),
-					ConvertHelper.convertIdFromView(answerId));
+					ConvertHelper.convertIdFromView(answerId), false, null);
 
 			ResultControllerHelper.returnResultSuccess(result);
 
@@ -206,7 +206,8 @@ public class QuestionController {
 			}
 
 			questionService.makeComment(
-					ConvertHelper.convertIdFromView(questionId), comment);
+					ConvertHelper.convertIdFromView(questionId), comment,
+					false, null);
 
 			result.redirectTo(QuestionController.class).commentBox(questionId);
 
@@ -239,7 +240,7 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-	
+
 	@Get
 	@Path("/partialResultsModal")
 	public void partialResultsModal(String questionId) {
@@ -255,11 +256,11 @@ public class QuestionController {
 							.convertIdFromView(questionId));
 
 			result.include("partialResults", partialResults);
-			
+
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
-		} 
+		}
 	}
 }

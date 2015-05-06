@@ -13,6 +13,7 @@ import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.helper.ConvertHelper;
+import br.com.democracy.helper.DateHelper;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.enums.UserStatusEnum;
@@ -30,7 +31,7 @@ public class MobileServiceImpl implements MobileService {
 	private QuestionService questionService;
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public String authenticate(String email, String password,
 			HttpSession session) throws ServiceException {
 
@@ -48,6 +49,7 @@ public class MobileServiceImpl implements MobileService {
 				// create token
 				String token = ConvertHelper.convertIdToView(user.getId());
 				user.setToken(token);
+				user.setUpdated(DateHelper.now());
 				userDAO.saveOrUpdate(user);
 
 				return token;
@@ -65,7 +67,7 @@ public class MobileServiceImpl implements MobileService {
 	@Transactional(readOnly = true)
 	public boolean checkToken(String token) {
 		
-		User user = userDAO.getUserToken(token);
+		User user = userDAO.getUserByToken(token);
 		
 		if (user == null) {
 			return false;
@@ -85,7 +87,7 @@ public class MobileServiceImpl implements MobileService {
 
 		/* Busca perguntas disponiveis */
 		List<QuestionAvailableOutputDTO> questions = questionService
-				.getAvailableQuestions();
+				.getAvailableQuestions(true, token);
 
 		return questions;
 	}
@@ -99,7 +101,7 @@ public class MobileServiceImpl implements MobileService {
 			throw new ServiceException(Messages.USER_AUTHENTICATION_INVALID);
 		}
 
-		questionService.answerQuestion(questionId, answerId);
+		questionService.answerQuestion(questionId, answerId, true, token);
 	}
 	
 	@Override
@@ -111,7 +113,7 @@ public class MobileServiceImpl implements MobileService {
 			throw new ServiceException(Messages.USER_AUTHENTICATION_INVALID);
 		}
 
-		questionService.makeComment(questionId, comment);
+		questionService.makeComment(questionId, comment, true, token);
 	}
 	
 	

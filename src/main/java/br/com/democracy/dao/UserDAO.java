@@ -10,5 +10,5 @@ public interface UserDAO extends GenericDAO<User> {
 
 	List<User> getAwaitingNormalUsers();
 
-	User getUserToken(String token);
+	User getUserByToken(String token);
 }

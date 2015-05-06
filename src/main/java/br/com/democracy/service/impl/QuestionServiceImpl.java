@@ -181,19 +181,37 @@ public class QuestionServiceImpl implements QuestionService {
 		return QuestionOutputDTO.copy(question);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
-	public List<QuestionAvailableOutputDTO> getAvailableQuestions()
+	private User getUser(boolean isMobile, String token)
 			throws ServiceException {
 
-		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
+		User user = null;
+		if (!isMobile) {
+			CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+					.getContext().getAuthentication().getPrincipal();
 
-		User user = userDAO.getById(userSession.getId());
+			user = userDAO.getById(userSession.getId());
 
-		if (user == null) {
-			throw new ServiceException(Messages.USER_NOT_FOUND);
+			if (user == null) {
+				throw new ServiceException(Messages.USER_NOT_FOUND);
+			}
+		} else {
+			user = userDAO.getUserByToken(token);
+
+			if (user == null) {
+				throw new ServiceException(Messages.USER_NOT_FOUND);
+			}
 		}
+
+		return user;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<QuestionAvailableOutputDTO> getAvailableQuestions(
+			boolean isMobile, String token) throws ServiceException {
+
+		User user = getUser(isMobile, token);
 
 		List<Question> questions = questionDAO.getAvailableQuestions();
 
@@ -205,16 +223,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void answerQuestion(Long questionId, Long answerId)
-			throws ServiceException {
+	public void answerQuestion(Long questionId, Long answerId,
+			boolean isMobile, String token) throws ServiceException {
 
-		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-
-		User user = userDAO.getById(userSession.getId());
-		if (user == null) {
-			throw new ServiceException(Messages.USER_NOT_FOUND);
-		}
+		User user = getUser(isMobile, token);
 
 		Question question = questionDAO.getById(questionId);
 		if (question == null) {
@@ -248,16 +260,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void makeComment(Long questionId, String comment)
-			throws ServiceException {
+	public void makeComment(Long questionId, String comment, boolean isMobile,
+			String token) throws ServiceException {
 
-		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-
-		User user = userDAO.getById(userSession.getId());
-		if (user == null) {
-			throw new ServiceException(Messages.USER_NOT_FOUND);
-		}
+		User user = getUser(isMobile, token);
 
 		Question question = questionDAO.getById(questionId);
 		if (question == null) {
@@ -303,23 +309,24 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
 		}
 
-		List<UserQuestion> userQuestions = userQuestionDAO.getByQuestion(questionId);
-		
+		List<UserQuestion> userQuestions = userQuestionDAO
+				.getByQuestion(questionId);
+
 		PartialResultsDTO dto = generateResults(userQuestions);
-		
+
 		return dto;
 	}
-	
+
 	private PartialResultsDTO generateResults(List<UserQuestion> userQuestions)
 			throws ServiceException {
-		
+
 		int aux;
-		
+
 		PartialResultsDTO dto = new PartialResultsDTO();
 		dto.setTotal(userQuestions.size());
 		dto.setAnswers(new ArrayList<AnswerOutputDTO>());
-		
-		for(UserQuestion uq : userQuestions) {
+
+		for (UserQuestion uq : userQuestions) {
 			aux = containsAnswer(dto.getAnswers(),
 					ConvertHelper.convertIdToView(uq.getAnswerId()));
 			if (aux == -1) {
@@ -336,20 +343,20 @@ public class QuestionServiceImpl implements QuestionService {
 								dto.getAnswers().get(aux).getChosenTimes() + 1);
 			}
 		}
-		
+
 		return dto;
 	}
-	
+
 	private int containsAnswer(List<AnswerOutputDTO> answers, String answerId) {
-		
+
 		int i = 0;
-		for(AnswerOutputDTO dto : answers) {
-			if(dto.getId().equals(answerId)) {
+		for (AnswerOutputDTO dto : answers) {
+			if (dto.getId().equals(answerId)) {
 				return i;
 			}
 			i++;
 		}
-		
+
 		return -1;
 	}
 }
