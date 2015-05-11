@@ -93,7 +93,7 @@ public class MobileServiceImpl implements MobileService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public void answerQuestion(String token, Long questionId, Long answerId)
 			throws ServiceException {
 
@@ -105,7 +105,7 @@ public class MobileServiceImpl implements MobileService {
 	}
 	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public void makeComment(String token, Long questionId, String comment)
 			throws ServiceException {
 
