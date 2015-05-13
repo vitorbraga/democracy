@@ -253,7 +253,7 @@ public class QuestionController {
 
 			PartialResultsDTO partialResults = questionService
 					.getPartialResults(ConvertHelper
-							.convertIdFromView(questionId));
+							.convertIdFromView(questionId), false, null);
 
 			result.include("partialResults", partialResults);
 

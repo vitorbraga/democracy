@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.ResponseDTO;
 import br.com.democracy.exception.ServiceException;
@@ -103,9 +104,9 @@ public class MobileController {
 			mobileService.answerQuestion(token,
 					ConvertHelper.convertIdFromView(questionId),
 					ConvertHelper.convertIdFromView(answerId));
-			
+
 			ResultControllerHelper.returnResultSuccess(result);
-			
+
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		} catch (ServiceException e) {
@@ -132,9 +133,32 @@ public class MobileController {
 
 			mobileService.makeComment(token,
 					ConvertHelper.convertIdFromView(questionId), comment);
-			
+
 			ResultControllerHelper.returnResultSuccess(result);
-			
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+	@Get
+	@Path("/getPartialResults")
+	public void partialResultsModal(String token, String questionId) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			PartialResultsDTO partialResults = mobileService.getPartialResults(
+					token, ConvertHelper.convertIdFromView(questionId));
+
+			ResultControllerHelper.returnResultWithoutRoot(result,
+					partialResults);
+
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		} catch (ServiceException e) {

@@ -30,9 +30,6 @@ public interface QuestionService {
 
 	List<CommentOutputDTO> getComments(Long questionId) throws ServiceException;
 
-	PartialResultsDTO getPartialResults(Long questionId)
-			throws ServiceException;
-
 	void answerQuestion(Long questionId, Long answerId, boolean isMobile,
 			String token) throws ServiceException;
 
@@ -40,6 +37,9 @@ public interface QuestionService {
 			String token) throws ServiceException;
 
 	void makeComment(Long questionId, String comment, boolean isMobile,
+			String token) throws ServiceException;
+
+	PartialResultsDTO getPartialResults(Long questionId, boolean isMobile,
 			String token) throws ServiceException;
 
 }

@@ -301,8 +301,11 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public PartialResultsDTO getPartialResults(Long questionId)
-			throws ServiceException {
+	public PartialResultsDTO getPartialResults(Long questionId,
+			boolean isMobile, String token) throws ServiceException {
+
+		@SuppressWarnings("unused")
+		User user = getUser(isMobile, token);
 
 		Question question = questionDAO.getById(questionId);
 		if (question == null) {
