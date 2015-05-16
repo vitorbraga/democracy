@@ -68,88 +68,132 @@
 
 <body class="landing">
 
-		<!-- Header -->
-			<header id="header" class="alt">
-				<h1><a href="index.html"><img src="${pageContext.request.contextPath}/resources/images/democracy_min.png" style="padding-top:10px"/> </a> </h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="${pageContext.request.contextPath}/login" class="button">Login</a></li>
-					</ul>
-				</nav>
+	<!-- Header -->
+	<header id="header" class="alt">
+		<h1>
+			<a href="index.html"><img
+				src="${pageContext.request.contextPath}/resources/images/democracy_min.png"
+				style="padding-top: 10px" /> </a>
+		</h1>
+		<nav id="nav">
+			<ul>
+				<li><a href="${pageContext.request.contextPath}/login"
+					class="button">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Banner -->
+	<section id="banner">
+		<img
+			src="${pageContext.request.contextPath}/resources/images/democracy_med.png" />
+		<p>Crie, gerencie e comente sobre diversas enquetes</p>
+		<ul class="actions">
+			<li><a href="${pageContext.request.contextPath}/login"
+				class="button special">Login</a></li>
+			<li><a href="#signUp" class="button">Cadastre - se</a></li>
+		</ul>
+	</section>
+
+	<!-- Main -->
+	<section id="main" class="container">
+
+		<section class="box special">
+			<header class="major">
+				<h2>Introduzindo o sistema para a criação e gerenciamento de
+					enquetes seja no seu navegador ou no seu celular</h2>
+				<p>Agora você pode criar, gerenciar e comentar sobre diversas
+					enquetes diferentes podendo acompanha - las pelo seu celualar ou
+					navegador.</p>
 			</header>
-
-		<!-- Banner -->
-			<section id="banner">
-				<img src="${pageContext.request.contextPath}/resources/images/democracy_med.png"/>
-				<p>Crie, gerencie e comente sobre diversas enquetes </p>
-				<ul class="actions">
-					<li><a href="${pageContext.request.contextPath}/login" class="button special">Login</a></li>
-					<li><a href="#signUp" class="button">Cadastre - se</a></li>
-				</ul>
-			</section>
-
-		<!-- Main -->
-			<section id="main" class="container">
-
-				<section class="box special">
-					<header class="major">
-						<h2>Introduzindo o sistema para a criação e gerenciamento de enquetes
-						seja no seu navegador ou no seu celular</h2>
-						<p>Agora você pode criar, gerenciar e comentar sobre diversas enquetes diferentes
-							podendo acompanha - las pelo seu celualar ou navegador.</p>
-					</header>
-					<span class="image featured"><img src="${pageContext.request.contextPath}/resources/images/pic01.jpg" alt="" /></span>
-				</section>
+			<span class="image featured"><img
+				src="${pageContext.request.contextPath}/resources/images/pic01.jpg"
+				alt="" /></span>
+		</section>
 
 
-			</section>
+	</section>
 
-		<!-- CTA -->
-			<section id="signUp" class="container 75%">
-				<header>
-					<h2>Faça seu Cadastro</h2>
-					<p>Preencha os campos e clique em Cadastrar, iremos analisar seu pedido e logo lhe enviaremos um e-mail.</p>
-				</header>
-				<div class="box">
-					<form method="post" action="#">
-						<div class="row uniform 50%">
-							<div class="6u 12u(mobilep)">
-								<input type="text" name="name" id="name" value="" placeholder="Nome" />
-							</div>
-							<div class="6u 12u(mobilep)">
-								<input type="text" name="academicRegister" id="academicRegister" value="" placeholder="Registro Acadêmico" />
-							</div>
+	<!-- CTA -->
+	<section id="signUp" class="container 75%">
+		<header>
+			<h2>Faça seu Cadastro</h2>
+			<p>Preencha os campos e clique em Cadastrar, iremos analisar seu
+				pedido e logo lhe enviaremos um e-mail.</p>
+		</header>
+		<div class="box">
+			<form role="form" method="post"
+				action="${pageContext.request.contextPath}/user/registerUser">
+				<div class="row uniform 50%">
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="name-field">Nome:</label> <input type="text"
+								name="user.name" id="name-field" value="" placeholder="Nome" />
 						</div>
-						<div class="row uniform 50%">
-							<div class="6u 12u(mobilep)">
-								<input type="email" name="email" id="email" value="" placeholder="Email" />
-							</div>
-							<div class="6u 12u(mobilep)">
-								<input type="email" name="email" id="email" value="" placeholder="Confirme seu Email" />
-								
-							</div>
+					</div>
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="academicRegister-field">Registro Acadêmico:</label> <input
+								type="text" name="user.academicRegister"
+								id="academicRegister-field" value=""
+								placeholder="Registro Acadêmico" />
 						</div>
-						<div class="row uniform 50%">
-							
-							<label> Sexo</label>
-							<fieldset>
-                        				<input type="radio" name="gender" id="male" value="1" />
-                        				<label for = "male">Masculino</label>
-                        				<input type="radio" name="gender" id="female" value="2" />
-                        				<label for = "female">Feminino</label>
-        						</fieldset>
-						</div>
-						
-						<div class="row uniform">
-							<div class="12u">
-								<ul class="actions align-center">
-									<li><input type="submit" value="Cadastrar" /></li>
-								</ul>
-							</div>
-						</div>
-					</form>
+					</div>
 				</div>
-			</section>
-	</body>
+				<div class="row uniform 50%">
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="user-email">Email:</label> <input type="email"
+								name="user.email" id="email-field" value="" placeholder="Email" />
+						</div>
+					</div>
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="email-conf-field">Confirme seu Email:</label> <input
+								type="email" name="user.emailConf" id="email-conf-field"
+								value="" placeholder="Confirme seu Email" />
+
+						</div>
+					</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="pass-field">Senha:</label> <input type="password"
+								name="user.password" id="pass-field" value=""
+								placeholder="Senha" />
+						</div>
+					</div>
+					<div class="6u 12u(mobilep)">
+						<div class="form-group">
+							<label for="pass-conf-field">Confirme sua Senha:</label> <input
+								type="password" name="user.passwordConf" id="pass-conf-field"
+								value="" placeholder="Confirme sua Senha" />
+
+						</div>
+					</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="form-group">
+						<label for="gender-field"> Sexo</label>
+						<fieldset>
+							<input type="radio" name="user.gender" id="male" value="1" /> <label
+								for="male">Masculino</label> <input type="radio"
+								name="user.gender" id="female" value="2" /> <label for="female">Feminino</label>
+						</fieldset>
+					</div>
+				</div>
+
+				<div class="row uniform">
+					<div class="12u">
+						<ul class="actions align-center">
+							<li><input type="submit" value="Cadastrar" /></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
 
 </html>
