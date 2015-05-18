@@ -71,7 +71,7 @@
 	<!-- Header -->
 	<header id="header" class="alt">
 		<h1>
-			<a href="index.html"><img
+			<a><img
 				src="${pageContext.request.contextPath}/resources/images/democracy_min.png"
 				style="padding-top: 10px" /> </a>
 		</h1>
