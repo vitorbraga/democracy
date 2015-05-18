@@ -28,8 +28,6 @@ public interface QuestionService {
 
 	void editQuestion(QuestionEditDTO edit) throws ValidationException;
 
-	List<CommentOutputDTO> getComments(Long questionId) throws ServiceException;
-
 	void answerQuestion(Long questionId, Long answerId, boolean isMobile,
 			String token) throws ServiceException;
 
@@ -40,6 +38,9 @@ public interface QuestionService {
 			String token) throws ServiceException;
 
 	PartialResultsDTO getPartialResults(Long questionId, boolean isMobile,
+			String token) throws ServiceException;
+
+	List<CommentOutputDTO> getComments(Long questionId, boolean isMobile,
 			String token) throws ServiceException;
 
 }

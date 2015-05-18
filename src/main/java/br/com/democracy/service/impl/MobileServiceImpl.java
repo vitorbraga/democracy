@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.democracy.dao.UserDAO;
+import br.com.democracy.dto.CommentOutputDTO;
 import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.exception.ServiceException;
@@ -130,5 +131,21 @@ public class MobileServiceImpl implements MobileService {
 		PartialResultsDTO partialResults = questionService.getPartialResults(questionId, true, token);
 
 		return partialResults;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CommentOutputDTO> getQuestionComments(String token, Long questionId)
+			throws ServiceException {
+
+		if (!checkToken(token)) {
+			throw new ServiceException(Messages.USER_AUTHENTICATION_INVALID);
+		}
+
+		/* Busca perguntas disponiveis */
+		List<CommentOutputDTO> comments = questionService.getComments(
+				questionId, true, token);
+
+		return comments;
 	}
 }

@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.democracy.dto.CommentOutputDTO;
 import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.ResponseDTO;
@@ -158,6 +159,29 @@ public class MobileController {
 
 			ResultControllerHelper.returnResultWithoutRoot(result,
 					partialResults);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+	@Get
+	@Path("/getQuestionComments")
+	public void getQuestionComments(String token, String questionId) {
+
+		try {
+
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			List<CommentOutputDTO> comments = mobileService
+					.getQuestionComments(token,
+							ConvertHelper.convertIdFromView(questionId));
+
+			ResultControllerHelper.returnResultWithoutRoot(result, comments);
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());

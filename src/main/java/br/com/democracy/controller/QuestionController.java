@@ -228,8 +228,8 @@ public class QuestionController {
 				throw new ValidationException(Messages.ID_INVALID);
 			}
 
-			List<CommentOutputDTO> comments = questionService
-					.getComments(ConvertHelper.convertIdFromView(questionId));
+			List<CommentOutputDTO> comments = questionService.getComments(
+					ConvertHelper.convertIdFromView(questionId), false, null);
 
 			result.include("questionId", questionId);
 			result.include("comments", comments);
