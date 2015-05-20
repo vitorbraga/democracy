@@ -173,5 +173,17 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public UserOutputDTO getUserDetails(Long userId) throws ServiceException {
+		User user = userDAO.getById(userId);
+		if (user != null) {
+			return UserOutputDTO.copy(user);
+		} else {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+		
+	}
 	
 }

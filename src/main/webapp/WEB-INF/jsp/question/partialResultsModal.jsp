@@ -4,20 +4,6 @@
 
 <style>
 
-.modal {
-	left: 50%;
-	bottom: auto;
-	right: auto;
-	padding: 0;
-	width: 500px;
-	margin-left: -250px;
-	background-color: #ffffff;
-	border: none;
-	-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-	box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-	background-clip: padding-box;
-}
-
 .info-header {
 	font-size: 20pt;
 	display: block;
@@ -77,35 +63,37 @@
 
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog"
 	aria-labelledby="basicModal" aria-hidden="true">
-	<div class="modal-content">
-		<div class="modal-body">
-			<span class="info-header"> 
-				Resultados parciais
-			</span>
-
-			<c:choose>
-			    <c:when test="${partialResults.total == 0}">
-			        <span class="empty-result-msg">Sem resultados parciais.</span>
-			    </c:when>
-			    <c:otherwise>
-			    	<span>Total de respostas: ${partialResults.total}</span>
-					<table id="tourney-result-table" class="table table-condensed table-hover">
-					
-						<tr><th>Resposta</th><th>Votos</th><th>Porcentagem</th></tr>
-						<c:forEach var="answer" items="${partialResults.answers}">
-							<tr>
-								<td>${answer.answer}</td>
-								<td>${answer.chosenTimes}</td>
-								<td><fmt:formatNumber var="percentage" value="${(answer.chosenTimes / partialResults.total) *100}"  maxFractionDigits="1" />${percentage}%</td>
-							</tr>
-						</c:forEach>
+	<div class="modal-dialog" style="margin:90px auto;">
+		<div class="modal-content">
+			<div class="modal-body">
+				<span class="info-header"> 
+					Resultados parciais
+				</span>
+	
+				<c:choose>
+				    <c:when test="${partialResults.total == 0}">
+				        <span class="empty-result-msg">Sem resultados parciais.</span>
+				    </c:when>
+				    <c:otherwise>
+				    	<span>Total de respostas: ${partialResults.total}</span>
+						<table id="tourney-result-table" class="table table-condensed table-hover">
 						
-					</table>
-			    </c:otherwise>
-			</c:choose>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+							<tr><th>Resposta</th><th>Votos</th><th>Porcentagem</th></tr>
+							<c:forEach var="answer" items="${partialResults.answers}">
+								<tr>
+									<td>${answer.answer}</td>
+									<td>${answer.chosenTimes}</td>
+									<td><fmt:formatNumber var="percentage" value="${(answer.chosenTimes / partialResults.total) *100}"  maxFractionDigits="1" />${percentage}%</td>
+								</tr>
+							</c:forEach>
+							
+						</table>
+				    </c:otherwise>
+				</c:choose>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
 		</div>
 	</div>
 </div>

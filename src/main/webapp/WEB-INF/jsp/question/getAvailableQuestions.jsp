@@ -44,14 +44,13 @@
 			<c:forEach var="question" items="${questions}">
 				<div class="question-box" questionId="${question.id}">
 					<span class="question-question">${question.question}</span>
-					<span class="question-date">(${question.dateActivated})</span>
+					<span class="question-date">(${question.dateActivated})</span><br><br>
 					<c:forEach var="answer" items="${question.answers}">
 						<div class="form-group">
-							<div class="radio">
-							  	<label><input name="question-${question.id}" ${question.userAnswer == answer.id ? 'checked' : ''} type="radio" value="${answer.id}">
-							  		${answer.answer}
-							  	</label>
-							</div>
+							<fieldset>
+							  	<input name="question-${question.id}" ${question.userAnswer == answer.id ? 'checked' : ''} type="radio" id="${answer.id}" value="${answer.id}">
+							  	<label for="${answer.id}">${answer.answer}</label>
+							</fieldset>
 						</div>
 					</c:forEach>
 					<button type="button" class="btn btn-default answer-question">Responder</button>

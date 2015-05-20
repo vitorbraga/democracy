@@ -10,11 +10,11 @@ import br.com.democracy.persistence.User;
 public class UserOutputDTO {
 
 	private String id;
-	
+
 	private String name;
-	
+
 	private String email;
-	
+
 	private String dateRegistered;
 
 	public String getId() {
@@ -49,25 +49,41 @@ public class UserOutputDTO {
 		this.dateRegistered = dateRegistered;
 	}
 
-	
-	public static List<UserOutputDTO> copy(List<User> users) throws ServiceException {
-		
-		if(users != null) {
+	public static List<UserOutputDTO> copy(List<User> users)
+			throws ServiceException {
+
+		if (users != null) {
 			List<UserOutputDTO> dtos = new ArrayList<UserOutputDTO>();
-			for(User user : users) {
+			for (User user : users) {
 				UserOutputDTO dto = new UserOutputDTO();
-				
+
 				dto.setId(ConvertHelper.convertIdToView(user.getId()));
 				dto.setName(user.getName());
 				dto.setEmail(user.getEmail());
-				dto.setDateRegistered(ConvertHelper.dateToView(user.getRegDate()));
-	
+				dto.setDateRegistered(ConvertHelper.dateToView(user
+						.getRegDate()));
+
 				dtos.add(dto);
 			}
-			
+
 			return dtos;
 		}
-		
+
 		return null;
+	}
+
+	public static UserOutputDTO copy(User user) throws ServiceException {
+		if (user != null) {
+			UserOutputDTO dto = new UserOutputDTO();
+
+			dto.setId(ConvertHelper.convertIdToView(user.getId()));
+			dto.setName(user.getName());
+			dto.setEmail(user.getEmail());
+			dto.setDateRegistered(ConvertHelper.dateToView(user.getRegDate()));
+			return dto;
+
+		}
+		return null;
+
 	}
 }
