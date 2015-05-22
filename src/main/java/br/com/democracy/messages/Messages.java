@@ -36,6 +36,8 @@ public class Messages {
 	
 	public static final String QUESTION_FIELD_INVALID = "Campo pergunta inválido.";
 	
+	public static final String QUESTION_TYPE_FIELD_INVALID = "Campo tipo de pergunta inválido.";
+	
 	public static final String ANSWER_FIELD_INVALID = "Campo resposta inválido.";
 	
 	public static final String STATUS_FIELD_INVALID = "Campo status inválido.";

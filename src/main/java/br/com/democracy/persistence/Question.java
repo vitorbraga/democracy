@@ -26,6 +26,10 @@ public class Question extends BaseEntity {
 	/** QuestionStatusEnum */
 	@Column(name = "STATUS", nullable = false)
 	private Integer status;
+	
+	/** QuestionTypeEnum */
+	@Column(name = "TYPE", nullable = false)
+	private Integer type;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE_ACTIVATED", nullable = true)
@@ -54,6 +58,14 @@ public class Question extends BaseEntity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public Date getDateActivated() {

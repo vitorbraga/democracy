@@ -11,6 +11,8 @@ import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.enums.GenderTypeEnum;
+import br.com.democracy.persistence.enums.QuestionStatusEnum;
+import br.com.democracy.persistence.enums.QuestionTypeEnum;
 
 /**
  * The Class ValidationHelper.
@@ -26,7 +28,7 @@ public class ValidationHelper {
 	private static final String NAME_COMPANY = "([0-9A-Za-záéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕçÇäëïöüÄËÏÖÜ&!()%@$+'.]+ ?)+";
 
 	private static final String QUESTION_OR_ANSWER = "([0-9A-Za-zàáéíóúÁÉÍÓÚâêîôûÀÂÊÎÔÛãõÃÕçÇäëïöüÄËÏÖÜ\\_\\!\\\\\\;\\'\\?\\.\\-\\n,@#%$\\*\\+=\\(\\)\\[\\]\\{\\}\\/]+ *)+";
-	
+
 	/** The Constant DATE. */
 	private static final String DATE = "(([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/\\d{4}) \\d{2}:\\d{2}:\\d{2}";
 
@@ -199,7 +201,7 @@ public class ValidationHelper {
 	public static final String VISA_NUMBER = "^4[0-9]{12}(?:[0-9]{3})?$";
 
 	public static final String AMEX_NUMBER = "^3[47][0-9]{13}$";
-	
+
 	public static final String HIPERCARD_NUMBER = "(^(3841)([0-9]{15})$)|(^((609820)|(606282))([0-9]{10})$)";
 
 	public static final String DINERS_NUMBER = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
@@ -313,7 +315,7 @@ public class ValidationHelper {
 			}
 		}
 	}
-	
+
 	public static boolean isHipercard(String cardNumber) {
 		if (isEmptyOrVoid(cardNumber)) {
 			return false;
@@ -1018,7 +1020,7 @@ public class ValidationHelper {
 
 		return false;
 	}
-	
+
 	public static boolean isPipeList(final String string) {
 		if (isEmptyOrVoid(string)) {
 			return true;
@@ -1028,7 +1030,7 @@ public class ValidationHelper {
 
 		return false;
 	}
-	
+
 	public static boolean isPipeListOrEmpty(final String string) {
 		if (isEmptyOrVoid(string)) {
 			return true;
@@ -1665,7 +1667,8 @@ public class ValidationHelper {
 			return true;
 		}
 		return false;
-	} 
+	}
+
 	/**
 	 * Checks if is percentage.
 	 * 
@@ -2163,8 +2166,9 @@ public class ValidationHelper {
 				String subString = token[i];
 				String acquirerId = subString.split("_")[0];
 				String acqTechType = subString.split("_")[1];
-				if (isIdFromView(acquirerId) && acqTechType.matches(ACQ_TECH_TYPE)) {
-					result= true;
+				if (isIdFromView(acquirerId)
+						&& acqTechType.matches(ACQ_TECH_TYPE)) {
+					result = true;
 				}
 			}
 			return result;
@@ -2277,21 +2281,22 @@ public class ValidationHelper {
 		return false;
 	}
 
-//	public static boolean isMerchantTechnology(final String merchantTechnology) {
-//		
-//		if (isEmptyOrVoid(merchantTechnology)) {
-//			return false;
-//		} else {
-//			try {
-//				MerchantTechnologyEnum.valueOf(merchantTechnology);
-//				return true;
-//			}
-//			catch (Exception e) {
-//				return false;
-//			}
-//		}
-//		
-//	}
+	// public static boolean isMerchantTechnology(final String
+	// merchantTechnology) {
+	//
+	// if (isEmptyOrVoid(merchantTechnology)) {
+	// return false;
+	// } else {
+	// try {
+	// MerchantTechnologyEnum.valueOf(merchantTechnology);
+	// return true;
+	// }
+	// catch (Exception e) {
+	// return false;
+	// }
+	// }
+	//
+	// }
 
 	public static boolean isMerchantTechnologyOrEmpty(final String string) {
 		if (isEmptyOrVoid(string) || string.matches(MERCHANT_TECHNOLOGY)) {
@@ -2357,23 +2362,25 @@ public class ValidationHelper {
 		return false;
 	}
 
-//	public static boolean isOwnershipOptionValid(final Long technology,
-//			final Long ownership) {
-//		if ((technology == MerchantTechnologyEnum.VESPAGUE_PINPAD.id() || technology == MerchantTechnologyEnum.BOTH
-//				.id()) && (ownership != 1L && ownership != 2L)) {
-//			return false;
-//		}
-//		return true;
-//	}
+	// public static boolean isOwnershipOptionValid(final Long technology,
+	// final Long ownership) {
+	// if ((technology == MerchantTechnologyEnum.VESPAGUE_PINPAD.id() ||
+	// technology == MerchantTechnologyEnum.BOTH
+	// .id()) && (ownership != 1L && ownership != 2L)) {
+	// return false;
+	// }
+	// return true;
+	// }
 
-//	public static boolean isPinPadModelOptionValid(final Long technology,
-//			final Long model) {
-//		if ((technology == MerchantTechnologyEnum.VESPAGUE_PINPAD.id() || technology == MerchantTechnologyEnum.BOTH
-//				.id()) && (model != 1L && model != 2L)) {
-//			return false;
-//		}
-//		return true;
-//	}
+	// public static boolean isPinPadModelOptionValid(final Long technology,
+	// final Long model) {
+	// if ((technology == MerchantTechnologyEnum.VESPAGUE_PINPAD.id() ||
+	// technology == MerchantTechnologyEnum.BOTH
+	// .id()) && (model != 1L && model != 2L)) {
+	// return false;
+	// }
+	// return true;
+	// }
 
 	public static boolean isOperationalSystem(final String string) {
 		if (isEmptyOrVoid(string)) {
@@ -2409,7 +2416,7 @@ public class ValidationHelper {
 		}
 		return false;
 	}
-	
+
 	public static boolean isQuestionOrAnswer(final String string) {
 		if (isEmptyOrVoid(string)) {
 			return false;
@@ -2427,7 +2434,6 @@ public class ValidationHelper {
 		}
 		return false;
 	}
-	
 
 	public static void validateUserLogin(String username, String password)
 			throws ValidationException {
@@ -2507,11 +2513,11 @@ public class ValidationHelper {
 		}
 		return false;
 	}
-	
-	public static boolean isEmptyOrVoidArray(Object  array[]) {
-		return (array.length==0);
+
+	public static boolean isEmptyOrVoidArray(Object array[]) {
+		return (array.length == 0);
 	}
-	
+
 	public static boolean isGender(final String string) {
 
 		if (isEmptyOrVoid(string)) {
@@ -2528,6 +2534,52 @@ public class ValidationHelper {
 
 		if (isEmptyOrVoid(string)
 				|| ((isNumber(string) && GenderTypeEnum.get(Integer
+						.parseInt(string)) != null))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isQuestionType(final String string) {
+
+		if (isEmptyOrVoid(string)) {
+			return false;
+		} else if (isNumber(string)
+				&& QuestionTypeEnum.get(Integer.parseInt(string)) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isQuestionTyperOrEmpty(final String string) {
+
+		if (isEmptyOrVoid(string)
+				|| ((isNumber(string) && QuestionTypeEnum.get(Integer
+						.parseInt(string)) != null))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isQuestionStatus(final String string) {
+
+		if (isEmptyOrVoid(string)) {
+			return false;
+		} else if (isNumber(string)
+				&& QuestionStatusEnum.get(Integer.parseInt(string)) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isQuestionStatusrOrEmpty(final String string) {
+
+		if (isEmptyOrVoid(string)
+				|| ((isNumber(string) && QuestionStatusEnum.get(Integer
 						.parseInt(string)) != null))) {
 			return true;
 		}

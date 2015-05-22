@@ -7,6 +7,7 @@ import br.com.democracy.exception.ServiceException;
 import br.com.democracy.helper.ConvertHelper;
 import br.com.democracy.helper.Mappers;
 import br.com.democracy.persistence.Question;
+import br.com.democracy.persistence.enums.QuestionTypeEnum;
 
 public class QuestionOutputDTO {
 
@@ -15,6 +16,8 @@ public class QuestionOutputDTO {
 	private String question;
 
 	private List<AnswerOutputDTO> answers;
+	
+	private List<DiscursiveAnswerOutputDTO> discursiveAnswers;
 
 	private String status;
 
@@ -40,6 +43,15 @@ public class QuestionOutputDTO {
 
 	public List<AnswerOutputDTO> getAnswers() {
 		return answers;
+	}
+
+	public List<DiscursiveAnswerOutputDTO> getDiscursiveAnswers() {
+		return discursiveAnswers;
+	}
+
+	public void setDiscursiveAnswers(
+			List<DiscursiveAnswerOutputDTO> discursiveAnswers) {
+		this.discursiveAnswers = discursiveAnswers;
 	}
 
 	public void setAnswers(List<AnswerOutputDTO> answers) {
@@ -83,7 +95,11 @@ public class QuestionOutputDTO {
 				dto.setStatus(Mappers.questionStatus(question.getStatus()));
 
 				// Copia answers
-				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
+				if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+					dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
+				} else {
+					dto.setDiscursiveAnswers(null); // TODO XXX
+				}
 				
 				dto.setAllStatus(SelectBoxDTO.copyQuestionStatus());
 				dtos.add(dto);

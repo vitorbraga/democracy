@@ -17,6 +17,9 @@ public class QuestionInputDTO {
 	@Validate(message=Messages.QUESTION_FIELD_INVALID, validation="isQuestionOrAnswer")
 	private String question;
 	
+	@Validate(message=Messages.QUESTION_TYPE_FIELD_INVALID, validation="isQuestionType")
+	private String type;
+	
 	@ValidateCollection(recursive = true, nullable = false)
 	private List<AnswerInputDTO> answers;
 
@@ -26,6 +29,14 @@ public class QuestionInputDTO {
 
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public List<AnswerInputDTO> getAnswers() {
@@ -45,6 +56,7 @@ public class QuestionInputDTO {
 			
 			Question question = new Question();
 			question.setQuestion(questionDTO.getQuestion());
+			question.setType(Integer.parseInt(questionDTO.getType()));
 			question.setStatus(QuestionStatusEnum.INACTIVE.id());
 			question.setRegDate(now);
 			question.setUpdated(now);

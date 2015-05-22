@@ -13,6 +13,14 @@
 		</select>
 	</div>
 	<div class="form-group">
+		<label>Tipo</label> 
+		<select name="search.type" class="form-control search-field">
+			<option value="0">Selecione uma opção</option>
+			<option value="1">Múltipla escolha</option>
+			<option value="2">Discursivas</option>
+		</select>
+	</div>
+	<div class="form-group">
 		<label class="label_answer">Período</label> 
 		<select name="search.date" class="form-control search-field">
 			<option value="0">Selecione uma opção</option>
