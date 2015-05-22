@@ -99,28 +99,6 @@ function getSearchFilters() {
 	return search;
 }
 
-function newQuestion() {
-	
-	$('#add-answer').on('click', function() {
-		var answers = $('.answer-box');
-		var num = answers.length;
-		num++;
-		var newAnswer = '<div class="form-group answer-box"><label class="label_answer">Resposta '+num+'</label>' +
-			'<input type="text" num="'+ num +'" name="question.answers['+(num-1)+'].answer" class="input_answer  form-control" '+
-			'placeholder="Resposta '+num+'"/></div>';
-		$(newAnswer).insertBefore('#question-submit-but');
-	});
-	
-	$('#remove-answer').on('click', function() {
-		var answers = $('.answer-box');
-		var length = answers.length;
-		if(length > 2) {
-			$(answers[length-1]).remove();
-		}
-	});
-	
-}
-
 function searchQuestion() {
 	
 	$('#question-search-but').on('click', function() {

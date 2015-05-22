@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.helper.ConvertHelper;
-import br.com.democracy.persistence.Answer;
+import br.com.democracy.persistence.DiscursiveAnswer;
 
 public class DiscursiveAnswerOutputDTO {
 
@@ -13,8 +13,8 @@ public class DiscursiveAnswerOutputDTO {
 
 	private String answer;
 
-	private Integer chosenTimes;
-
+	private String date;
+	
 	public String getId() {
 		return id;
 	}
@@ -30,25 +30,26 @@ public class DiscursiveAnswerOutputDTO {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-
-	public Integer getChosenTimes() {
-		return chosenTimes;
+	
+	public String getDate() {
+		return date;
 	}
 
-	public void setChosenTimes(Integer chosenTimes) {
-		this.chosenTimes = chosenTimes;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public static List<DiscursiveAnswerOutputDTO> copyAll(List<Answer> answers)
+	public static List<DiscursiveAnswerOutputDTO> copyAll(List<DiscursiveAnswer> discursiveAnswers)
 			throws ServiceException {
 
-		if (answers != null) {
+		if (discursiveAnswers != null) {
 
 			List<DiscursiveAnswerOutputDTO> dtos = new ArrayList<DiscursiveAnswerOutputDTO>();
-			for (Answer answer : answers) {
+			for (DiscursiveAnswer answer : discursiveAnswers) {
 				DiscursiveAnswerOutputDTO dto = new DiscursiveAnswerOutputDTO();
 				dto.setId(ConvertHelper.convertIdToView(answer.getId()));
 				dto.setAnswer(answer.getAnswer());
+				dto.setDate(ConvertHelper.dateToView(answer.getRegDate()));
 
 				dtos.add(dto);
 			}
@@ -59,17 +60,4 @@ public class DiscursiveAnswerOutputDTO {
 		return null;
 	}
 
-	public static DiscursiveAnswerOutputDTO copy(Answer answer) throws ServiceException {
-
-		if (answer != null) {
-
-			DiscursiveAnswerOutputDTO dto = new DiscursiveAnswerOutputDTO();
-			dto.setId(ConvertHelper.convertIdToView(answer.getId()));
-			dto.setAnswer(answer.getAnswer());
-
-			return dto;
-		}
-
-		return null;
-	}
 }

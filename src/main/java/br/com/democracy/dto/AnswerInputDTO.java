@@ -5,7 +5,7 @@ import br.com.democracy.validation.annotation.Validate;
 
 public class AnswerInputDTO {
 
-	@Validate(message=Messages.ANSWER_FIELD_INVALID, validation="isQuestionOrAnswer")
+	@Validate(message=Messages.ANSWER_FIELD_INVALID, validation="isQuestionOrAnswerOrEmpty")
 	private String answer;
 
 	public String getAnswer() {

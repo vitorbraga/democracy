@@ -190,6 +190,32 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
+	
+	@Post
+	@Path("/answerDiscursiveQuestion")
+	public void answerDiscursiveQuestion(String questionId, String answer) {
+
+		try {
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			if (!ValidationHelper.isComment(answer)) {
+				throw new ValidationException(Messages.ANSWER_FIELD_INVALID);
+			}
+			
+			questionService.answerDiscursiveQuestion(
+					ConvertHelper.convertIdFromView(questionId),
+					answer, false, null);
+
+			ResultControllerHelper.returnResultSuccess(result);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
 
 	@Post
 	@Path("/makeComment")

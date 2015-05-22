@@ -16,15 +16,15 @@ public class QuestionOutputDTO {
 	private String question;
 
 	private List<AnswerOutputDTO> answers;
-	
+
 	private List<DiscursiveAnswerOutputDTO> discursiveAnswers;
 
 	private String status;
 
 	private String date;
 
-	private List<SelectBoxDTO> allStatus; 
-	
+	private List<SelectBoxDTO> allStatus;
+
 	public String getId() {
 		return id;
 	}
@@ -73,7 +73,7 @@ public class QuestionOutputDTO {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	public List<SelectBoxDTO> getAllStatus() {
 		return allStatus;
 	}
@@ -95,16 +95,19 @@ public class QuestionOutputDTO {
 				dto.setStatus(Mappers.questionStatus(question.getStatus()));
 
 				// Copia answers
-				if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
-					dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
+				if (question.getType().equals(
+						QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+					dto.setAnswers(AnswerOutputDTO.copyAll(question
+							.getAnswers()));
 				} else {
-					dto.setDiscursiveAnswers(null); // TODO XXX
+					dto.setDiscursiveAnswers(DiscursiveAnswerOutputDTO
+							.copyAll(question.getDiscursiveAnswers()));
 				}
-				
+
 				dto.setAllStatus(SelectBoxDTO.copyQuestionStatus());
 				dtos.add(dto);
 			}
-			
+
 			return dtos;
 		}
 
@@ -116,7 +119,7 @@ public class QuestionOutputDTO {
 
 		if (question != null) {
 			QuestionOutputDTO dto = new QuestionOutputDTO();
-			
+
 			dto.setId(ConvertHelper.convertIdToView(question.getId()));
 			dto.setQuestion(question.getQuestion());
 			dto.setDate(ConvertHelper.dateToView(question.getUpdated()));

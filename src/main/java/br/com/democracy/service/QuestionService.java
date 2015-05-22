@@ -43,4 +43,7 @@ public interface QuestionService {
 	List<CommentOutputDTO> getComments(Long questionId, boolean isMobile,
 			String token) throws ServiceException;
 
+	void answerDiscursiveQuestion(Long questionId, String answer,
+			boolean isMobile, String token) throws ServiceException;
+
 }

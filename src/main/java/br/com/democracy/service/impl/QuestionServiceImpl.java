@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.democracy.dao.AnswerDAO;
 import br.com.democracy.dao.CommentDAO;
+import br.com.democracy.dao.DiscursiveAnswerDAO;
 import br.com.democracy.dao.QuestionDAO;
 import br.com.democracy.dao.UserAnswerDAO;
 import br.com.democracy.dao.UserDAO;
+import br.com.democracy.dao.UserDiscursiveAnswerDAO;
 import br.com.democracy.dao.UserQuestionDAO;
 import br.com.democracy.dto.AnswerEditDTO;
 import br.com.democracy.dto.AnswerOutputDTO;
@@ -31,9 +33,11 @@ import br.com.democracy.helper.DateHelper;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.Answer;
 import br.com.democracy.persistence.Comment;
+import br.com.democracy.persistence.DiscursiveAnswer;
 import br.com.democracy.persistence.Question;
 import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.UserAnswer;
+import br.com.democracy.persistence.UserDiscursiveAnswer;
 import br.com.democracy.persistence.UserQuestion;
 import br.com.democracy.persistence.enums.QuestionStatusEnum;
 import br.com.democracy.security.CustomUserDetails;
@@ -47,6 +51,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private AnswerDAO answerDAO;
+	
+	@Autowired
+	private DiscursiveAnswerDAO discursiveAnswerDAO;
 
 	@Autowired
 	private UserDAO userDAO;
@@ -56,6 +63,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private UserAnswerDAO userAnswerDAO;
+	
+	@Autowired
+	private UserDiscursiveAnswerDAO userDiscursiveAnswerDAO;
 
 	@Autowired
 	private UserQuestionDAO userQuestionDAO;
@@ -71,7 +81,6 @@ public class QuestionServiceImpl implements QuestionService {
 		Question question = QuestionInputDTO.copy(questionDTO);
 
 		questionDAO.saveOrUpdate(question);
-
 	}
 
 	@Override
@@ -254,6 +263,46 @@ public class QuestionServiceImpl implements QuestionService {
 		userQuestion.setCreated(now);
 		userQuestion.setUpdated(now);
 		userQuestion.setAnswerId(answerId);
+
+		userQuestionDAO.saveOrUpdate(userQuestion);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public void answerDiscursiveQuestion(Long questionId, String answer,
+			boolean isMobile, String token) throws ServiceException {
+
+		User user = getUser(isMobile, token);
+
+		Question question = questionDAO.getById(questionId);
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+		Date now = DateHelper.now();
+		
+		DiscursiveAnswer discursiveAnswer = new DiscursiveAnswer();
+		discursiveAnswer.setAnswer(answer);
+		discursiveAnswer.setQuestion(question);
+		discursiveAnswer.setRegDate(now);
+		discursiveAnswer.setRegUser("ADMIN");
+		discursiveAnswer.setUpdated(now);
+
+		discursiveAnswer = discursiveAnswerDAO.saveOrUpdate(discursiveAnswer);
+		
+		UserDiscursiveAnswer userDiscursiveAnswer = new UserDiscursiveAnswer();
+		userDiscursiveAnswer.setUser(user);
+		userDiscursiveAnswer.setDiscursiveAnswer(discursiveAnswer); 
+		userDiscursiveAnswer.setCreated(now);
+		userDiscursiveAnswer.setUpdated(now);
+
+		userDiscursiveAnswerDAO.saveOrUpdate(userDiscursiveAnswer);
+
+		UserQuestion userQuestion = new UserQuestion();
+		userQuestion.setUser(user);
+		userQuestion.setQuestion(question);
+		userQuestion.setCreated(now);
+		userQuestion.setUpdated(now);
+		userQuestion.setDiscursiveAnswerId(discursiveAnswer.getId());
 
 		userQuestionDAO.saveOrUpdate(userQuestion);
 	}

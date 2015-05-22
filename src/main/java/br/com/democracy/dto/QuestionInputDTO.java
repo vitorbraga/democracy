@@ -20,7 +20,7 @@ public class QuestionInputDTO {
 	@Validate(message=Messages.QUESTION_TYPE_FIELD_INVALID, validation="isQuestionType")
 	private String type;
 	
-	@ValidateCollection(recursive = true, nullable = false)
+	@ValidateCollection(recursive = true, nullable = true)
 	private List<AnswerInputDTO> answers;
 
 	public String getQuestion() {
@@ -62,18 +62,21 @@ public class QuestionInputDTO {
 			question.setUpdated(now);
 			question.setRegUser(regUser);
 			
-			question.setAnswers(new ArrayList<Answer>());
-			
-			/* Constroi lista de alternativas (respostas) */
-			for(AnswerInputDTO ansDTO : questionDTO.getAnswers()) {
-				Answer answer = new Answer();
-				answer.setAnswer(ansDTO.getAnswer());
-				answer.setRegUser(regUser);
-				answer.setRegDate(now);
-				answer.setUpdated(now);
-				answer.setQuestion(question);
+			if(questionDTO.getType().equals("1")) {
 				
-				question.getAnswers().add(answer);
+				question.setAnswers(new ArrayList<Answer>());
+				
+				/* Constroi lista de alternativas (respostas) */
+				for(AnswerInputDTO ansDTO : questionDTO.getAnswers()) {
+					Answer answer = new Answer();
+					answer.setAnswer(ansDTO.getAnswer());
+					answer.setRegUser(regUser);
+					answer.setRegDate(now);
+					answer.setUpdated(now);
+					answer.setQuestion(question);
+					
+					question.getAnswers().add(answer);
+				}
 			}
 			
 			return question;

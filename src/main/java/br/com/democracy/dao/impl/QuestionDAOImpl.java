@@ -37,6 +37,10 @@ public class QuestionDAOImpl extends GenericDAOImpl<Question> implements
 		if (question.getStatus() != null && !question.getStatus().equals("0")) {
 			criteria.add(Restrictions.eq("status", Integer.parseInt(question.getStatus())));
 		}
+		
+		if (question.getType() != null && !question.getType().equals("0")) {
+			criteria.add(Restrictions.eq("type", Integer.parseInt(question.getType())));
+		}
 
 		// TODO buscar por periodo data
 		

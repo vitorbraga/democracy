@@ -39,6 +39,9 @@ public class Question extends BaseEntity {
 	private List<Answer> answers;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
+	private List<DiscursiveAnswer> discursiveAnswers;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.question", cascade=CascadeType.ALL)
@@ -90,6 +93,14 @@ public class Question extends BaseEntity {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public List<DiscursiveAnswer> getDiscursiveAnswers() {
+		return discursiveAnswers;
+	}
+
+	public void setDiscursiveAnswers(List<DiscursiveAnswer> discursiveAnswers) {
+		this.discursiveAnswers = discursiveAnswers;
 	}
 
 	public Set<UserQuestion> getUserQuestions() {

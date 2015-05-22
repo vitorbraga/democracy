@@ -15,36 +15,30 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "USER_QUESTION")
+@Table(name = "USER_DISCURSIVE_ANSWER")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "userId")),
-		@AssociationOverride(name = "pk.question", joinColumns = @JoinColumn(name = "questionId")) })
-public class UserQuestion implements Serializable {
+		@AssociationOverride(name = "pk.discursiveAnswer", joinColumns = @JoinColumn(name = "discursiveAnswerId")) })
+public class UserDiscursiveAnswer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private UserQuestionId pk = new UserQuestionId();
+	private UserDiscursiveAnswerId pk = new UserDiscursiveAnswerId();
 
-	@Column(name = "CREATED", nullable = true, columnDefinition = "TIMESTAMP")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
-
-	@Column(name = "UPDATED", nullable = true, columnDefinition = "TIMESTAMP")
+	@Column(nullable = true, columnDefinition = "TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
 
-	@Column(name = "ANSWER_ID", nullable = true)
-	private Long answerId;
-	
-	@Column(name = "DISCURSIVE_ANSWER_ID", nullable = true)
-	private Long discursiveAnswerId;
+	@Column(nullable = true, columnDefinition = "TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
 
-	public UserQuestionId getPk() {
+	public UserDiscursiveAnswerId getPk() {
 		return pk;
 	}
 
-	public void setPk(UserQuestionId pk) {
+	public void setPk(UserDiscursiveAnswerId pk) {
 		this.pk = pk;
 	}
 
@@ -58,12 +52,12 @@ public class UserQuestion implements Serializable {
 	}
 
 	@Transient
-	public Question getQuestion() {
-		return getPk().getQuestion();
+	public DiscursiveAnswer getDiscursiveAnswer() {
+		return getPk().getDiscursiveAnswer();
 	}
 
-	public void setQuestion(Question question) {
-		getPk().setQuestion(question);
+	public void setDiscursiveAnswer(DiscursiveAnswer discursiveAnswer) {
+		getPk().setDiscursiveAnswer(discursiveAnswer);
 	}
 
 	public boolean equals(Object o) {
@@ -72,7 +66,7 @@ public class UserQuestion implements Serializable {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		UserQuestion that = (UserQuestion) o;
+		UserDiscursiveAnswer that = (UserDiscursiveAnswer) o;
 
 		if (getPk() != null ? !getPk().equals(that.getPk())
 				: that.getPk() != null)
@@ -99,22 +93,6 @@ public class UserQuestion implements Serializable {
 
 	public void setCreated(Date created) {
 		this.created = created;
-	}
-
-	public Long getAnswerId() {
-		return answerId;
-	}
-
-	public void setAnswerId(Long answerId) {
-		this.answerId = answerId;
-	}
-
-	public Long getDiscursiveAnswerId() {
-		return discursiveAnswerId;
-	}
-
-	public void setDiscursiveAnswerId(Long discursiveAnswerId) {
-		this.discursiveAnswerId = discursiveAnswerId;
 	}
 
 }

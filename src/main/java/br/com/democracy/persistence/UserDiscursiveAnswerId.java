@@ -1,0 +1,65 @@
+package br.com.democracy.persistence;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Embeddable
+public class UserDiscursiveAnswerId implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private User user;
+
+	@ManyToOne
+	@JoinColumn(name = "discursiveAnswerId")
+	private DiscursiveAnswer discursiveAnswer;
+
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		UserDiscursiveAnswerId that = (UserDiscursiveAnswerId) o;
+
+		if (user != null ? !user.equals(that.user) : that.user != null) {
+			return false;
+		}
+
+		if (discursiveAnswer != null ? !discursiveAnswer.equals(that.discursiveAnswer)
+				: that.discursiveAnswer != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public int hashCode() {
+		int result;
+		result = (user != null ? user.hashCode() : 0);
+		result = 31 * result + (discursiveAnswer != null ? discursiveAnswer.hashCode() : 0);
+		return result;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public DiscursiveAnswer getDiscursiveAnswer() {
+		return discursiveAnswer;
+	}
+
+	public void setDiscursiveAnswer(DiscursiveAnswer discursiveAnswer) {
+		this.discursiveAnswer = discursiveAnswer;
+	}
+
+}
