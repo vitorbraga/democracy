@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import br.com.democracy.messages.Messages;
 import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.enums.UserStatusEnum;
 import br.com.democracy.persistence.enums.UserTypeEnum;
+import br.com.democracy.security.CustomUserDetails;
 import br.com.democracy.service.EmailService;
 import br.com.democracy.service.UserService;
 
@@ -176,14 +178,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserOutputDTO getUserDetails(Long userId) throws ServiceException {
-		User user = userDAO.getById(userId);
-		if (user != null) {
-			return UserOutputDTO.copy(user);
-		} else {
+	public UserOutputDTO getUserDetails() throws ServiceException {
+		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		User user = userDAO.getById(userSession.getId());
+
+		if (user == null) {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
-		
+		return UserOutputDTO.copy(user);
 	}
 	
 }

@@ -16,6 +16,10 @@ public class UserOutputDTO {
 	private String email;
 
 	private String dateRegistered;
+	
+	private Long genderId;
+	
+	private String academicRegister;
 
 	public String getId() {
 		return id;
@@ -47,6 +51,22 @@ public class UserOutputDTO {
 
 	public void setDateRegistered(String dateRegistered) {
 		this.dateRegistered = dateRegistered;
+	}
+	
+	public Long getGenderId() {
+		return genderId;
+	}
+
+	public void setGenderId(Long genderId) {
+		this.genderId = genderId;
+	}
+	
+	public String getAcademicRegister() {
+		return academicRegister;
+	}
+
+	public void setAcademicRegister(String academicRegister) {
+		this.academicRegister = academicRegister;
 	}
 
 	public static List<UserOutputDTO> copy(List<User> users)
@@ -80,10 +100,16 @@ public class UserOutputDTO {
 			dto.setName(user.getName());
 			dto.setEmail(user.getEmail());
 			dto.setDateRegistered(ConvertHelper.dateToView(user.getRegDate()));
+			dto.setGenderId(user.getGender().longValue());
+			if (null != user.getAcademicRegister())
+				dto.setAcademicRegister(user.getAcademicRegister());
 			return dto;
 
 		}
 		return null;
 
 	}
+
+
+	
 }

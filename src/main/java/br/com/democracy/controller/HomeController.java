@@ -88,7 +88,7 @@ public class HomeController {
 	public void userDetails()	{
 		try	{
 			
-			UserOutputDTO user = userService.getUserDetails(userSession.getUserDetails().getId());
+			UserOutputDTO user = userService.getUserDetails();
 			result.include("user", user);
 		} catch (ServiceException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());

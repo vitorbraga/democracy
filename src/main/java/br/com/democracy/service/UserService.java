@@ -21,7 +21,7 @@ public interface UserService {
 
 	void registerAdmin(UserInputDTO userInput) throws ServiceException;
 
-	UserOutputDTO getUserDetails(Long userId) throws ServiceException;
+	UserOutputDTO getUserDetails() throws ServiceException;
 
 
 }

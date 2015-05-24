@@ -73,14 +73,14 @@
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
 						<label for="name-field">Nome:</label> <input type="text"
-							name="user.name" id="name-field" value="user.name" placeholder="Nome" />
+							name="user.name" id="name-field" value="${user.name}" placeholder="Nome" />
 					</div>
 				</div>
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
 						<label for="academicRegister-field">Registro Acadêmico:</label> <input
 							type="text" name="user.academicRegister"
-							id="academicRegister-field" value="academicRegister"
+							id="academicRegister-field" value=""
 							placeholder="Registro Acadêmico" />
 					</div>
 				</div>
@@ -89,14 +89,14 @@
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
 						<label for="user-email">Email:</label> <input type="email"
-							name="user.email" id="email-field" value="user.email" placeholder="Email" />
+							name="user.email" id="email-field" value="${user.email}" placeholder="Email" />
 					</div>
 				</div>
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
 						<label for="email-conf-field">Confirme seu Email:</label> <input
 							type="email" name="user.emailConf" id="email-conf-field"
-							value="user.email" placeholder="Confirme seu Email" />
+							value="${user.email}" placeholder="Confirme seu Email" />
 
 					</div>
 				</div>
@@ -122,9 +122,9 @@
 				<div class="form-group">
 					<label for="gender-field"> Sexo</label>
 					<fieldset>
-						<input type="radio" name="user.gender" id="male" value="1" /> <label
+						<input type="radio" name="user.gender" ${user.genderId == 1 ? 'checked' : ''} id="male" value="1" /> <label
 							for="male">Masculino</label> <input type="radio"
-							name="user.gender" id="female" value="2" /> <label for="female">Feminino</label>
+							name="user.gender" id="female" ${user.genderId == 2 ? 'checked' : ''} value="2" /> <label for="female">Feminino</label>
 					</fieldset>
 				</div>
 			</div>
