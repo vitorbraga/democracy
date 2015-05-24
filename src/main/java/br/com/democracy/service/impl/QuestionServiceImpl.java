@@ -170,10 +170,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search)
+	public List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search, boolean isAdmin)
 			throws ServiceException {
 
-		List<Question> questions = questionDAO.searchQuestion(search);
+		List<Question> questions = questionDAO.searchQuestion(search, isAdmin);
 
 		return QuestionOutputDTO.copyAll(questions);
 	}
@@ -190,6 +190,25 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 
 		return QuestionOutputDTO.copy(question);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public QuestionAvailableOutputDTO getQuestionAnswerData(Long questionId,
+			boolean isMobile, String token) throws ServiceException {
+
+		User user = getUser(isMobile, token);
+
+		Question question = questionDAO.getById(questionId);
+
+		if (question == null) {
+			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
+		}
+
+		List<UserQuestion> userQuestions = userQuestionDAO.getByUser(user
+				.getId());
+
+		return QuestionAvailableOutputDTO.copy(question, userQuestions);
 	}
 
 	@Transactional(readOnly = true)

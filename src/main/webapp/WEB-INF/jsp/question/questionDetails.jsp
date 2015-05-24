@@ -4,20 +4,6 @@
 
 <style>
 
-.modal {
-	left: 50%;
-	bottom: auto;
-	right: auto;
-	padding: 0;
-	width: 500px;
-	margin-left: -250px;
-	background-color: #ffffff;
-	border: none;
-	-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-	box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-	background-clip: padding-box;
-}
-
 .info-header {
 	font-size: 20pt;
 	display: block;

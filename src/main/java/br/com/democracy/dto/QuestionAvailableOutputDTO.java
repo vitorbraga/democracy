@@ -131,6 +131,39 @@ public class QuestionAvailableOutputDTO {
 		return null;
 	}
 
+	public static QuestionAvailableOutputDTO copy(
+			Question question, List<UserQuestion> userQuestions)
+			throws ServiceException {
+
+
+		if(question != null) {
+			QuestionAvailableOutputDTO dto = new QuestionAvailableOutputDTO();
+			dto.setId(ConvertHelper.convertIdToView(question.getId()));
+			dto.setQuestion(question.getQuestion());
+			dto.setTypeInt(question.getType());
+			dto.setDateActivated(ConvertHelper.dateToViewSlash(question.getDateActivated()));
+			
+			if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
+				dto.setUserAnswer(checkAnswer(
+						question, userQuestions));
+			} else {
+				dto.setUserDiscursiveAnswer(checkAnswerDiscursive(
+						question, userQuestions));
+			}
+			
+			if(question.getComments() != null) {
+				dto.setNumComments(question.getComments().size());
+			} else {
+				dto.setNumComments(0);
+			}
+
+			return dto;
+		}
+				
+		return null;
+	}
+	
 	public static String checkAnswer(Question question,
 			List<UserQuestion> userQuestions) throws ServiceException {
 

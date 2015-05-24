@@ -32,7 +32,7 @@ public class QuestionDAOImpl extends GenericDAOImpl<Question> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Question> searchQuestion(QuestionSearchDTO question) {
+	public List<Question> searchQuestion(QuestionSearchDTO question, boolean isAdmin) {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -40,6 +40,10 @@ public class QuestionDAOImpl extends GenericDAOImpl<Question> implements
 
 		if (question.getStatus() != null && !question.getStatus().equals("0")) {
 			criteria.add(Restrictions.eq("status", Integer.parseInt(question.getStatus())));
+		}
+
+		if(!isAdmin) {
+			criteria.add(Restrictions.eq("status", QuestionStatusEnum.ACTIVE.id()));
 		}
 		
 		if (question.getType() != null && !question.getType().equals("0")) {

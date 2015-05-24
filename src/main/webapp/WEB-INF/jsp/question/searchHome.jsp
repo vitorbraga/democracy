@@ -35,11 +35,10 @@
 	    <c:otherwise>
 			<table id="tourney-result-table" class="table table-condensed table-hover">
 			
-				<tr><th>Pergunta</th><th>Status</th><th>Data</th></tr>
+				<tr><th>Pergunta</th><th>Data</th></tr>
 				<c:forEach var="question" items="${questions}">
 					<tr questionId="${question.id}">
 						<td>${question.question}</td>
-						<td>${question.status}</td>
 						<td>${question.date}</td>
 					</tr>
 				</c:forEach>
@@ -98,12 +97,12 @@
 		});
 	});
 
-	$('table tr td:not(:last-child)').on('click', function() {
+	$('table tr td').on('click', function() {
 		$('#loader-wrapper').fadeIn(150);
 		var questionId = $(this).parent().attr('questionId');
 		$.ajax({
 			type : 'GET',
-			url : basePath + 'question/questionDetails',
+			url : basePath + 'question/questionAnswerModal',
 			data : {
 				questionId : questionId
 			},
@@ -119,26 +118,9 @@
 			        $(this).remove();
 			    });
 
-			    bindEditButton();
 			}
 		});
 	});
 
-	function bindEditButton() {
-		$('#edit-question-button').on('click', function() {
-			$('#loader-wrapper').fadeIn(200);
-			var edit = getSearchFilters();
-			$.ajax({
-				type : 'post',
-				url : basePath + 'question/edit',
-				data : edit,
-				success : function(data) {
-					$('#loader-wrapper').fadeOut(150);
-					alert('Editado com sucesso.');
-				}
-			});
-		});
-	}
-	
 	
 </script>

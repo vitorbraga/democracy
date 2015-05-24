@@ -7,7 +7,7 @@ import br.com.democracy.persistence.Question;
 
 public interface QuestionDAO extends GenericDAO<Question> {
 
-	List<Question> searchQuestion(QuestionSearchDTO question);
+	List<Question> searchQuestion(QuestionSearchDTO question, boolean isAdmin);
 
 	List<Question> getAvailableQuestions();
 }

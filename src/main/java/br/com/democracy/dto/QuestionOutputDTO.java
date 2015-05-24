@@ -20,6 +20,8 @@ public class QuestionOutputDTO {
 	private List<DiscursiveAnswerOutputDTO> discursiveAnswers;
 
 	private String status;
+	
+	private Integer type;
 
 	private String date;
 
@@ -40,7 +42,7 @@ public class QuestionOutputDTO {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
+	
 	public List<AnswerOutputDTO> getAnswers() {
 		return answers;
 	}
@@ -91,6 +93,7 @@ public class QuestionOutputDTO {
 				QuestionOutputDTO dto = new QuestionOutputDTO();
 				dto.setId(ConvertHelper.convertIdToView(question.getId()));
 				dto.setQuestion(question.getQuestion());
+				dto.setType(question.getType());
 				dto.setDate(ConvertHelper.dateToView(question.getUpdated()));
 				dto.setStatus(Mappers.questionStatus(question.getStatus()));
 
@@ -122,15 +125,27 @@ public class QuestionOutputDTO {
 
 			dto.setId(ConvertHelper.convertIdToView(question.getId()));
 			dto.setQuestion(question.getQuestion());
+			dto.setType(question.getType());
 			dto.setDate(ConvertHelper.dateToView(question.getUpdated()));
 			dto.setStatus(Mappers.questionStatus(question.getStatus()));
 
 			// Copia answers
-			dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));
+			if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+				dto.setAnswers(AnswerOutputDTO.copyAll(question.getAnswers()));				
+			}
+			
 			dto.setAllStatus(SelectBoxDTO.copyQuestionStatus());
 			return dto;
 		}
 
 		return null;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }

@@ -45,7 +45,7 @@ public class QuestionController {
 			questionService.newQuestion(question);
 
 			ResultControllerHelper.returnResultSuccess(result);
-			
+
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
@@ -118,7 +118,7 @@ public class QuestionController {
 			Validator.validate(search);
 
 			List<QuestionOutputDTO> questions = questionService
-					.searchQuestion(search);
+					.searchQuestion(search, true);
 
 			result.include("questions", questions);
 
@@ -128,7 +128,7 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-	
+
 	@Get
 	@Path("/searchHome")
 	public void searchHome(QuestionSearchDTO search) {
@@ -138,7 +138,7 @@ public class QuestionController {
 			Validator.validate(search);
 
 			List<QuestionOutputDTO> questions = questionService
-					.searchQuestion(search);
+					.searchQuestion(search, false);
 
 			result.include("questions", questions);
 
@@ -171,6 +171,26 @@ public class QuestionController {
 	}
 
 	@Get
+	@Path("/questionAnswerModal")
+	public void questionAnswerModal(String questionId) {
+
+		try {
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			QuestionAvailableOutputDTO question = questionService.getQuestionAnswerData(
+					ConvertHelper.convertIdFromView(questionId), false, null);
+			result.include("question", question);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+	@Get
 	@Path("/getAvailableQuestions")
 	public void getAvailableQuestions() {
 
@@ -185,7 +205,6 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-
 
 	@Get
 	@Path("/getActiveQuestions")
@@ -228,7 +247,7 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
-	
+
 	@Post
 	@Path("/answerDiscursiveQuestion")
 	public void answerDiscursiveQuestion(String questionId, String answer) {
@@ -241,10 +260,10 @@ public class QuestionController {
 			if (!ValidationHelper.isComment(answer)) {
 				throw new ValidationException(Messages.ANSWER_FIELD_INVALID);
 			}
-			
+
 			questionService.answerDiscursiveQuestion(
-					ConvertHelper.convertIdFromView(questionId),
-					answer, false, null);
+					ConvertHelper.convertIdFromView(questionId), answer, false,
+					null);
 
 			ResultControllerHelper.returnResultSuccess(result);
 
@@ -316,8 +335,9 @@ public class QuestionController {
 			}
 
 			PartialResultsDTO partialResults = questionService
-					.getPartialResults(ConvertHelper
-							.convertIdFromView(questionId), false, null);
+					.getPartialResults(
+							ConvertHelper.convertIdFromView(questionId), false,
+							null);
 
 			result.include("partialResults", partialResults);
 

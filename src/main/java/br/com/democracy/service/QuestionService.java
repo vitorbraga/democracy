@@ -20,9 +20,6 @@ public interface QuestionService {
 
 	void deactivateQuestion(Long questionId) throws ServiceException;
 
-	List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search)
-			throws ServiceException;
-
 	QuestionOutputDTO getQuestionDetails(Long questionId)
 			throws ServiceException;
 
@@ -45,5 +42,11 @@ public interface QuestionService {
 
 	void answerDiscursiveQuestion(Long questionId, String answer,
 			boolean isMobile, String token) throws ServiceException;
+
+	QuestionAvailableOutputDTO getQuestionAnswerData(Long questionId,
+			boolean isMobile, String token) throws ServiceException;
+
+	List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search,
+			boolean isAdmin) throws ServiceException;
 
 }
