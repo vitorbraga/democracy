@@ -128,6 +128,26 @@ public class QuestionController {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 	}
+	
+	@Get
+	@Path("/searchHome")
+	public void searchHome(QuestionSearchDTO search) {
+
+		try {
+
+			Validator.validate(search);
+
+			List<QuestionOutputDTO> questions = questionService
+					.searchQuestion(search);
+
+			result.include("questions", questions);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
 
 	@Get
 	@Path("/questionDetails")

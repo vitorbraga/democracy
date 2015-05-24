@@ -77,13 +77,6 @@
 					</ul>
 				
 				</li>
-				<li>
-					<a href="javascript:;" data-toggle="collapse"
-							data-target="#statistics" class="icon fa-angle-down"><i class="fa fa-fw fa-pie-chart "></i>Estatísticas</a>
-							<ul id="statistics" >
-								<li><a href="#" class="routeLink">Perguntas</a></li>
-							</ul>
-				</li>
 				
 				<li>
 					<a href="" class="icon fa-angle-down"><i class="fa fa-user"></i><sec:authentication

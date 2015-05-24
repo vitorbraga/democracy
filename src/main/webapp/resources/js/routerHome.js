@@ -142,7 +142,7 @@ function doSearchQuestion() {
 	var search = getSearchFilters();
 	
 	$.ajax({
-		url : basePath + 'question/search',
+		url : basePath + 'question/searchHome',
 		type : 'get',
 		data : search
 	}).done(function(data) {

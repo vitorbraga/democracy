@@ -8,9 +8,13 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import br.com.caelum.vraptor.ioc.ConverterHandler;
 import br.com.democracy.dao.QuestionDAO;
 import br.com.democracy.dto.QuestionSearchDTO;
+import br.com.democracy.helper.ConvertHelper;
+import br.com.democracy.helper.DateHelper;
 import br.com.democracy.persistence.Question;
+import br.com.democracy.persistence.enums.PeriodEnum;
 import br.com.democracy.persistence.enums.QuestionStatusEnum;
 
 @Repository
@@ -40,6 +44,14 @@ public class QuestionDAOImpl extends GenericDAOImpl<Question> implements
 		
 		if (question.getType() != null && !question.getType().equals("0")) {
 			criteria.add(Restrictions.eq("type", Integer.parseInt(question.getType())));
+		}
+		
+		if (question.getDate() != null && !question.getDate().equals("0"))	{
+			if(ConvertHelper.convertStringToInteger(question.getDate()).equals(PeriodEnum.LAST_MONTH.id()))	{
+				criteria.add(Restrictions.gt("regDate", DateHelper.addDays(DateHelper.now(), -30L)));
+			} else if (ConvertHelper.convertStringToInteger(question.getDate()).equals(PeriodEnum.LAST_WEEK.id()))	{
+				criteria.add(Restrictions.gt("regDate", DateHelper.addDays(DateHelper.now(), -7L)));
+			}
 		}
 
 		// TODO buscar por periodo data
