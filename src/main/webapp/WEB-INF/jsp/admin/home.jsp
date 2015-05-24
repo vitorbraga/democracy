@@ -24,7 +24,8 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sweet-alert.css">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css">
 
 	<link href="${pageContext.request.contextPath}/resources/css/admin.css" rel="stylesheet">
 
@@ -129,8 +130,10 @@
             <div class="container-fluid">
 
 				<h2>Dashboard</h2>
-                <p>Admin - Home</p>
+                <marquee class="admin-marquee">Neste momento 8 perguntas ativas</marquee>
 
+				<div id="available-questions">
+				</div>
             </div>
             <!-- /.container-fluid -->
 
@@ -142,6 +145,7 @@
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/underscore-min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/backbone-min.js"></script>
 

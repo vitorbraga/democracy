@@ -37,7 +37,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css" />
 
 <!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
 
 
 

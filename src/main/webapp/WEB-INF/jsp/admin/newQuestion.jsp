@@ -4,8 +4,11 @@
 
 <div>
 	<h2>Cadastrar Pergunta</h2>
-
-	<form id="form-new-question" method="post" action="<c:url value="/question/new"/>">
+	<div class="alert alert-danger" style="display:none;" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Error:</span><span class="error-text"></span>
+	</div>
+	<form method="post" url="question/new" role="form" class="simple-form">
 		<div class="form-group">
 			<label>Pergunta</label>
 			<textarea rows="2" name="question.question" class="input_question form-control" placeholder="Nova pergunta..."></textarea>
@@ -32,12 +35,39 @@
 	</form>
 
 	<br/>
-	<div id="add-remove-answer-wrapper">
+	<div id="add-remove-answer-wrapper" style="display:none;">
 		<a href="javascript:void(0)" id="add-answer">+ Resposta</a>&nbsp;&nbsp;<a href="javascript:void(0)" id="remove-answer">- Resposta</a>
 	</div>
 </div>
 
 <script>
+	
+	function afterAjaxSubmit(data) {
+		$('#loader-wrapper').fadeOut(150);
+		swal("Sucesso!", 'Nova pergunta cadastrada com sucesso!', "success");
+	}
+	
+	function errorResult(data) {
+		$('#loader-wrapper').fadeOut(150);
+		$('.alert-danger .error-text').html(data.responseJSON.message);
+		$('.alert-danger').show(200);
+	}
+	
+	$('.simple-form').submit(function (){
+		$('#loader-wrapper').fadeIn(150);
+		var formUrl = basePath + $(this).attr('url');
+		var options = {
+			url : formUrl,
+			type : 'post',
+			dataType : 'json',
+			success : afterAjaxSubmit,
+			error : errorResult
+		};
+		
+		$(this).ajaxSubmit(options); 
+		
+		return false;
+	});
 	
 	$('#add-answer').on('click', function() {
 		var answers = $('.answer-box');

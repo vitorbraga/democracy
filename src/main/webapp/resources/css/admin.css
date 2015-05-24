@@ -76,3 +76,10 @@
         transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
     }
 }
+
+.admin-marquee {
+	padding: 5px;
+	background-color: #FFFF66;
+	border: 1px solid #FFCC00;
+	border-radius: 5px;
+}

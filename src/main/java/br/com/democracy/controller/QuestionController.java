@@ -44,7 +44,8 @@ public class QuestionController {
 
 			questionService.newQuestion(question);
 
-			result.redirectTo(AdminController.class).home();
+			ResultControllerHelper.returnResultSuccess(result);
+			
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
@@ -152,6 +153,23 @@ public class QuestionController {
 	@Get
 	@Path("/getAvailableQuestions")
 	public void getAvailableQuestions() {
+
+		try {
+
+			List<QuestionAvailableOutputDTO> questions = questionService
+					.getAvailableQuestions(false, null);
+
+			result.include("questions", questions);
+
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+
+
+	@Get
+	@Path("/getActiveQuestions")
+	public void getActiveQuestions() {
 
 		try {
 

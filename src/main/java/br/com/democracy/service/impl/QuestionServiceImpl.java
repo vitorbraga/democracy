@@ -53,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private AnswerDAO answerDAO;
-	
+
 	@Autowired
 	private DiscursiveAnswerDAO discursiveAnswerDAO;
 
@@ -65,7 +65,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private UserAnswerDAO userAnswerDAO;
-	
+
 	@Autowired
 	private UserDiscursiveAnswerDAO userDiscursiveAnswerDAO;
 
@@ -268,7 +268,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 		userQuestionDAO.saveOrUpdate(userQuestion);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public void answerDiscursiveQuestion(Long questionId, String answer,
@@ -281,7 +281,7 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new ServiceException(Messages.QUESTION_NOT_FOUND);
 		}
 		Date now = DateHelper.now();
-		
+
 		DiscursiveAnswer discursiveAnswer = new DiscursiveAnswer();
 		discursiveAnswer.setAnswer(answer);
 		discursiveAnswer.setQuestion(question);
@@ -290,10 +290,10 @@ public class QuestionServiceImpl implements QuestionService {
 		discursiveAnswer.setUpdated(now);
 
 		discursiveAnswer = discursiveAnswerDAO.saveOrUpdate(discursiveAnswer);
-		
+
 		UserDiscursiveAnswer userDiscursiveAnswer = new UserDiscursiveAnswer();
 		userDiscursiveAnswer.setUser(user);
-		userDiscursiveAnswer.setDiscursiveAnswer(discursiveAnswer); 
+		userDiscursiveAnswer.setDiscursiveAnswer(discursiveAnswer);
 		userDiscursiveAnswer.setCreated(now);
 		userDiscursiveAnswer.setUpdated(now);
 
@@ -358,7 +358,6 @@ public class QuestionServiceImpl implements QuestionService {
 	public PartialResultsDTO getPartialResults(Long questionId,
 			boolean isMobile, String token) throws ServiceException {
 
-		@SuppressWarnings("unused")
 		User user = getUser(isMobile, token);
 
 		Question question = questionDAO.getById(questionId);
@@ -370,10 +369,10 @@ public class QuestionServiceImpl implements QuestionService {
 				.getByQuestion(questionId);
 
 		PartialResultsDTO dto = null;
-		if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
-			dto = generateResults(userQuestions);	
+		if (question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+			dto = generateResults(userQuestions);
 		} else {
-			dto = generateResultsDiscursive(userQuestions);
+			dto = generateResultsDiscursive(userQuestions, user.getId());
 		}
 
 		return dto;
@@ -389,16 +388,16 @@ public class QuestionServiceImpl implements QuestionService {
 		dto.setType(QuestionTypeEnum.MULTIPLE_CHOICES.id());
 		dto.setAnswers(new ArrayList<AnswerOutputDTO>());
 
-		if(userQuestions != null) {
+		if (userQuestions != null) {
 			for (UserQuestion uq : userQuestions) {
 				aux = containsAnswer(dto.getAnswers(),
 						ConvertHelper.convertIdToView(uq.getAnswerId()));
 				if (aux == -1) {
-	
+
 					Answer answer = answerDAO.getById(uq.getAnswerId());
 					AnswerOutputDTO answerDTO = AnswerOutputDTO.copy(answer);
 					answerDTO.setChosenTimes(1);
-	
+
 					dto.getAnswers().add(answerDTO);
 				} else {
 					dto.getAnswers()
@@ -424,8 +423,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 		return -1;
 	}
-	
-	private PartialResultsDTO generateResultsDiscursive(List<UserQuestion> userQuestions)
+
+	private PartialResultsDTO generateResultsDiscursive(
+			List<UserQuestion> userQuestions, Long userId)
 			throws ServiceException {
 
 		PartialResultsDTO dto = new PartialResultsDTO();
@@ -435,11 +435,14 @@ public class QuestionServiceImpl implements QuestionService {
 
 		if (userQuestions != null) {
 			for (UserQuestion uq : userQuestions) {
-				DiscursiveAnswerOutputDTO discursiveDTO = new DiscursiveAnswerOutputDTO();
-				discursiveDTO.setAnswer(uq.getDiscursiveAnswer());
-				discursiveDTO.setDate(ConvertHelper.dateToViewSlash(uq.getCreated()));
-				
-				dto.getDiscursiveAnswers().add(discursiveDTO);
+				if (uq.getUser().getId().equals(userId)) {
+					DiscursiveAnswerOutputDTO discursiveDTO = new DiscursiveAnswerOutputDTO();
+					discursiveDTO.setAnswer(uq.getDiscursiveAnswer());
+					discursiveDTO.setDate(ConvertHelper.dateToViewSlash(uq
+							.getCreated()));
+
+					dto.getDiscursiveAnswers().add(discursiveDTO);
+				}
 			}
 		}
 

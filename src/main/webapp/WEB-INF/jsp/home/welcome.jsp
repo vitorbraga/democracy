@@ -53,7 +53,7 @@
 
 
 <!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+<link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -103,7 +103,7 @@
 				<h2>Introduzindo o sistema para a criação e gerenciamento de
 					enquetes seja no seu navegador ou no seu celular</h2>
 				<p>Agora você pode criar, gerenciar e comentar sobre diversas
-					enquetes diferentes podendo acompanha - las pelo seu celualar ou
+					enquetes diferentes podendo acompanhá-las pelo seu celular ou
 					navegador.</p>
 			</header>
 			<span class="image featured"><img
