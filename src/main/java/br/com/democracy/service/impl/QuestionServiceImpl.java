@@ -20,6 +20,7 @@ import br.com.democracy.dao.UserQuestionDAO;
 import br.com.democracy.dto.AnswerEditDTO;
 import br.com.democracy.dto.AnswerOutputDTO;
 import br.com.democracy.dto.CommentOutputDTO;
+import br.com.democracy.dto.DiscursiveAnswerOutputDTO;
 import br.com.democracy.dto.PartialResultsDTO;
 import br.com.democracy.dto.QuestionAvailableOutputDTO;
 import br.com.democracy.dto.QuestionEditDTO;
@@ -40,6 +41,7 @@ import br.com.democracy.persistence.UserAnswer;
 import br.com.democracy.persistence.UserDiscursiveAnswer;
 import br.com.democracy.persistence.UserQuestion;
 import br.com.democracy.persistence.enums.QuestionStatusEnum;
+import br.com.democracy.persistence.enums.QuestionTypeEnum;
 import br.com.democracy.security.CustomUserDetails;
 import br.com.democracy.service.QuestionService;
 
@@ -302,7 +304,7 @@ public class QuestionServiceImpl implements QuestionService {
 		userQuestion.setQuestion(question);
 		userQuestion.setCreated(now);
 		userQuestion.setUpdated(now);
-		userQuestion.setDiscursiveAnswerId(discursiveAnswer.getId());
+		userQuestion.setDiscursiveAnswer(discursiveAnswer.getAnswer());
 
 		userQuestionDAO.saveOrUpdate(userQuestion);
 	}
@@ -367,7 +369,12 @@ public class QuestionServiceImpl implements QuestionService {
 		List<UserQuestion> userQuestions = userQuestionDAO
 				.getByQuestion(questionId);
 
-		PartialResultsDTO dto = generateResults(userQuestions);
+		PartialResultsDTO dto = null;
+		if(question.getType().equals(QuestionTypeEnum.MULTIPLE_CHOICES.id())) {
+			dto = generateResults(userQuestions);	
+		} else {
+			dto = generateResultsDiscursive(userQuestions);
+		}
 
 		return dto;
 	}
@@ -379,23 +386,26 @@ public class QuestionServiceImpl implements QuestionService {
 
 		PartialResultsDTO dto = new PartialResultsDTO();
 		dto.setTotal(userQuestions.size());
+		dto.setType(QuestionTypeEnum.MULTIPLE_CHOICES.id());
 		dto.setAnswers(new ArrayList<AnswerOutputDTO>());
 
-		for (UserQuestion uq : userQuestions) {
-			aux = containsAnswer(dto.getAnswers(),
-					ConvertHelper.convertIdToView(uq.getAnswerId()));
-			if (aux == -1) {
-
-				Answer answer = answerDAO.getById(uq.getAnswerId());
-				AnswerOutputDTO answerDTO = AnswerOutputDTO.copy(answer);
-				answerDTO.setChosenTimes(1);
-
-				dto.getAnswers().add(answerDTO);
-			} else {
-				dto.getAnswers()
-						.get(aux)
-						.setChosenTimes(
-								dto.getAnswers().get(aux).getChosenTimes() + 1);
+		if(userQuestions != null) {
+			for (UserQuestion uq : userQuestions) {
+				aux = containsAnswer(dto.getAnswers(),
+						ConvertHelper.convertIdToView(uq.getAnswerId()));
+				if (aux == -1) {
+	
+					Answer answer = answerDAO.getById(uq.getAnswerId());
+					AnswerOutputDTO answerDTO = AnswerOutputDTO.copy(answer);
+					answerDTO.setChosenTimes(1);
+	
+					dto.getAnswers().add(answerDTO);
+				} else {
+					dto.getAnswers()
+							.get(aux)
+							.setChosenTimes(
+									dto.getAnswers().get(aux).getChosenTimes() + 1);
+				}
 			}
 		}
 
@@ -413,5 +423,26 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 
 		return -1;
+	}
+	
+	private PartialResultsDTO generateResultsDiscursive(List<UserQuestion> userQuestions)
+			throws ServiceException {
+
+		PartialResultsDTO dto = new PartialResultsDTO();
+		dto.setType(QuestionTypeEnum.DISCURSIVE.id());
+		dto.setTotal(userQuestions.size());
+		dto.setDiscursiveAnswers(new ArrayList<DiscursiveAnswerOutputDTO>());
+
+		if (userQuestions != null) {
+			for (UserQuestion uq : userQuestions) {
+				DiscursiveAnswerOutputDTO discursiveDTO = new DiscursiveAnswerOutputDTO();
+				discursiveDTO.setAnswer(uq.getDiscursiveAnswer());
+				discursiveDTO.setDate(ConvertHelper.dateToViewSlash(uq.getCreated()));
+				
+				dto.getDiscursiveAnswers().add(discursiveDTO);
+			}
+		}
+
+		return dto;
 	}
 }

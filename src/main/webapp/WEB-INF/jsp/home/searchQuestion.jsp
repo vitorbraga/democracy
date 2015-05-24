@@ -12,6 +12,14 @@
 			<option value="2">Último mês</option>
 		</select>
 	</div>
+	<div class="form-group">
+		<label class="label_answer">Tipo</label> 
+		<select name="search.type" class="form-control search-field">
+			<option value="0">Selecione uma opção</option>
+			<option value="1">Múltipla escolha</option>
+			<option value="2">Discursiva</option>
+		</select>
+	</div>
 	<button type="button" id="question-search-but" class="btn btn-default">Buscar</button>
 	<div id="questions-result"></div>
 </div>

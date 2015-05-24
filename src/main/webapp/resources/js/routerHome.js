@@ -36,6 +36,14 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	home : function() {
+		$('#loader-wrapper').fadeIn(150);
+		$.ajax({
+			url : basePath + 'question/getAvailableQuestions',
+			type : 'get'
+		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			$('.container-fluid').html(data);
+		});
 	},
 
 	redirect : function() {

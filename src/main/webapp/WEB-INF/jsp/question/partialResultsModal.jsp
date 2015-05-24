@@ -7,6 +7,7 @@
 .info-header {
 	font-size: 20pt;
 	display: block;
+	color: block;
 }
 
 .info-header img {
@@ -43,25 +44,23 @@
 	letter-spacing: 0.5px;
 }
 
-.prize-box {
-	margin-top: 10px;
-	padding: 10px;
-	width: 100%;
-}
-
-.white-back {
-	background: rgba(255, 255, 255, 0.15);
-	padding: 10px;
-	margin-top: 20px;
-}
 
 .prize-title {
 	font-size: 14pt;
 	display: block;
 }
+
+.info-header {
+	color: black;
+}
+
+.discursive-answer {
+	font-size: 11pt;
+
+}
 </style>
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog"
+<div class="modal fade custom-modal" id="basicModal" tabindex="-1" role="dialog"
 	aria-labelledby="basicModal" aria-hidden="true">
 	<div class="modal-dialog" style="margin:90px auto;">
 		<div class="modal-content">
@@ -69,27 +68,55 @@
 				<span class="info-header"> 
 					Resultados parciais
 				</span>
-	
+
 				<c:choose>
-				    <c:when test="${partialResults.total == 0}">
-				        <span class="empty-result-msg">Sem resultados parciais.</span>
-				    </c:when>
-				    <c:otherwise>
-				    	<span>Total de respostas: ${partialResults.total}</span>
-						<table id="tourney-result-table" class="table table-condensed table-hover">
-						
-							<tr><th>Resposta</th><th>Votos</th><th>Porcentagem</th></tr>
-							<c:forEach var="answer" items="${partialResults.answers}">
+					<c:when test="${partialResults.type == 1}">
+						<c:choose>
+							<c:when test="${partialResults.total == 0}">
+								<span class="empty-result-msg">Sem resultados parciais.</span>
+							</c:when>
+							<c:otherwise>
+								<span class="empty-result-msg">Total de respostas:
+									${partialResults.total}</span>
+								<table id="tourney-result-table"
+									class="table table-condensed table-hover">
+									<tr>
+										<th>Resposta</th>
+										<th>Votos</th>
+										<th>Porcentagem</th>
+									</tr>
+									<c:forEach var="answer" items="${partialResults.answers}">
+										<tr>
+											<td>${answer.answer}</td>
+											<td>${answer.chosenTimes}</td>
+											<td><fmt:formatNumber var="percentage"
+													value="${(answer.chosenTimes / partialResults.total) *100}"
+													maxFractionDigits="1" />${percentage}%</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<table id="tourney-result-table"
+							class="table table-condensed table-hover">
+							<tr>
+								<th>Resposta</th>
+								<th style="width:100px;">Data</th>
+							</tr>
+							<c:forEach var="answer"
+								items="${partialResults.discursiveAnswers}">
 								<tr>
 									<td>${answer.answer}</td>
-									<td>${answer.chosenTimes}</td>
-									<td><fmt:formatNumber var="percentage" value="${(answer.chosenTimes / partialResults.total) *100}"  maxFractionDigits="1" />${percentage}%</td>
+									<td class="discursive-answer">${answer.date}</td>
 								</tr>
 							</c:forEach>
-							
 						</table>
-				    </c:otherwise>
+					</c:otherwise>
 				</c:choose>
+
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>

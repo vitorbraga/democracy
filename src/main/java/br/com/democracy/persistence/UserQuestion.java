@@ -37,8 +37,8 @@ public class UserQuestion implements Serializable {
 	@Column(name = "ANSWER_ID", nullable = true)
 	private Long answerId;
 	
-	@Column(name = "DISCURSIVE_ANSWER_ID", nullable = true)
-	private Long discursiveAnswerId;
+	@Column(name = "DISCURSIVE_ANSWER", nullable = true)
+	private String discursiveAnswer;
 
 	public UserQuestionId getPk() {
 		return pk;
@@ -109,12 +109,12 @@ public class UserQuestion implements Serializable {
 		this.answerId = answerId;
 	}
 
-	public Long getDiscursiveAnswerId() {
-		return discursiveAnswerId;
+	public String getDiscursiveAnswer() {
+		return discursiveAnswer;
 	}
 
-	public void setDiscursiveAnswerId(Long discursiveAnswerId) {
-		this.discursiveAnswerId = discursiveAnswerId;
+	public void setDiscursiveAnswer(String discursiveAnswer) {
+		this.discursiveAnswer = discursiveAnswer;
 	}
 
 }

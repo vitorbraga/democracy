@@ -34,6 +34,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style-wide.css" />
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css" />
+
 <!-- Custom Fonts -->
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -144,18 +146,8 @@
 				param = $(this).attr('callback');
 			});
 			
-			$('#loader-wrapper').fadeIn(150);
-			$.ajax({
-				url : basePath + 'question/getAvailableQuestions',
-				type : 'get'
-			}).done(function(data) {
-				$('#loader-wrapper').fadeOut(150);
-				$('.container-fluid').html(data);
-			});
 		});
 		
-		
-	
 	</script>
 </body>
 

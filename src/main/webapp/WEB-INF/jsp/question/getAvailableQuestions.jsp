@@ -31,6 +31,13 @@
 		padding: 5px;
 		display: none;
 	}
+	
+	.user-discursive-answer {
+		font-style: italic;
+		display: block;
+		padding: 5px 5px;
+		color: black;
+	}
 </style>
 
 <div>
@@ -44,16 +51,34 @@
 			<c:forEach var="question" items="${questions}">
 				<div class="question-box" questionId="${question.id}">
 					<span class="question-question">${question.question}</span>
-					<span class="question-date">(${question.dateActivated})</span><br><br>
-					<c:forEach var="answer" items="${question.answers}">
-						<div class="form-group">
-							<fieldset>
-							  	<input name="question-${question.id}" ${question.userAnswer == answer.id ? 'checked' : ''} type="radio" id="${answer.id}" value="${answer.id}">
-							  	<label for="${answer.id}">${answer.answer}</label>
-							</fieldset>
-						</div>
-					</c:forEach>
-					<button type="button" class="btn btn-default answer-question">Responder</button>
+					<span class="question-date">(${question.dateActivated})</span><br/>
+					<c:if test="${question.typeInt == 1}">
+						<br/>
+					   	<c:forEach var="answer" items="${question.answers}">
+							<div class="form-group">
+								<fieldset>
+								  	<input name="question-${question.id}" ${question.userAnswer == answer.id ? 'checked' : ''} type="radio" id="${answer.id}" value="${answer.id}">
+								  	<label for="${answer.id}">${answer.answer}</label>
+								</fieldset>
+							</div>
+						</c:forEach>
+						<button type="button" class="btn btn-default answer-question-multiple">Responder</button>
+					</c:if>
+	    			<c:if test="${question.typeInt == 2}">
+	    				<c:choose>
+	    					<c:when test="${not empty question.userDiscursiveAnswer}">
+						        <span class="user-discursive-answer">${question.userDiscursiveAnswer}</span>
+						    </c:when>
+						    <c:otherwise>
+			    				<div class="form-group">
+							      	<label for="dicursive-answer">Resposta:</label>
+							      	<textarea class="form-control" rows="5" id="dicursive-answer" name="question-${question.id}"></textarea>
+							    </div>
+							    <button type="button" class="btn btn-default answer-question-discursive">Responder</button>
+						    </c:otherwise>
+	    				</c:choose>
+	    			</c:if>
+	    			
 					<button type="button" class="btn btn-default comment-question">Comentários (${question.numComments})</button>
 					<button type="button" class="btn btn-default partial-result">Resultado parcial</button>
 					<div class="question-comments" questionId="${question.id}">
@@ -68,7 +93,7 @@
 
 <script>
 
-	$('.answer-question').on('click', function() {
+	$('.answer-question-multiple').on('click', function() {
 		
 		var box = $(this).parent('.question-box');
 		
@@ -81,6 +106,32 @@
 			data : {
 				questionId : questionId,
 				answerId : answerId,
+			}, 
+			error : function(data) {
+				$('#loader-wrapper').fadeOut(150);
+				var error = jQuery.parseJSON(data.responseText);
+				sweetAlert("Oops...", error.message, "error");
+			}
+		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			swal("Sucesso!", 'Sua resposta foi salva!', "success");
+		});
+	});
+
+	$('.answer-question-discursive').on('click', function() {
+		
+		var box = $(this).parent('.question-box');
+		
+		var questionId = $(box).attr('questionId');
+		
+		var answer = $('textarea[name="question-'+ questionId +'"]').val();
+		
+		$.ajax({
+			type : 'POST',
+			url : basePath + 'question/answerDiscursiveQuestion',
+			data : {
+				questionId : questionId,
+				answer : answer,
 			}, 
 			error : function(data) {
 				$('#loader-wrapper').fadeOut(150);

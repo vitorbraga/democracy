@@ -76,3 +76,9 @@
         transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
     }
 }
+
+.empty-result-msg {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+}
