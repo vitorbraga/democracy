@@ -68,4 +68,6 @@ public class Messages {
 	
 	public static final String TOKEN_INVALID = "Token de autenticação inválido.";
 	
+	public static final String ACADEMIC_REGISTER_INVALID = "Registro acadêmico inválido";
+	
 }

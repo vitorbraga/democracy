@@ -1,12 +1,15 @@
 package br.com.democracy.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.wsdl.Input;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
 		if (emailUser == null) {
 			User user = UserInputDTO.createUser(userInput);
-			
+
 			user.setStatus(UserStatusEnum.AWAITING_APPROVAL.id());
 			user.setType(UserTypeEnum.NORMAL.id());
 
@@ -151,7 +154,7 @@ public class UserServiceImpl implements UserService {
 			/* Inicia thread que envia email */
 			Thread thread = new Thread(new SendPostApprovalEmailTask(user));
 			thread.start();
-			
+
 		} else {
 			throw new ServiceException(Messages.USER_NOT_FOUND);
 		}
@@ -189,5 +192,55 @@ public class UserServiceImpl implements UserService {
 		}
 		return UserOutputDTO.copy(user);
 	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void editUser(UserInputDTO userInput) throws ServiceException {
+		CustomUserDetails userSession = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+		User user = userDAO.getById(userSession.getId());
+		if (user == null) {
+			throw new ServiceException(Messages.USER_NOT_FOUND);
+		}
+		if (!encoder.matches(userInput.getPassword(), user.getPassword()))	{
+			throw new ServiceException(Messages.PASSWORD_INVALID);
+		}
+		
+
+		User emailUser = userDAO.getUserByEmail(userInput.getEmail());
+
+		if (emailUser == null) {
+			updateUser(user, userInput);
+
+			user = userDAO.saveOrUpdate(user);
+
+		} else {
+			if (emailUser.getEmail() != user.getEmail())
+				throw new ServiceException(Messages.EMAIL_ALREADY_REGISTERED);
+			
+			updateUser(user, userInput);
+			user = userDAO.saveOrUpdate(user);
+			
+		}
+
+	}
 	
+	private void updateUser(User user, UserInputDTO userInput)	{
+		
+		if(userInput != null) {
+			Date now = DateHelper.now(); 
+			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+			
+			user.setName(userInput.getName());
+			user.setEmail(userInput.getEmail());
+			user.setPassword(encoder.encode(userInput.getPassword()));
+			user.setGender(Integer.parseInt(userInput.getGender()));
+			user.setAcademicRegister(userInput.getAcademicRegister());
+			user.setUpdated(now);
+
+		}
+		
+	}
+
 }

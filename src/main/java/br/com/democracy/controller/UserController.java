@@ -102,8 +102,25 @@ public class UserController {
 	 * 
 	 */
 	@Post
-	@Path("/addOrEditUser")
-	public void addOrEditUser() {
+	@Path("/editUser")
+	public void editUser(UserInputDTO user) {
+		try {
+			Validator.validate(user);
+
+			if (!user.getEmail().equals(user.getEmailConf())) {
+				throw new ValidationException(
+						Messages.EMAIL_CONFIRMATION_INCORRECT);
+			}
+
+			userService.editUser(user);
+
+			result.redirectTo(HomeController.class).home();
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
 
 	}
 	

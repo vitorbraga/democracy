@@ -72,7 +72,7 @@
 			<div class="row uniform 50%">
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
-						<label for="name-field">Nome:</label> <input type="text"
+						<label for="name-field">Nome <b>*</b>:</label> <input type="text"
 							name="user.name" id="name-field" value="${user.name}" placeholder="Nome" />
 					</div>
 				</div>
@@ -80,7 +80,7 @@
 					<div class="form-group">
 						<label for="academicRegister-field">Registro Acadêmico:</label> <input
 							type="text" name="user.academicRegister"
-							id="academicRegister-field" value=""
+							id="academicRegister-field" value="${user.academicRegister}"
 							placeholder="Registro Acadêmico" />
 					</div>
 				</div>
@@ -88,32 +88,15 @@
 			<div class="row uniform 50%">
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
-						<label for="user-email">Email:</label> <input type="email"
+						<label for="user-email">Email <b>*</b>:</label> <input type="email"
 							name="user.email" id="email-field" value="${user.email}" placeholder="Email" />
 					</div>
 				</div>
 				<div class="6u 12u(mobilep)">
 					<div class="form-group">
-						<label for="email-conf-field">Confirme seu Email:</label> <input
+						<label for="email-conf-field">Confirme seu Email <b>*</b>:</label> <input
 							type="email" name="user.emailConf" id="email-conf-field"
 							value="${user.email}" placeholder="Confirme seu Email" />
-
-					</div>
-				</div>
-			</div>
-			<div class="row uniform 50%">
-				<div class="6u 12u(mobilep)">
-					<div class="form-group">
-						<label for="pass-field">Senha:</label> <input type="password"
-							name="user.password" id="pass-field" value=""
-							placeholder="Senha" />
-					</div>
-				</div>
-				<div class="6u 12u(mobilep)">
-					<div class="form-group">
-						<label for="pass-conf-field">Confirme sua Senha:</label> <input
-							type="password" name="user.passwordConf" id="pass-conf-field"
-							value="" placeholder="Confirme sua Senha" />
 
 					</div>
 				</div>
@@ -126,6 +109,17 @@
 							for="male">Masculino</label> <input type="radio"
 							name="user.gender" id="female" ${user.genderId == 2 ? 'checked' : ''} value="2" /> <label for="female">Feminino</label>
 					</fieldset>
+				</div>
+			</div>
+			
+			<p>Digite sua senha e clique em salvar para editar seu perfil.</p>
+			<div class="row uniform 50%">
+				<div class="6u 12u(mobilep)">
+					<div class="form-group">
+						<label for="pass-field">Senha <b>*</b>:</label> <input type="password"
+							name="user.password" id="pass-field" value=""
+							placeholder="Senha" />
+					</div>
 				</div>
 			</div>
 

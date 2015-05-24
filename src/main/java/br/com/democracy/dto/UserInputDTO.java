@@ -29,6 +29,7 @@ public class UserInputDTO {
 	@Validate(message=Messages.GENDER_FIELD_INVALID, validation="isGender")
 	private String gender;
 	
+	@Validate(message=Messages.ACADEMIC_REGISTER_INVALID, validation ="isNumberOrEmpty")
 	private String academicRegister;
 	
 	private SelectBoxDTO genderSelectBox;
