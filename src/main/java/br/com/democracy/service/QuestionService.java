@@ -49,4 +49,6 @@ public interface QuestionService {
 	List<QuestionOutputDTO> searchQuestion(QuestionSearchDTO search,
 			boolean isAdmin) throws ServiceException;
 
+	List<QuestionOutputDTO> getActiveQuestions() throws ServiceException;
+
 }

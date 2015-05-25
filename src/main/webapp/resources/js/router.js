@@ -36,6 +36,14 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	home : function() {
+		$('#loader-wrapper').fadeIn(150);
+		$.ajax({
+			url : basePath + 'question/getActiveQuestions',
+			type : 'get'
+		}).done(function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			$('.container-fluid').html(data);
+		});
 	},
 
 	redirect : function() {
@@ -122,6 +130,33 @@ function doSearchQuestion() {
 			$('#loader-wrapper').fadeOut(150);
 			$('#questions-result').hide().html(data).fadeIn(150);
 		}
+	});
+}
+
+function searchUser() {
+	
+	$('#user-search-but').on('click', function() {
+		$('#loader-wrapper').fadeIn(150);
+		doSearchUser();
+	});
+}
+
+function doSearchUser() {
+	
+	var search = getSearchFilters();
+	
+	$.ajax({
+		url : basePath + 'user/search',
+		type : 'get',
+		data : search, 
+		error : function(data) {
+			$('#loader-wrapper').fadeOut(150);
+			var error = jQuery.parseJSON(data.responseText);
+			sweetAlert("Oops...", error.message, "error");
+		}
+	}).done(function(data) {
+		$('#loader-wrapper').fadeOut(150);
+		$('#users-result').hide().html(data).fadeIn(150);
 	});
 }
 

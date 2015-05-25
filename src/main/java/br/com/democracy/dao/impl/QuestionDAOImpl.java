@@ -8,7 +8,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import br.com.caelum.vraptor.ioc.ConverterHandler;
 import br.com.democracy.dao.QuestionDAO;
 import br.com.democracy.dto.QuestionSearchDTO;
 import br.com.democracy.helper.ConvertHelper;
@@ -58,8 +57,6 @@ public class QuestionDAOImpl extends GenericDAOImpl<Question> implements
 			}
 		}
 
-		// TODO buscar por periodo data
-		
 		return criteria.list();
 	}
 	

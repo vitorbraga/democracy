@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import javax.wsdl.Input;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.democracy.dao.UserDAO;
 import br.com.democracy.dto.UserInputDTO;
 import br.com.democracy.dto.UserOutputDTO;
+import br.com.democracy.dto.UserSearchDTO;
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.helper.DateHelper;
 import br.com.democracy.messages.Messages;
@@ -240,7 +240,15 @@ public class UserServiceImpl implements UserService {
 			user.setUpdated(now);
 
 		}
-		
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserOutputDTO> searchUser(UserSearchDTO search)
+			throws ServiceException {
+
+		List<User> users = userDAO.searchUser(search);
+
+		return UserOutputDTO.copy(users);
+	}
 }

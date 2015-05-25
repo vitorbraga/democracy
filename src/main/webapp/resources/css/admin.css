@@ -83,3 +83,8 @@
 	border: 1px solid #FFCC00;
 	border-radius: 5px;
 }
+
+.empty-result-msg {
+	margin-top: 15px;
+	display: block;
+}

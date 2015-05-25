@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.democracy.dto.UserInputDTO;
 import br.com.democracy.dto.UserOutputDTO;
+import br.com.democracy.dto.UserSearchDTO;
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.persistence.User;
 
@@ -24,6 +25,9 @@ public interface UserService {
 	UserOutputDTO getUserDetails() throws ServiceException;
 	
 	void editUser(UserInputDTO userInput)	throws ServiceException;
+
+	List<UserOutputDTO> searchUser(UserSearchDTO search)
+			throws ServiceException;
 
 
 }

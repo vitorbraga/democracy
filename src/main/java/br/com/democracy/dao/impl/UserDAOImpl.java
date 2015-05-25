@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import br.com.democracy.dao.UserDAO;
+import br.com.democracy.dto.UserSearchDTO;
 import br.com.democracy.persistence.User;
 import br.com.democracy.persistence.enums.UserStatusEnum;
 import br.com.democracy.persistence.enums.UserTypeEnum;
@@ -61,4 +62,26 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO {
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> searchUser(UserSearchDTO user) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		Criteria criteria = session.createCriteria(User.class);
+
+		if (user.getStatus() != null && !user.getStatus().equals("0")) {
+			criteria.add(Restrictions.eq("status", Integer.parseInt(user.getStatus())));
+		}
+
+		if (user.getEmail() != null) {
+			criteria.add(Restrictions.eq("email", user.getEmail()));
+		}
+		
+		if (user.getName() != null) {
+			criteria.add(Restrictions.eq("name", user.getName()));
+		}
+		
+		return criteria.list();
+	}
 }

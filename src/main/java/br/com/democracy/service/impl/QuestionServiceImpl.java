@@ -252,6 +252,15 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<QuestionOutputDTO> getActiveQuestions() throws ServiceException {
+
+		List<Question> questions = questionDAO.getAvailableQuestions();
+
+		return QuestionOutputDTO.copyAll(questions);
+	}
+	
+	@Override
 	@Transactional(readOnly = false)
 	public void answerQuestion(Long questionId, Long answerId,
 			boolean isMobile, String token) throws ServiceException {

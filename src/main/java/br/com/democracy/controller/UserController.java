@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.democracy.dto.UserInputDTO;
 import br.com.democracy.dto.UserOutputDTO;
+import br.com.democracy.dto.UserSearchDTO;
 import br.com.democracy.exception.ServiceException;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.helper.ConvertHelper;
@@ -181,4 +182,23 @@ public class UserController {
 
 	}
 
+	@Get
+	@Path("/search")
+	public void search(UserSearchDTO search) {
+
+		try {
+
+			Validator.validate(search);
+
+			List<UserOutputDTO> users = userService.searchUser(search);
+
+			result.include("users", users);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
 }

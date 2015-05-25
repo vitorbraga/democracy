@@ -212,8 +212,8 @@ public class QuestionController {
 
 		try {
 
-			List<QuestionAvailableOutputDTO> questions = questionService
-					.getAvailableQuestions(false, null);
+			List<QuestionOutputDTO> questions = questionService
+					.getActiveQuestions();
 
 			result.include("questions", questions);
 

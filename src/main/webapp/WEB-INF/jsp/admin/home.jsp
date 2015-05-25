@@ -93,22 +93,22 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#statistics"><i class="fa fa-fw fa-arrows-v"></i> Estatísticas <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="statistics" class="collapse">
-                            <li>
-                                <a href="#" class="routeLink">Perguntas</a>
-                            </li>
-                            <li>
-                                <a href="#" class="routeLink">Usuários</a>
-                            </li>
-                        </ul>
-                    </li>
+<!--                     <li> -->
+<!--                         <a href="javascript:;" data-toggle="collapse" data-target="#statistics"><i class="fa fa-fw fa-arrows-v"></i> Estatísticas <i class="fa fa-fw fa-caret-down"></i></a> -->
+<!--                         <ul id="statistics" class="collapse"> -->
+<!--                             <li> -->
+<!--                                 <a href="#" class="routeLink">Perguntas</a> -->
+<!--                             </li> -->
+<!--                             <li> -->
+<!--                                 <a href="#" class="routeLink">Usuários</a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                     </li> -->
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#users"><i class="fa fa-fw fa-arrows-v"></i> Usuários <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="users" class="collapse">
                             <li>
-                                <a href="#searchUser" class="routeLink">Buscar</a>
+                                <a href="#searchUser" class="routeLink" callback="searchUser">Buscar</a>
                             </li>
                             <li>
                                 <a href="#awaitingUsers" class="routeLink" callback="awaitingUsers">Usuários pendentes</a>
@@ -129,11 +129,6 @@
 			</div>
             <div class="container-fluid">
 
-				<h2>Dashboard</h2>
-                <marquee class="admin-marquee">Neste momento 8 perguntas ativas</marquee>
-
-				<div id="available-questions">
-				</div>
             </div>
             <!-- /.container-fluid -->
 
