@@ -1,5 +1,6 @@
 package br.com.democracy.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,8 +58,9 @@ public class MobileController {
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
-
 		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ParseException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
 		}
 
@@ -105,6 +107,35 @@ public class MobileController {
 			mobileService.answerQuestion(token,
 					ConvertHelper.convertIdFromView(questionId),
 					ConvertHelper.convertIdFromView(answerId));
+
+			ResultControllerHelper.returnResultSuccess(result);
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
+	@Post
+	@Path("/answerDiscursiveQuestion")
+	public void answerDiscursiveQuestion(String token, String questionId, String answer) {
+
+		try {
+			if (ValidationHelper.isEmptyOrVoid(token)) {
+				throw new ValidationException(Messages.TOKEN_INVALID);
+			}
+			if (!ValidationHelper.isIdFromView(questionId)) {
+				throw new ValidationException(Messages.ID_INVALID);
+			}
+
+			if (!ValidationHelper.isQuestionOrAnswer(answer)) {
+				throw new ValidationException(Messages.ANSWER_FIELD_INVALID);
+			}
+
+			// chamar mobileServie que vai chamar questionService
+			mobileService.answerDiscursiveQuestion(token,
+					ConvertHelper.convertIdFromView(questionId), answer);
 
 			ResultControllerHelper.returnResultSuccess(result);
 

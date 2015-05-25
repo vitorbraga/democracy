@@ -1,5 +1,7 @@
 package br.com.democracy.service.impl;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,7 @@ public class MobileServiceImpl implements MobileService {
 	@Override
 	@Transactional(readOnly = false)
 	public String authenticate(String email, String password,
-			HttpSession session) throws ServiceException {
+			HttpSession session) throws ServiceException, ParseException {
 
 		User user = userDAO.getUserByEmail(email);
 
@@ -50,6 +52,7 @@ public class MobileServiceImpl implements MobileService {
 				session.setAttribute("user", user);
 				// create token
 				String token = ConvertHelper.convertIdToView(user.getId());
+				token += generateUniqueSerial(DateHelper.now());
 				user.setToken(token);
 				user.setUpdated(DateHelper.now());
 				userDAO.saveOrUpdate(user);
@@ -64,6 +67,15 @@ public class MobileServiceImpl implements MobileService {
 
 	}
 
+	public String generateUniqueSerial(Date dateBase) throws ParseException {
+
+		String dateString = DateHelper.formatSerialDate(dateBase);
+		/* Cria serial para o torneio */
+		String serial = ConvertHelper.generateToken(dateString);
+
+		return serial;
+	}
+	
 	/** Verifica token. Se não encontrar usuário com aquele token 
 	 *  a autenticação é invalidada */
 	@Transactional(readOnly = true)
@@ -104,6 +116,19 @@ public class MobileServiceImpl implements MobileService {
 		}
 
 		questionService.answerQuestion(questionId, answerId, true, token);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public void answerDiscursiveQuestion(String token, Long questionId,
+			String answer) throws ServiceException {
+
+		if (!checkToken(token)) {
+			throw new ServiceException(Messages.USER_AUTHENTICATION_INVALID);
+		}
+
+		questionService.answerDiscursiveQuestion(questionId, answer, true,
+				token);
 	}
 	
 	@Override

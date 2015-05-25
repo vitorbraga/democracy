@@ -119,5 +119,12 @@ public class DateHelper {
 		c.add(Calendar.MINUTE, minutes);
 		return c.getTime();
 	}
+	
+	public static String formatSerialDate(final Date date) throws ParseException {
+		final SimpleDateFormat parser = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
+
+		return parser.format(date);
+	}
 
 }

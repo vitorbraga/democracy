@@ -21,7 +21,6 @@ import br.com.democracy.exception.ServiceException;
 import br.com.democracy.exception.ValidationException;
 import br.com.democracy.messages.Messages;
 import br.com.democracy.messages.MessagesLog;
-import br.com.democracy.persistence.User;
 
 public class ConvertHelper {
 
@@ -742,6 +741,14 @@ public class ConvertHelper {
 	
 	public static String bigDecimalToEdiFile(BigDecimal value) {
 		return value.multiply(new BigDecimal(100.00)).toBigInteger().toString();
+	}
+	
+	public static String generateToken(String serial) {
+		
+		serial = serial.replaceAll("/", "").replaceAll(" ", "")
+				.replaceAll(":", "").replaceAll("-", "");
+		
+		return serial;
 	}
 	
 }
