@@ -23,7 +23,6 @@ public class UserInputDTO {
 	@Validate(message=Messages.PASSWORD_INVALID, validation="isPasswordUser")
 	private String password;
 	
-	@Validate(message=Messages.PASSWORD_CONFIRMATION_INVALID, validation="isPasswordUser")
 	private String passwordConf;
 	
 	@Validate(message=Messages.GENDER_FIELD_INVALID, validation="isGender")

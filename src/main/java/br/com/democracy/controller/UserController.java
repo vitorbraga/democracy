@@ -125,6 +125,33 @@ public class UserController {
 
 	}
 	
+	/**
+	 * Método que adiciona ou edita um novo usuário
+	 * 
+	 */
+	@Post
+	@Path("/editAdmin")
+	public void editAdmin(UserInputDTO user) {
+		try {
+			Validator.validate(user);
+
+			if (!user.getEmail().equals(user.getEmailConf())) {
+				throw new ValidationException(
+						Messages.EMAIL_CONFIRMATION_INCORRECT);
+			}
+
+			userService.editUser(user);
+
+			result.redirectTo(AdminController.class).home();
+
+		} catch (ValidationException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+
+	}
+	
 
 	@Get
 	@Path("/getAwaitingUsers")

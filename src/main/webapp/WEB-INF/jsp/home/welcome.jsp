@@ -127,13 +127,13 @@
 				<div class="row uniform 50%">
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="name-field">Nome:</label> <input type="text"
+							<label for="name-field">Nome<b>*</b>:</label> <input type="text"
 								name="user.name" id="name-field" value="" placeholder="Nome" />
 						</div>
 					</div>
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="academicRegister-field">Registro Acadêmico:</label> <input
+							<label for="academicRegister-field">Registro Acadêmico<b>*</b>:</label> <input
 								type="text" name="user.academicRegister"
 								id="academicRegister-field" value=""
 								placeholder="Registro Acadêmico" />
@@ -143,13 +143,13 @@
 				<div class="row uniform 50%">
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="user-email">Email:</label> <input type="email"
+							<label for="user-email">Email<b>*</b>:</label> <input type="email"
 								name="user.email" id="email-field" value="" placeholder="Email" />
 						</div>
 					</div>
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="email-conf-field">Confirme seu Email:</label> <input
+							<label for="email-conf-field">Confirme seu Email<b>*</b>:</label> <input
 								type="email" name="user.emailConf" id="email-conf-field"
 								value="" placeholder="Confirme seu Email" />
 
@@ -159,14 +159,14 @@
 				<div class="row uniform 50%">
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="pass-field">Senha:</label> <input type="password"
+							<label for="pass-field">Senha<b>*</b>:</label> <input type="password"
 								name="user.password" id="pass-field" value=""
 								placeholder="Senha" />
 						</div>
 					</div>
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
-							<label for="pass-conf-field">Confirme sua Senha:</label> <input
+							<label for="pass-conf-field">Confirme sua Senha<b>*</b>:</label> <input
 								type="password" name="user.passwordConf" id="pass-conf-field"
 								value="" placeholder="Confirme sua Senha" />
 
@@ -175,7 +175,7 @@
 				</div>
 				<div class="row uniform 50%">
 					<div class="form-group">
-						<label for="gender-field"> Sexo</label>
+						<label for="gender-field"> Sexo<b>*</b></label>
 						<fieldset>
 							<input type="radio" name="user.gender" id="male" value="1" /> <label
 								for="male">Masculino</label> <input type="radio"

@@ -76,5 +76,17 @@ public class AdminController {
 		}
 	}
 	
+	@Get
+	@Path("/userDetails")
+	public void userDetails()	{
+		try	{
+			
+			UserOutputDTO user = userService.getUserDetails();
+			result.include("user", user);
+		} catch (ServiceException e) {
+			ResultControllerHelper.returnResultError(result, e.getMessage());
+		}
+	}
+	
 	
 }

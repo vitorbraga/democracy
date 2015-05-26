@@ -28,28 +28,18 @@
 <script src="${pageContext.request.contextPath}/resources/js/init.js"></script>
 
 <!-- Bootstrap Core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom CSS -->
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
 
-<!-- Custom CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin.css"
-	rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sweet-alert.css">
 
-<!-- HTML5UP CSS -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/skel.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style-wide.css" />
+    <!-- Custom Fonts -->
+    <link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css">
 
-
-<!-- Custom Fonts -->
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
+	<link href="${pageContext.request.contextPath}/resources/css/admin.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,49 +51,41 @@
 </head>
 
 <body>
-	<section class="container 75%" >
+	<section class="container 85%" style="padding-top: 30px;">
 		<header>
-				<h2>Dados do usuário</h2>
-				<p>Preencha os campos e clique em Salvar, para alterar algum dado cadastral</p>
+			<h2>Dados do Admin</h2>
+			<p>Preencha os campos e clique em Salvar, para alterar algum dado cadastral</p>
 		</header>
 		<div class="box">
 			<form role="form" method="post"
-				action="${pageContext.request.contextPath}/user/editUser">
+				action="${pageContext.request.contextPath}/user/editAdmin">
 				<div class="row uniform 50%">
-					<div class="6u 12u(mobilep)">
-						<div class="form-group">
-							<label for="name-field">Nome <b>*</b>:</label> <input type="text"
-								name="user.name" id="name-field" value="${user.name}" placeholder="Nome" />
-						</div>
+					<div class="form-group">
+						<label for="name-field">Nome <b>*</b>:</label> <input type="text"
+							name="user.name" id="name-field" value="${user.name}" placeholder="Nome" />
 					</div>
-					<div class="6u 12u(mobilep)">
-						<div class="form-group">
-							<label for="academicRegister-field">Registro Acadêmico:</label> <input
-								type="text" name="user.academicRegister"
-								id="academicRegister-field" value="${user.academicRegister}"
-								placeholder="Registro Acadêmico" />
-						</div>
-					</div>
-				</div>
-				<div class="row uniform 50%">
-					<div class="6u 12u(mobilep)">
-						<div class="form-group">
-							<label for="user-email">Email <b>*</b>:</label> <input type="email"
-								name="user.email" id="email-field" value="${user.email}" placeholder="Email" />
-						</div>
-					</div>
-					<div class="6u 12u(mobilep)">
-						<div class="form-group">
-							<label for="email-conf-field">Confirme seu Email <b>*</b>:</label> <input
-								type="email" name="user.emailConf" id="email-conf-field"
-								value="${user.email}" placeholder="Confirme seu Email" />
-	
-						</div>
+					<div class="form-group">
+						<label for="academicRegister-field">Registro Acadêmico:</label> <input
+							type="text" name="user.academicRegister"
+							id="academicRegister-field" value="${user.academicRegister}"
+							placeholder="Registro Acadêmico" />
 					</div>
 				</div>
 				<div class="row uniform 50%">
 					<div class="form-group">
-						<label for="gender-field"> Sexo</label>
+						<label for="user-email">Email <b>*</b>:</label> <input type="email"
+							name="user.email" id="email-field" value="${user.email}" placeholder="Email" />
+					</div>
+					<div class="form-group">
+						<label for="email-conf-field">Confirme seu Email <b>*</b>:</label> <input
+							type="email" name="user.emailConf" id="email-conf-field"
+							value="${user.email}" placeholder="Confirme seu Email" />
+
+					</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="form-group">
+						<label for="gender-field"> Sexo<b>*</b></label>
 						<fieldset>
 							<input type="radio" name="user.gender" ${user.genderId == 1 ? 'checked' : ''} id="male" value="1" /> <label
 								for="male">Masculino</label> <input type="radio"
@@ -114,12 +96,10 @@
 				
 				<p>Digite sua senha e clique em salvar para editar seu perfil.</p>
 				<div class="row uniform 50%">
-					<div class="6u 12u(mobilep)">
-						<div class="form-group">
-							<label for="pass-field">Senha <b>*</b>:</label> <input type="password"
-								name="user.password" id="pass-field" value=""
-								placeholder="Senha" />
-						</div>
+					<div class="form-group">
+						<label for="pass-field">Senha <b>*</b>:</label> <input type="password"
+							name="user.password" id="pass-field" value=""
+							placeholder="Senha" />
 					</div>
 				</div>
 	
