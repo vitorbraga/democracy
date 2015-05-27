@@ -79,9 +79,9 @@
 					<input type="password"
 						name="password" class="form-control" id="user-password" />
 				</div>
-				<!-- <div class="form-group">
-					<a href="<c:url value="/user/forgotPassword"/>" >Esqueci minha senha</a>
-				</div> -->
+				<div class="form-group">
+					<a href="${pageContext.request.contextPath}/">Voltar para página principal</a>
+				</div>
 				<button type="submit" class="btn btn-default">Login</button>
 			</form>
 		</div>
