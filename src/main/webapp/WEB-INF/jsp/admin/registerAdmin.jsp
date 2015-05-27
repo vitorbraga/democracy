@@ -48,8 +48,12 @@ label {
 
 	<div class="container">
 		<h2>Cadastrar admin</h2>
+		<div class="alert alert-danger" style="display:none;" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span><span class="error-text"></span>
+		</div>
 		<div class="row">
-			<form action="${pageContext.request.contextPath}/user/registerAdmin"
+			<form id="registerAdmin" action="${pageContext.request.contextPath}/user/registerAdmin"
 				method="post" role="form">
 				<div class="col-lg-6">
 					<div class="form-group">
@@ -117,3 +121,37 @@ label {
 </body>
 
 </html>
+
+<script>
+
+function afterAjaxSubmit(data) {
+	$('#loader-wrapper').fadeOut(150);
+	swal("Sucesso!", 'Admin cadastrado com sucesso!', "success");
+}
+
+function errorResult(data) {
+	$('#loader-wrapper').fadeOut(150);
+	$('.alert-danger .error-text').html(data.responseJSON.message);
+	$('.alert-danger').show(200);
+}
+
+
+$("#registerAdmin").submit(function(e)	{
+	$('#loader-wrapper').fadeIn(150);
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        success: afterAjaxSubmit,
+        error: errorResult
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind();
+    
+});
+
+
+</script>

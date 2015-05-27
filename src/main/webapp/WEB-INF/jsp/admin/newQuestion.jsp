@@ -39,9 +39,23 @@
 		<a href="javascript:void(0)" id="add-answer">+ Resposta</a>&nbsp;&nbsp;<a href="javascript:void(0)" id="remove-answer">- Resposta</a>
 	</div>
 </div>
+<!-- jQuery -->
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/underscore-min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/backbone-min.js"></script>
 
-<script>
-	
+	<!-- Bootstrap Core JavaScript -->
+	<script
+		src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/js/sweet-alert.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/routerHome.js"></script>
+
+	<script type="text/javascript">	
 	function afterAjaxSubmit(data) {
 		$('#loader-wrapper').fadeOut(150);
 		swal("Sucesso!", 'Nova pergunta cadastrada com sucesso!', "success");

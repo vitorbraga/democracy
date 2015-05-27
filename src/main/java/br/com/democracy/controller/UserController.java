@@ -89,7 +89,7 @@ public class UserController {
 
 			userService.registerAdmin(user);
 
-			result.redirectTo(AdminController.class).home();
+			ResultControllerHelper.returnResultSuccess(result);
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
@@ -115,7 +115,7 @@ public class UserController {
 
 			userService.editUser(user);
 
-			result.redirectTo(HomeController.class).home();
+			ResultControllerHelper.returnResultSuccess(result);
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());
@@ -142,7 +142,7 @@ public class UserController {
 
 			userService.editUser(user);
 
-			result.redirectTo(AdminController.class).home();
+			ResultControllerHelper.returnResultSuccess(result);
 
 		} catch (ValidationException e) {
 			ResultControllerHelper.returnResultError(result, e.getMessage());

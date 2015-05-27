@@ -109,7 +109,6 @@
 	
 		</div>
 	</section>
-	<!-- /#wrapper -->
 
 	<!-- jQuery -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
@@ -126,7 +125,7 @@
 		src="${pageContext.request.contextPath}/resources/js/sweet-alert.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/routerHome.js"></script>
 
-	<script type="text/javascript">
+	<script>
 	
 		var callback = '', param = '';
 		var basePath = "${pageContext.request.contextPath}" + '/';

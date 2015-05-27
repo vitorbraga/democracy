@@ -66,9 +66,12 @@
 				<h2>Dados do usuário</h2>
 				<p>Preencha os campos e clique em Salvar, para alterar algum dado cadastral</p>
 		</header>
+		<div class="alert alert-danger" style="display:none;" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span><span class="error-text"></span>
+		</div>
 		<div class="box">
-			<form role="form" method="post"
-				action="${pageContext.request.contextPath}/user/editUser">
+			<form method="post" id="userForm" action="${pageContext.request.contextPath}/user/editUser" role="form" >
 				<div class="row uniform 50%">
 					<div class="6u 12u(mobilep)">
 						<div class="form-group">
@@ -126,7 +129,7 @@
 				<div class="row uniform">
 					<div class="12u">
 						<ul class="actions align-center">
-							<li><input type="submit" value="Salvar" /></li>
+							<li><input type="submit" id="question-submit-but" class="btn btn-default" value="Salvar" /></li>
 						</ul>
 					</div>
 				</div>
@@ -138,5 +141,34 @@
 </html>
 
 <script>
+
+function afterAjaxSubmit(data) {
+	$('#loader-wrapper').fadeOut(150);
+	swal("Sucesso!", 'Usuário editado com sucesso!', "success");
+}
+
+function errorResult(data) {
+	$('#loader-wrapper').fadeOut(150);
+	$('.alert-danger .error-text').html(data.responseJSON.message);
+	$('.alert-danger').show(200);
+}
+
+
+$("#userForm").submit(function(e)	{
+	$('#loader-wrapper').fadeIn(150);
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        success: afterAjaxSubmit,
+        error: errorResult
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind();
+});
+
 
 </script>
