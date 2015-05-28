@@ -100,12 +100,17 @@
 
 		<section class="box special">
 			<header class="major">
-				<h2>Introduzindo o sistema para a criação e gerenciamento de
-					enquetes seja no seu navegador ou no seu celular</h2>
-				<p>Agora você pode criar, gerenciar e comentar sobre diversas
-					enquetes diferentes podendo acompanhá-las pelo seu celular ou
-					navegador.</p>
+				<h2>Introduzindo o sistema para uma maior participação e imersão na Democracia Digital</h2>
 			</header>
+				<div class="justify">
+					<p style=" text-align: justify;">A Democracia Digital é o resultado do uso das novas Tecnologias de Informação e Comunicação 
+						pelos setores democráticos em prol de uma participação cidadã mais ativa e direta nas decisões 
+						públicas. Imerso nesta demanda de desenvolvimento de tecnologias para democracia participativa,
+						o sistema Web/Mobile Democracy foi implementado.</p>
+					<p style=" text-align: justify;">Visando então uma maior participação da população na Democracia Digital, agora através do 
+						sistema Democracy você pode criar, gerenciar e comentar sobre diversas discussões podendo acompanhá-las pelo seu celular 
+						ou navegador.</p>
+				</div>
 			<span class="image featured"><img
 				src="${pageContext.request.contextPath}/resources/images/pic01.jpg"
 				alt="" /></span>
